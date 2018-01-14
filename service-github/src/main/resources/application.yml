@@ -1,0 +1,20 @@
+server:
+  port: 8001
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:9999/eureka/
+
+spring:
+  application:
+    name: service-github
+    
+    
+oauth:
+  github:
+    client_id: f19062e395781988b16b
+    client_secret: c2aff484725198c6147e498bf5d43b1d55969fca
+    url:
+      authorize: https://github.com/login/oauth/authorize
+      access_token: https://github.com/login/oauth/access_token
