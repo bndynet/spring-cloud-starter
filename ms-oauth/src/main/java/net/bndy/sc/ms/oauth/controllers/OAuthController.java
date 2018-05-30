@@ -31,7 +31,8 @@ public class OAuthController {
     }
 
 	@RequestMapping("/authorize")
-	public RedirectView authorize(HttpServletRequest request, RedirectAttributes attributes) {
+	public RedirectView authorize(HttpServletRequest request, RedirectAttributes attributes, @RequestParam(name = "redirect_uri" ) String redirectUri) {
+		request.getSession().setAttribute("redirectUri", redirectUri);
 		attributes.addAttribute("client_id", this.githubConfig.getClient_id());
 		attributes.addAttribute("redirect_uri", this.getCallbackUrl());
 		attributes.addAttribute("state", "1");
@@ -39,7 +40,7 @@ public class OAuthController {
 	}
 	
 	@RequestMapping("/callback")
-	public RedirectView callback(RedirectAttributes attributes, @RequestParam(name = "code") String code) {
+	public RedirectView callback(HttpServletRequest request, RedirectAttributes attributes, @RequestParam(name = "code") String code) {
 		ResponseEntity<OAuthParams> responseEntity = this.restTemplate.postForEntity(
 				this.githubConfig.getUrl().getAccess_token(), new OAuthParams(
 					this.githubConfig.getClient_id(),
@@ -47,6 +48,7 @@ public class OAuthController {
 					this.getCallbackUrl(),
 					code), OAuthParams.class);
 		attributes.addAttribute("access_token", responseEntity.getBody().getAccess_token());
-		return new RedirectView("https://api.github.com/user");
+		String redirectUri = request.getSession().getAttribute("redirectUri").toString(); // "https://api.github.com/user";
+		return new RedirectView(redirectUri);
 	}
 }
