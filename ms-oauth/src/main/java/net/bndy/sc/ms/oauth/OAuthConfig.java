@@ -1,12 +1,8 @@
-package net.bndy.sc.github;
+package net.bndy.sc.ms.oauth;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
+import net.bndy.sc.ms.oauth.Url;
 
-@Component
-@ConfigurationProperties(prefix="oauth.github")
-public class GitHubConfig {
-	
+public class OAuthConfig {
 	private Url url;
 	private String client_id;
 	private String client_secret;

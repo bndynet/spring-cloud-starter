@@ -1,4 +1,4 @@
-package net.bndy.sc.github;
+package net.bndy.sc.ms.oauth;
 
 public class Url {
 	private String authorize;

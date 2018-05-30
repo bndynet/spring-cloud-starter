@@ -1,4 +1,4 @@
-package net.bndy.sc;
+package net.bndy.sc.ms.oauth.controllers;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -11,8 +11,8 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
-import net.bndy.sc.github.GitHubConfig;
-import net.bndy.sc.github.OAuthParams;
+import net.bndy.sc.ms.oauth.github.GitHubConfig;
+import net.bndy.sc.ms.oauth.OAuthParams;
 
 @Controller
 public class OAuthController {
@@ -47,6 +47,6 @@ public class OAuthController {
 					this.getCallbackUrl(),
 					code), OAuthParams.class);
 		attributes.addAttribute("access_token", responseEntity.getBody().getAccess_token());
-		return new RedirectView("http://bndy.net");
+		return new RedirectView("https://api.github.com/user");
 	}
 }

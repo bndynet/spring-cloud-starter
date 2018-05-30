@@ -1,4 +1,4 @@
-package net.bndy.sc;
+package net.bndy.sc.ms.oauth;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,10 +9,10 @@ import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
 @EnableEurekaClient
-public class ServiceGithubApplication {
+public class Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ServiceGithubApplication.class, args);
+		SpringApplication.run(Application.class, args);
 	}
 	
 	@Bean
