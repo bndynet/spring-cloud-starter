@@ -1,7 +1,15 @@
+/**
+ * Copyright (c) 2018 BNDY-NET. All Rights Reserved.
+ * http://bndy.net
+ */
 package net.bndy.sc.ms.oauth;
 
 import java.io.Serializable;
 
+/**
+ * @author Bendy Zhang
+ * @version 1.0
+ */
 public class OAuthParams implements Serializable {
 	
 	private static final long serialVersionUID = 1L;

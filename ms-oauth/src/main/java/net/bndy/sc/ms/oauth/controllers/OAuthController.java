@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2018 BNDY-NET. All Rights Reserved.
+ * http://bndy.net
+ */
 package net.bndy.sc.ms.oauth.controllers;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +18,10 @@ import org.springframework.web.servlet.view.RedirectView;
 import net.bndy.sc.ms.oauth.github.GitHubConfig;
 import net.bndy.sc.ms.oauth.OAuthParams;
 
+/**
+ * @author Bendy Zhang
+ * @version 1.0
+ */
 @Controller
 public class OAuthController {
 

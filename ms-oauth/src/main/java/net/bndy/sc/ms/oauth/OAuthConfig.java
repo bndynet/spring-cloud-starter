@@ -1,7 +1,15 @@
+/**
+ * Copyright (c) 2018 BNDY-NET. All Rights Reserved.
+ * http://bndy.net
+ */
 package net.bndy.sc.ms.oauth;
 
 import net.bndy.sc.ms.oauth.Url;
 
+/**
+ * @author Bendy Zhang
+ * @version 1.0
+ */
 public class OAuthConfig {
 	private Url url;
 	private String client_id;
