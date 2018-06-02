@@ -99,15 +99,17 @@ public class OAuthParams implements Serializable {
 	public OAuthParams() {
 	}
 
-	public OAuthParams(String client_id, String redirect_uri) {
+	public OAuthParams(String client_id, String redirect_uri, String state) {
 		this.client_id = client_id;
 		this.redirect_uri = redirect_uri;
+		this.state = state;
 	}
 	
-	public OAuthParams(String client_id, String client_secret, String redirect_uri, String code) {
+	public OAuthParams(String client_id, String client_secret, String redirect_uri, String code, String state) {
 		this.client_id = client_id;
 		this.client_secret = client_secret;
 		this.redirect_uri = redirect_uri;
 		this.code = code;
+		this.state = state;
 	}
 }
