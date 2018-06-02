@@ -4,12 +4,9 @@
  */
 package net.bndy.sc.ms.oauth.controllers;
 
-import java.util.prefs.BackingStoreException;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.filter.FilterAnnotations;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,9 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
-
-import com.fasterxml.classmate.util.ResolvedTypeCache.Key;
-import com.netflix.infix.lang.infix.antlr.EventFilterParser.path_function_return;
 
 import net.bndy.sc.ms.oauth.github.GitHubConfig;
 import net.bndy.lib.StringHelper;
@@ -82,8 +76,8 @@ public class OAuthController {
 					this.getCallbackUrl(),
 					code, state), OAuthParams.class);
 		attributes.addAttribute(KEY_ACCESS_TOKEN, responseEntity.getBody().getAccess_token());
-		String redirectUri = "https://api.github.com/user";
-//		String redirectUri = request.getSession().getAttribute(KEY_REDIRECT_URI).toString(); // "https://api.github.com/user";
+//		String redirectUri = "https://api.github.com/user";		// Just for testing
+		String redirectUri = request.getSession().getAttribute(KEY_REDIRECT_URI).toString();
 		return new RedirectView(redirectUri);
 	}
 }
