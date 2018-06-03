@@ -4,12 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>net.bndy</groupId>
-	<artifactId>sc-service-github</artifactId>
+	<artifactId>sc-service-oauth</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>service-github</name>
-	<description>Service for GitHub</description>
+	<name>service-oauth</name>
+	<description>OAuth</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
