@@ -1,0 +1,37 @@
+version: "3"
+services:
+
+  server-center:
+    image: "bndynet/sc-server-center"
+    ports:
+     - "9000:9000"
+     
+#  server-config:
+#    image: "bndynet/sc-server-config"
+#    ports:
+#      - "9010:9010"
+#    depends_on:
+#      - server-center
+
+  server-gateway:
+    image: "bndynet/sc-server-gateway"
+    ports:
+      - "9020:9020"
+    depends_on:
+      - server-center
+      
+  service-oauth:
+    image: "bndynet/sc-service-oauth"
+    ports:
+      - "9100:9100"
+    depends_on:
+      - server-center
+      - server-gateway
+
+  service-sso:
+    image: "bndynet/sc-service-sso"
+    ports:
+      - "9110:9110"
+    depends_on:
+      - server-center
+      - server-gateway

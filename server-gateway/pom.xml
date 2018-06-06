@@ -8,16 +8,20 @@
 		<version>1.0</version>
 	</parent>
 
-	<artifactId>sc-service-sso</artifactId>
+	<artifactId>sc-server-gateway</artifactId>
 	<packaging>jar</packaging>
 
-	<name>service-sso</name>
-	<description>SSO</description>
+	<name>server-gateway</name>
+	<description>Gateway</description>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-zuul</artifactId>
 		</dependency>
 
 		<dependency>

@@ -8,25 +8,22 @@
 		<version>1.0</version>
 	</parent>
 
-	<artifactId>sc-service-sso</artifactId>
+	<artifactId>sc-server-center</artifactId>
 	<packaging>jar</packaging>
 
-	<name>service-sso</name>
-	<description>SSO</description>
+	<name>server-center</name>
+	<description>Spring Cloud Server</description>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+			<artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-actuator</artifactId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
@@ -35,4 +32,8 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
+
+
+
 </project>

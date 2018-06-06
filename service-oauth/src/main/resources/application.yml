@@ -4,13 +4,11 @@ server:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:9000/eureka/
+      defaultZone: http://server-center:9000/eureka/
 
 spring:
   application:
-    name: service-github
-    
-    
+    name: service-oauth
 oauth:
   github:
     client_id: f19062e395781988b16b
