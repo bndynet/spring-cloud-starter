@@ -19,8 +19,11 @@ public class Application {
     @Value("${spring.application.name}")
     String name;
 
+    @Value("${name}")
+    String username;
+
     @RequestMapping("/hi")
     public String hi() {
-    		return "Hi " + name;
+    		return "Hi " + name + " --> i'm " + username;
     }
 }

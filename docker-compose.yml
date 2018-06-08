@@ -6,12 +6,12 @@ services:
     ports:
      - "9000:9000"
      
-#  server-config:
-#    image: "bndynet/sc-server-config"
-#    ports:
-#      - "9010:9010"
-#    depends_on:
-#      - server-center
+  server-config:
+    image: "bndynet/sc-server-config"
+    ports:
+      - "9010:9010"
+    depends_on:
+      - server-center
 
   server-gateway:
     image: "bndynet/sc-server-gateway"
@@ -26,6 +26,7 @@ services:
       - "9100:9100"
     depends_on:
       - server-center
+      - server-config
       - server-gateway
 
   service-sso:
@@ -34,4 +35,5 @@ services:
       - "9110:9110"
     depends_on:
       - server-center
+      - server-config
       - server-gateway

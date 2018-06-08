@@ -14,5 +14,4 @@ spring:
       label: master
       server:
         git:
-          uri: https://github.com/myorg/config-repo
-          skip-ssl-validation: true
+          uri: https://github.com/bndynet/bndy.net
