@@ -11,14 +11,20 @@ spring:
     name: service-sso
   banner:
     location: classpath:banner.txt
+  boot:
+    admin:
+      client:
+        url:
+        - http://server-center:9000/admin
+        
   cloud:
-    config:
-      failFast: true
-      retry:
-        initialInterval: 3000
-        multiplier: 1.3
-        maxInterval: 5000
-        maxAttempts: 20
+#    config:
+#      failFast: true
+#      retry:
+#        initialInterval: 3000
+#        multiplier: 1.3
+#        maxInterval: 5000
+#        maxAttempts: 20
 
       #uri: http://localhost:9010
       label: master
