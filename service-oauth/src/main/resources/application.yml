@@ -9,6 +9,9 @@ eureka:
 spring:
   application:
     name: service-oauth
+  banner:
+    location: classpath:banner.txt
+
 oauth:
   github:
     client_id: f19062e395781988b16b

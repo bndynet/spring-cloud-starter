@@ -50,6 +50,24 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<configuration>
+					<resources>
+						<resource>
+							<directory>src/main/resources</directory>
+							<filtering>true</filtering>
+						</resource>
+						<resource>
+							<directory>${basedir}/../</directory>
+							<includes>
+								<include>banner.txt</include>
+							</includes>
+						</resource>
+					</resources>
+				</configuration>
+			</plugin>
+			<plugin>
 				<groupId>com.spotify</groupId>
 				<artifactId>docker-maven-plugin</artifactId>
 				<version>1.1.1</version>
@@ -60,9 +78,7 @@
 					<entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
 					<forceTags>true</forceTags>
 					<imageTags>
-						<!-- 
-						<imageTag>${project.version}</imageTag>
-						 -->
+						<!-- <imageTag>${project.version}</imageTag> -->
 						<imageTag>latest</imageTag>
 					</imageTags>
 					<resources>
@@ -71,13 +87,6 @@
 							<directory>${project.build.directory}</directory>
 							<include>${project.build.finalName}.jar</include>
 						</resource>
-						<!-- 
-						<resource>
-							<targetPath>/</targetPath>
-							<directory>${basedir}/../</directory>
-							<include>wait-for-it.sh</include>
-						</resource>
-						 -->
 					</resources>
 				</configuration>
 			</plugin>

@@ -3,11 +3,13 @@ services:
 
   server-center:
     image: "bndynet/sc-server-center"
+    restart: always
     ports:
      - "9000:9000"
      
   server-config:
     image: "bndynet/sc-server-config"
+    restart: always
     ports:
       - "9010:9010"
     depends_on:
@@ -15,6 +17,7 @@ services:
 
   server-gateway:
     image: "bndynet/sc-server-gateway"
+    restart: always
     ports:
       - "9020:9020"
     depends_on:
@@ -22,6 +25,7 @@ services:
       
   service-oauth:
     image: "bndynet/sc-service-oauth"
+    restart: on-failure:3
     ports:
       - "9100:9100"
     depends_on:
@@ -31,6 +35,7 @@ services:
 
   service-sso:
     image: "bndynet/sc-service-sso"
+    restart: on-failure:3
     ports:
       - "9110:9110"
     depends_on:

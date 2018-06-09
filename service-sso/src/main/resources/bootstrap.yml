@@ -7,10 +7,10 @@ eureka:
       defaultZone: http://server-center:9000/eureka/
 
 spring:
-
   application:
     name: service-sso
-    
+  banner:
+    location: classpath:banner.txt
   cloud:
     config:
       failFast: true

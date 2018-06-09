@@ -4,6 +4,8 @@ server:
 spring:
   application:
     name: server-gateway
+  banner:
+    location: classpath:banner.txt
 
 eureka:
   client:
