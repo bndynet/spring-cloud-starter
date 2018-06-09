@@ -3,13 +3,30 @@ server:
 
 eureka:
   instance:
-    hostname: 127.0.0.1
+    leaseRenewalIntervalInSeconds: 10
+    health-check-url-path: /actuator/health
   client:
     registerWithEureka: false
     fetchRegistry: false
+    registryFetchIntervalSeconds: 5
     serviceUrl:
-      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+#      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+      defaultZone: http://server-center:9000/eureka/
       
 spring:
+  application:
+    name: server-center
   banner:
     location: classpath:banner.txt
+  boot:
+    admin:
+      context-path: /admin
+      
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"  
+  endpoint:
+    health:
+      show-details: ALWAYS
