@@ -9,7 +9,7 @@
 	</parent>
 
 	<artifactId>sc-server-gateway</artifactId>
-	<packaging>jar</packaging>
+	<packaging>${project.packaging}</packaging>
 
 	<name>server-gateway</name>
 	<description>Gateway</description>

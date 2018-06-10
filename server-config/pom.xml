@@ -9,7 +9,7 @@
 	</parent>
 
 	<artifactId>sc-server-config</artifactId>
-	<packaging>jar</packaging>
+	<packaging>${project.packaging}</packaging>
 
 	<name>server-config</name>
 	<description></description>

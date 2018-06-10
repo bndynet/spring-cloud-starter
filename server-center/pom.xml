@@ -9,7 +9,7 @@
 	</parent>
 
 	<artifactId>sc-server-center</artifactId>
-	<packaging>jar</packaging>
+	<packaging>${project.packaging}</packaging>
 
 	<name>server-center</name>
 	<description>Spring Cloud Server</description>

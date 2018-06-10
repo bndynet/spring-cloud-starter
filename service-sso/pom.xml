@@ -9,7 +9,7 @@
 	</parent>
 
 	<artifactId>sc-service-sso</artifactId>
-	<packaging>jar</packaging>
+	<packaging>${project.packaging}</packaging>
 
 	<name>service-sso</name>
 	<description>SSO</description>
