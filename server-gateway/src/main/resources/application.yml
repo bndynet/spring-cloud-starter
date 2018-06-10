@@ -10,7 +10,7 @@ spring:
     admin:
       client:
         url:
-        - http://server-center:9000/admin
+        - http://server-center:9000/sba
 
 eureka:
   client:
