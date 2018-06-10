@@ -7,13 +7,15 @@ eureka:
       defaultZone: http://server-center:9000/eureka/
 
 spring:
-
   application:
     name: server-config
-
   banner:
     location: classpath:banner.txt
-
+  boot:
+    admin:
+      client:
+        url:
+        - http://server-center:9000/admin
   cloud:
     config:
       label: master

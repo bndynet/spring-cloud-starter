@@ -6,6 +6,11 @@ spring:
     name: server-gateway
   banner:
     location: classpath:banner.txt
+  boot:
+    admin:
+      client:
+        url:
+        - http://server-center:9000/admin
 
 eureka:
   client:

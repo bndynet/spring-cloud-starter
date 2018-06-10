@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2018 BNDY-NET. All Rights Reserved.
+ * http://bndy.net
+ */
 package net.bndy.sc;
 
 import org.springframework.boot.SpringApplication;
@@ -12,6 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import de.codecentric.boot.admin.server.config.EnableAdminServer;
 
+/**
+ * @author Bendy Zhang
+ * @version 1.0
+ */
 @SpringBootApplication
 @EnableEurekaServer
 @EnableDiscoveryClient

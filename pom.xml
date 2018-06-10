@@ -46,6 +46,11 @@
 				<artifactId>spring-boot-admin-starter</artifactId>
 				<version>${spring-boot-admin.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>net.bndy</groupId>
+				<artifactId>sc-lib</artifactId>
+				<version>1.0</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
