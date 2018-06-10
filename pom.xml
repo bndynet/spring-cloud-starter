@@ -19,6 +19,7 @@
 	</properties>
 
 	<modules>
+		<module>lib</module>
 		<module>server-center</module>
 		<module>server-config</module>
 		<module>server-gateway</module>
