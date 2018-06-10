@@ -2,11 +2,13 @@
 
 ## Components
 
-- **server center** Port: 9000
-- **server config** Port: 9010
-- **server gateway** Port: 9020
-- **service oauth** Port: 9100
-- **service sso** Port: 9110
+| SERVICE NAME | PORT | DESCRIPTION |
+| --- | :---: | --- |
+| **server center** | 9000 | Eureka Server and Spring Boot Admin |
+| **server config** | 9010 | Configurations from GitHub Repo |
+| **server gateway** | 9020 | Zuul for All Services |
+| **service oauth** | 9100 | OAuth Service |
+| **service sso** | 9110 | SSO Service |
 
 ## Build (Docker and Docker Compose)
 
@@ -25,3 +27,5 @@ Endpoints
 - spring boot admin:    http://localhost:9000/sba    
 - service gateway:      http://localhost:9020/<service-name>/
 ```
+
+Note:  Deploy to tomcat container, please use `mvn clean package -Pwar` to generate war packages.
