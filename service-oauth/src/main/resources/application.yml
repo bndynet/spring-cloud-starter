@@ -18,6 +18,7 @@ spring:
         - http://server-center:9000/sba
 
 oauth:
+  callback-url: http://cloud.bndy.net/service/oauth/callback   # here to use nginx for proxy, if empty, will use the default server endpoint (/callback)
   github:
     client_id: f19062e395781988b16b
     client_secret: c2aff484725198c6147e498bf5d43b1d55969fca

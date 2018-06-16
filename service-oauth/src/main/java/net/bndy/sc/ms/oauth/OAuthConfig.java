@@ -4,38 +4,24 @@
  */
 package net.bndy.sc.ms.oauth;
 
-import net.bndy.sc.ms.oauth.Url;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 
 /**
  * @author Bendy Zhang
  * @version 1.0
  */
+@Component
+@ConfigurationProperties(prefix="oauth")
 public class OAuthConfig {
-	private Url url;
-	private String client_id;
-	private String client_secret;
+	private String callback_url;
+
+	public String getCallback_url() {
+		return callback_url;
+	}
+
+	public void setCallback_url(String callback_url) {
+		this.callback_url = callback_url;
+	}
 	
-	public Url getUrl() {
-		return url;
-	}
-
-	public void setUrl(Url url) {
-		this.url = url;
-	}
-
-	public String getClient_id() {
-		return client_id;
-	}
-
-	public void setClient_id(String client_id) {
-		this.client_id = client_id;
-	}
-
-	public String getClient_secret() {
-		return client_secret;
-	}
-
-	public void setClient_secret(String client_secret) {
-		this.client_secret = client_secret;
-	}
 }

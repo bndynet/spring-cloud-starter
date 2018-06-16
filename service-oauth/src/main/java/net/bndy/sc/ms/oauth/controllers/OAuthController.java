@@ -17,6 +17,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import net.bndy.sc.ms.oauth.github.GitHubConfig;
 import net.bndy.lib.StringHelper;
+import net.bndy.sc.ms.oauth.OAuthConfig;
 import net.bndy.sc.ms.oauth.OAuthParams;
 
 /**
@@ -39,10 +40,17 @@ public class OAuthController {
     private GitHubConfig githubConfig;
     
     @Autowired
+    private OAuthConfig oauthConfig;
+    
+    @Autowired
     private HttpServletRequest request;
     
     private String getCallbackUrl() {
-    		return request.getRequestURL().substring(0, request.getRequestURL().lastIndexOf("/")) + "/callback";
+    		if (this.oauthConfig.getCallback_url() == null || this.oauthConfig.getCallback_url().isEmpty()) {
+			return request.getRequestURL().substring(0, request.getRequestURL().lastIndexOf("/")) + "/callback";
+    		} else {
+    			return this.oauthConfig.getCallback_url();
+    		}
     }
 
 	@RequestMapping("/authorize")
