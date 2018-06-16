@@ -18,6 +18,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import net.bndy.sc.ms.oauth.github.GitHubConfig;
 import net.bndy.lib.StringHelper;
 import net.bndy.sc.ms.oauth.OAuthConfig;
+import net.bndy.sc.ms.oauth.OAuthItemConfigBase;
 import net.bndy.sc.ms.oauth.OAuthParams;
 
 /**
@@ -31,8 +32,8 @@ public class OAuthController {
 	private final String KEY_CLIENT_ID = "client_id";
 	private final String KEY_STATE = "state";
 	private final String KEY_ACCESS_TOKEN = "access_token";
+	private final String KEY_CONFIG = "oauth_config";
 	
-
     @Autowired
     private RestTemplate restTemplate;
     
@@ -56,14 +57,22 @@ public class OAuthController {
 	@RequestMapping("/authorize")
 	public RedirectView authorize(
 			HttpServletRequest request, RedirectAttributes attributes, 
+			@RequestParam(name = "target", required = false) String target,
 			@RequestParam(name = "redirect_uri" ) String redirectUri) {
 		String state = StringHelper.generateRandomCode(10);
 		request.getSession().setAttribute(KEY_REDIRECT_URI, redirectUri);
 		request.getSession().setAttribute(KEY_STATE, state);
-		attributes.addAttribute(KEY_CLIENT_ID, this.githubConfig.getClient_id());
+		
+		OAuthItemConfigBase itemConfig = null;
+		if ("github".equals(target)) {
+			itemConfig = this.githubConfig;
+		}
+		request.getSession().setAttribute(KEY_CONFIG, itemConfig);
+
+		attributes.addAttribute(KEY_CLIENT_ID, itemConfig.getClient_id());
 		attributes.addAttribute(KEY_REDIRECT_URI, this.getCallbackUrl());
 		attributes.addAttribute(KEY_STATE, state);
-		return new RedirectView(this.githubConfig.getUrl().getAuthorize());
+		return new RedirectView(itemConfig.getUrl().getAuthorize());
 	}
 	
 	@RequestMapping("/callback")
@@ -76,11 +85,11 @@ public class OAuthController {
 		if (!state.equals(validState)) {
 			throw new Exception("Invalid State: " + state);
 		}
-		
+		OAuthItemConfigBase itemConfig = (OAuthItemConfigBase)request.getSession().getAttribute(KEY_CONFIG);
 		ResponseEntity<OAuthParams> responseEntity = this.restTemplate.postForEntity(
-				this.githubConfig.getUrl().getAccess_token(), new OAuthParams(
-					this.githubConfig.getClient_id(),
-					this.githubConfig.getClient_secret(),
+				itemConfig.getUrl().getAccess_token(), new OAuthParams(
+					itemConfig.getClient_id(),
+					itemConfig.getClient_secret(),
 					this.getCallbackUrl(),
 					code, state), OAuthParams.class);
 		attributes.addAttribute(KEY_ACCESS_TOKEN, responseEntity.getBody().getAccess_token());
