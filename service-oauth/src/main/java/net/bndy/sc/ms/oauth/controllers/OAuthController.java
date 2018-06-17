@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import net.bndy.sc.ms.oauth.github.GitHubConfig;
+import net.bndy.lib.CollectionHelper;
 import net.bndy.lib.StringHelper;
 import net.bndy.sc.ms.oauth.OAuthConfig;
 import net.bndy.sc.ms.oauth.OAuthItemConfigBase;
@@ -28,6 +29,7 @@ import net.bndy.sc.ms.oauth.OAuthParams;
 @Controller
 public class OAuthController {
 	
+	private final String KEY_ERROR = "error";
 	private final String KEY_REDIRECT_URI = "redirect_uri";
 	private final String KEY_CLIENT_ID = "client_id";
 	private final String KEY_STATE = "state";
@@ -59,6 +61,14 @@ public class OAuthController {
 			HttpServletRequest request, RedirectAttributes attributes, 
 			@RequestParam(name = "target", required = false) String target,
 			@RequestParam(name = "redirect_uri" ) String redirectUri) {
+		// validate whether the redirect URI is allowed
+		if (!CollectionHelper.contains(
+				CollectionHelper.array2List(this.oauthConfig.getAllowed_origins()), item -> item.toLowerCase().equals(redirectUri.toLowerCase()))) {
+			
+			attributes.addAttribute(KEY_ERROR, "The redirect uri is not allowed");
+			return new RedirectView(redirectUri);
+		}
+
 		String state = StringHelper.generateRandomCode(10);
 		request.getSession().setAttribute(KEY_REDIRECT_URI, redirectUri);
 		request.getSession().setAttribute(KEY_STATE, state);
