@@ -1,5 +1,9 @@
 server:
   port: 9110
+  error:
+    whitelabel:
+      enabled: false
+    # include-stacktrace: always
 
 eureka:
   client:
@@ -32,3 +36,5 @@ spring:
       discovery:
         enabled: true
         serviceId: server-config
+  messages:
+    basename: i18n/messages

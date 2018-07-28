@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" layout:decorator="_layout">
+
+<head>
+    <title>Error</title>
+</head>
+
+<body class="layout-one page-error">
+    <div class="main" layout:fragment="body">
+        <div class="alert alert-danger" role="alert">
+            <h4 class="alert-heading">
+                <span th:text="${status}"></span>
+                <span th:text="${error}"></span>
+            </h4>
+            <p th:utext="${message}"></p>
+            <hr>
+            <p class="mb-0"></p>
+            <div class="d-none">
+                <hr>
+                <div th:text="${timestamp}"></div>
+                <div th:text="${path}"></div>
+                <div th:text="${exception}"></div>
+                <div th:text="${trace}"></div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
