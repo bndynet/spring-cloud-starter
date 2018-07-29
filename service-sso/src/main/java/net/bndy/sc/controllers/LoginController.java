@@ -23,29 +23,29 @@ public class LoginController {
     @Autowired
     private MessageSource messageSource;
 
-    @GetMapping("/login")
-    public String login(Model model, HttpSession session,
-        @RequestParam(name = KEY_REDIRECT_URI, required = true) String redirect) {
-
-        model.addAttribute("name", "Bendy");
-        session.setAttribute(KEY_REDIRECT_URI, redirect);
-
-        return "login";
-    }
-
-    @PostMapping("/login")
-    public String login(Model model, HttpSession session,
-        @RequestParam(name = "username", required = false) String username,
-        @RequestParam(name = "password", required = false) String password,
-        @RequestParam(name = "remember", required = false) Boolean remember) {
-
-        if (username.isEmpty() || username.trim().isEmpty() || password.isEmpty() || password.trim().isEmpty()) {
-            model.addAttribute("error", messageSource.getMessage("msgInvalidUsernameOrPassword", null, null, LocaleContextHolder.getLocale()));
-        } else {
-            // TODO: validate the user
-            return "redirect:" + session.getAttribute(KEY_REDIRECT_URI);
-        }
-
-        return "login";
-    }
+//    @GetMapping("/login")
+//    public String login(Model model, HttpSession session,
+//        @RequestParam(name = KEY_REDIRECT_URI, required = true) String redirect) {
+//
+//        model.addAttribute("name", "Bendy");
+//        session.setAttribute(KEY_REDIRECT_URI, redirect);
+//
+//        return "login";
+//    }
+//
+//    @PostMapping("/login")
+//    public String login(Model model, HttpSession session,
+//        @RequestParam(name = "username", required = false) String username,
+//        @RequestParam(name = "password", required = false) String password,
+//        @RequestParam(name = "remember", required = false) Boolean remember) {
+//
+//        if (username.isEmpty() || username.trim().isEmpty() || password.isEmpty() || password.trim().isEmpty()) {
+//            model.addAttribute("error", messageSource.getMessage("msgInvalidUsernameOrPassword", null, null, LocaleContextHolder.getLocale()));
+//        } else {
+//            // TODO: validate the user
+//            return "redirect:" + session.getAttribute(KEY_REDIRECT_URI);
+//        }
+//
+//        return "login";
+//    }
 }
