@@ -24,6 +24,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import net.bndy.sc.lib.SecurityConfig;
 
@@ -44,12 +45,15 @@ public class AppSecurityConfig extends SecurityConfig {
 	
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-    		http.csrf().disable();
 //    		http.httpBasic().disable();
     		http.authorizeRequests()
     			.antMatchers("/", "/static/**").permitAll()
     			.anyRequest().authenticated()
-    			.and().formLogin();
+    			.and().formLogin()
+    				.loginPage("/login").permitAll()
+    			.and().logout().permitAll()
+    				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))	// required if enable CSRF, because CSRF requires a Post for logging out with CSRF code like login
+    			;
     }
      
     @Override

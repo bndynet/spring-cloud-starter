@@ -10,11 +10,11 @@
         <div class="card">
             <!-- <img class="card-img-top" src=".../100px180/" alt="Card image cap"> -->
             <div class="card-body">
-                <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${error}">
-                    <span th:utext="${error}"></span>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                 <div th:if="${param.error}" class="alert alert-danger" role="alert">    
+                    Invalid username and password.
+                </div>
+                <div th:if="${param.logout}" class="alert alert-success" role="alert"> 
+                    You have been logged out.
                 </div>
                 <form th:action="@{login}" method="POST">
                     <div class="form-group">
@@ -23,11 +23,11 @@
                     </div>
                     <div class="form-group">
                         <label for="password" th:utext="#{labelPassword}"></label>
-                        <a href="#" class="pull-right" th:utext="#{labelForgotPassword}">Password</a>
+                        <a href="#" class="pull-right" th:utext="#{labelForgotPassword}" tabindex="-1">Password</a>
                         <input type="password" class="form-control" id="password" name="password">
                     </div>
                     <div class="form-group form-check checkbox checkbox-warning">
-                        <input class="form-check-input" id="remember" name="remember" type="checkbox" value="true">
+                        <input class="form-check-input" id="remember" name="remember" type="checkbox" value="true" tabindex="-1">
                         <label class="form-check-label" for="remember" th:utext="#{labelRememberMe}">Remember me</label>
                     </div>
                     <button type="submit" class="btn btn-block btn-primary" th:utext="#{labelSignIn}">Sign in</button>
