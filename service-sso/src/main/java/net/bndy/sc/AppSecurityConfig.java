@@ -4,6 +4,7 @@
  */
 package net.bndy.sc;
 
+import org.aspectj.weaver.ast.And;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +23,6 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
-import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -40,19 +40,21 @@ public class AppSecurityConfig extends SecurityConfig {
 	
 	@Bean
     public PasswordEncoder passwordEncoder() {
-        return  NoOpPasswordEncoder.getInstance(); // PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        return NoOpPasswordEncoder.getInstance();  // PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 	
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//    		http.httpBasic().disable();
-    		http.authorizeRequests()
+    		http
+    			.csrf().disable()
+    			.httpBasic().disable()
+    			.authorizeRequests()
     			.antMatchers("/", "/static/**").permitAll()
     			.anyRequest().authenticated()
     			.and().formLogin()
     				.loginPage("/login").permitAll()
     			.and().logout().permitAll()
-    				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))	// required if enable CSRF, because CSRF requires a Post for logging out with CSRF code like login
+//    				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))	// required if enable CSRF, because CSRF requires a Post for logging out with CSRF code like login
     			;
     }
      
