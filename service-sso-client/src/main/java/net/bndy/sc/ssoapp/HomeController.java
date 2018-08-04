@@ -17,13 +17,6 @@ public class HomeController {
     public String home(@AuthenticationPrincipal DefaultOAuth2User  user) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         System.out.println(auth.getPrincipal());
-        return "/home";
+        return "/index";
     }
-
-	
-	@RequestMapping("/hi")
-	public String callback(Authentication authentication, Principal principal, UserInfo user) {
-		System.out.println("redirecting to home page");
-		return "/index";
-	}
 }

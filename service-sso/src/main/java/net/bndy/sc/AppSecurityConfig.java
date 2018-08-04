@@ -47,6 +47,7 @@ public class AppSecurityConfig extends SecurityConfig {
     		http.csrf().disable();
 //    		http.httpBasic().disable();
     		http.authorizeRequests()
+    			.antMatchers("/", "/static/**").permitAll()
     			.anyRequest().authenticated()
     			.and().formLogin();
     }

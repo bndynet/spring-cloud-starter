@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" layout:decorator="_layout">
+
+<head>
+    <title>Welcome</title>
+</head>
+
+<body class="layout-one page-wel">
+    <div class="main" layout:fragment="body">
+		<div class="jumbotron">
+		  <h1 sec:authorize="isAuthenticated()">
+		  	<span th:text="#{hi}">Hello</span>,
+  			<span th:text="${#authentication.name}"></span>!
+		  </h1>
+		  <h1 sec:authorize="isAnonymous()" th:text="#{welcomeTitle}">
+		  	Hello, world!
+		  </h1>
+		  <p class="lead" th:utext="#{welcomeMessage}"></p>
+		  <div sec:authorize="isAnonymous()">
+			  <hr class="my-4">
+			  <a class="btn btn-primary btn-lg" th:href="@{/login}" role="button" th:text="#{labelSignIn}">Log in</a>
+		  </div>
+		</div>
+        <div class="block text-center" th:utext="#{copyright}">Copyright</div>
+    </div>
+</body>
+
+</html>
