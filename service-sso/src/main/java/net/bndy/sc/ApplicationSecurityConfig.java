@@ -4,7 +4,6 @@
  */
 package net.bndy.sc;
 
-import org.aspectj.weaver.ast.And;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,7 +23,6 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import net.bndy.sc.lib.SecurityConfig;
 
@@ -34,25 +32,25 @@ import net.bndy.sc.lib.SecurityConfig;
  */
 @Configuration
 @Order(99)
-public class AppSecurityConfig extends SecurityConfig {
+public class ApplicationSecurityConfig extends SecurityConfig {
 	private static final String SERVER_RESOURCE_ID = "oauth2-server";
 	private static InMemoryTokenStore tokenStore = new InMemoryTokenStore();
 	
 	@Bean
     public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();  // PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        return NoOpPasswordEncoder.getInstance(); // PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 	
     @Override
     protected void configure(HttpSecurity http) throws Exception {
     		http
     			.csrf().disable()
-    			.httpBasic().disable()
+    		    .httpBasic().disable()
     			.authorizeRequests()
     			.antMatchers("/", "/static/**").permitAll()
     			.anyRequest().authenticated()
-    			.and().formLogin()
-    				.loginPage("/login").permitAll()
+    			.and().formLogin().loginPage("/login").permitAll()
+    				.and().rememberMe().rememberMeParameter("rememberMe")
     			.and().logout().permitAll()
 //    				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))	// required if enable CSRF, because CSRF requires a Post for logging out with CSRF code like login
     			;
@@ -61,8 +59,9 @@ public class AppSecurityConfig extends SecurityConfig {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
+			.passwordEncoder(passwordEncoder())
             .withUser("user")
-            .password(passwordEncoder().encode("pwd"))
+            .password("pwd")
             .roles("USER");
     }
     
@@ -93,7 +92,6 @@ public class AppSecurityConfig extends SecurityConfig {
 
         @Autowired
         private AuthenticationManager authenticationManager;
-
 
         @Override
         public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
