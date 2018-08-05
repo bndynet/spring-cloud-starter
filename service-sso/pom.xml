@@ -13,14 +13,14 @@
 
 	<name>service-sso</name>
 	<description>SSO</description>
-	
+
 	<properties>
 		<mysql.connector.java.version>5.1.46</mysql.connector.java.version>
 		<!-- Used by MyBatis Generator to Generate Codes -->
 		<db.driver.location>/Users/bendy/.m2/repository/mysql/mysql-connector-java/${mysql.connector.java.version}/mysql-connector-java-${mysql.connector.java.version}.jar</db.driver.location>
-		<mybatis.generator.configurationFile>${basedir}/src/main/resources/config/MyBatisGeneratorConfig.xml</mybatis.generator.configurationFile>
+		<mybatis.generator.configurationFile>${basedir}/src/main/resources/config/mybatis-generator-config.xml</mybatis.generator.configurationFile>
 	</properties>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>net.bndy</groupId>

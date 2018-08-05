@@ -40,7 +40,22 @@ spring:
     basename: i18n/messages
     
   datasource:
-    name: oauth
     url: jdbc:mysql://127.0.0.1:3306/oauth
     username: root
     password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+
+    platform: mysql
+    schema: classpath:sql/schema.sql
+#    data: classpath:sql/data.sql
+    initialization-mode: always
+    continue-on-error: true
+    
+mybatis:
+#  config-location: classpath:config/mybatis-config.xml
+  mapper-locations: classpath:sqlmap/*Mapper.xml
+  type-aliases-package: net.bndy.sc.service.sso.model
+  configuration:
+     map-underscore-to-camel-case: true
+     default-fetch-size: 100
+     default-statement-timeout: 30
