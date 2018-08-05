@@ -38,3 +38,9 @@ spring:
         serviceId: server-config
   messages:
     basename: i18n/messages
+    
+  datasource:
+    name: oauth
+    url: jdbc:mysql://127.0.0.1:3306/oauth
+    username: root
+    password: 123456

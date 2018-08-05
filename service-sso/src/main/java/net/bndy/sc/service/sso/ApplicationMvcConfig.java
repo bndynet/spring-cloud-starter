@@ -2,7 +2,7 @@
  * Copyright (c) 2018 BNDY-NET. All Rights Reserved.
  * http://bndy.net
  */
-package net.bndy.sc;
+package net.bndy.sc.service.sso;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
