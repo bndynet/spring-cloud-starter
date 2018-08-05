@@ -4,6 +4,8 @@
  */
 package net.bndy.sc.service.sso;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +24,9 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
+import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
 import net.bndy.sc.lib.SecurityConfig;
 import net.bndy.sc.service.sso.service.AppUserDetailsService;
@@ -35,8 +39,9 @@ import net.bndy.sc.service.sso.service.AppUserDetailsService;
 @Order(99)
 public class ApplicationSecurityConfig extends SecurityConfig {
 	private static final String SERVER_RESOURCE_ID = "oauth2-server";
-	private static InMemoryTokenStore tokenStore = new InMemoryTokenStore();
 	
+	@Autowired
+	private DataSource dataSource;
 	@Autowired
 	private AppUserDetailsService appUserDetailsService;
 	
@@ -44,6 +49,11 @@ public class ApplicationSecurityConfig extends SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return NoOpPasswordEncoder.getInstance(); // PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
+	
+	@Bean
+	public TokenStore tokenStore() {
+		return new JdbcTokenStore(dataSource);
+	}
 	
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -74,11 +84,11 @@ public class ApplicationSecurityConfig extends SecurityConfig {
     
     @Configuration
     @EnableResourceServer
-    protected static class ResourceServer extends ResourceServerConfigurerAdapter {
+    protected class ResourceServer extends ResourceServerConfigurerAdapter {
 
         @Override
         public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
-            resources.tokenStore(tokenStore).resourceId(SERVER_RESOURCE_ID);
+            resources.tokenStore(tokenStore()).resourceId(SERVER_RESOURCE_ID);
         }
 
         @Override
@@ -89,7 +99,7 @@ public class ApplicationSecurityConfig extends SecurityConfig {
     
     @Configuration
     @EnableAuthorizationServer
-    protected static class AuthConfig extends AuthorizationServerConfigurerAdapter {
+    protected class AuthConfig extends AuthorizationServerConfigurerAdapter {
 
         @Autowired
         private AuthenticationManager authenticationManager;
@@ -101,7 +111,7 @@ public class ApplicationSecurityConfig extends SecurityConfig {
         public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
             endpoints.authenticationManager(authenticationManager)
             	.userDetailsService(appUserDetailsService)
-            	.tokenStore(tokenStore)
+            	.tokenStore(tokenStore())
             	.approvalStoreDisabled();
         }
         
