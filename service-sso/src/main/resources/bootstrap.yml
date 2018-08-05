@@ -10,6 +10,13 @@ eureka:
     serviceUrl:
       defaultZone: http://server-center:9000/eureka/
 
+logging:
+  level:
+    org:
+      hibernate:
+        stat: debug
+        type: trace
+
 spring:
   application:
     name: service-sso
@@ -36,26 +43,21 @@ spring:
       discovery:
         enabled: true
         serviceId: server-config
+
   messages:
     basename: i18n/messages
+    
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        generate_statistics: false
+    hibernate:
+      ddl-auto: update
     
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/oauth
     username: root
     password: 123456
     driver-class-name: com.mysql.jdbc.Driver
-
-    platform: mysql
-    schema: classpath:sql/schema.sql
-#    data: classpath:sql/data.sql
-    initialization-mode: always
-    continue-on-error: true
-    
-mybatis:
-#  config-location: classpath:config/mybatis-config.xml
-  mapper-locations: classpath:sqlmap/*Mapper.xml
-  type-aliases-package: net.bndy.sc.service.sso.model
-  configuration:
-     map-underscore-to-camel-case: true
-     default-fetch-size: 100
-     default-statement-timeout: 30

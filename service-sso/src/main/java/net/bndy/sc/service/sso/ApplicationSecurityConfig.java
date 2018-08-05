@@ -25,6 +25,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 
 import net.bndy.sc.lib.SecurityConfig;
+import net.bndy.sc.service.sso.service.AppUserDetailsService;
 
 /**
  * @author Bendy Zhang
@@ -35,6 +36,9 @@ import net.bndy.sc.lib.SecurityConfig;
 public class ApplicationSecurityConfig extends SecurityConfig {
 	private static final String SERVER_RESOURCE_ID = "oauth2-server";
 	private static InMemoryTokenStore tokenStore = new InMemoryTokenStore();
+	
+	@Autowired
+	private AppUserDetailsService appUserDetailsService;
 	
 	@Bean
     public PasswordEncoder passwordEncoder() {
@@ -58,11 +62,8 @@ public class ApplicationSecurityConfig extends SecurityConfig {
      
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-			.passwordEncoder(passwordEncoder())
-            .withUser("user")
-            .password("pwd")
-            .roles("USER");
+        auth.userDetailsService(appUserDetailsService)
+			.passwordEncoder(passwordEncoder());
     }
     
     @Bean
@@ -92,10 +93,16 @@ public class ApplicationSecurityConfig extends SecurityConfig {
 
         @Autowired
         private AuthenticationManager authenticationManager;
+		@Autowired
+		private AppUserDetailsService appUserDetailsService;
+        
 
         @Override
         public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-            endpoints.authenticationManager(authenticationManager).tokenStore(tokenStore).approvalStoreDisabled();
+            endpoints.authenticationManager(authenticationManager)
+            	.userDetailsService(appUserDetailsService)
+            	.tokenStore(tokenStore)
+            	.approvalStoreDisabled();
         }
         
         @Override
