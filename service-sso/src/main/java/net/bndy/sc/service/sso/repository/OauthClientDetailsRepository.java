@@ -6,14 +6,13 @@ package net.bndy.sc.service.sso.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import net.bndy.sc.service.sso.entity.AppUser;
+import net.bndy.sc.service.sso.entity.OauthClientDetails;
 
 /**
  * @author Bendy Zhang
  * @version 1.0
  */
-public interface UserRepository extends JpaRepository<AppUser, String> {
+public interface OauthClientDetailsRepository extends JpaRepository<OauthClientDetails, String> {
 
-	AppUser findByEmail(String email);
-	AppUser findByUsername(String username);
+	OauthClientDetails findByClientId(String clientId);
 }

@@ -57,7 +57,10 @@ spring:
       ddl-auto: update
     
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/oauth
+    url: jdbc:mysql://127.0.0.1:3306/sso
     username: root
     password: 123456
     driver-class-name: com.mysql.jdbc.Driver
+    # The following two properties will be used to initialize test data
+    data: classpath:sql/data.sql
+    initialization-mode: always

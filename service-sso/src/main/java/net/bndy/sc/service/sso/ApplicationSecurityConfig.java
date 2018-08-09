@@ -25,11 +25,11 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
 import net.bndy.sc.lib.SecurityConfig;
 import net.bndy.sc.service.sso.service.AppUserDetailsService;
+import net.bndy.sc.service.sso.service.OauthClientDetailsService;
 
 /**
  * @author Bendy Zhang
@@ -105,6 +105,8 @@ public class ApplicationSecurityConfig extends SecurityConfig {
         private AuthenticationManager authenticationManager;
 		@Autowired
 		private AppUserDetailsService appUserDetailsService;
+//		@Autowired
+//		private OauthClientDetailsService oauthClientDetailsService;
         
 
         @Override

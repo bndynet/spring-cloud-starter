@@ -4,7 +4,6 @@
  */
 package net.bndy.sc.service.sso.service;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,7 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import net.bndy.sc.service.sso.entity.AppUser;
-import net.bndy.sc.service.sso.repository.UserRepository;
+import net.bndy.sc.service.sso.repository.AppUserRepository;
 
 /**
  * @author Bendy Zhang
@@ -22,15 +21,15 @@ import net.bndy.sc.service.sso.repository.UserRepository;
 public class AppUserDetailsService implements UserDetailsService {
 	
 	@Autowired
-	private UserRepository userRepository;
+	private AppUserRepository appUserRepository;
 	
 	@Override
 	public UserDetails loadUserByUsername(String input) throws UsernameNotFoundException {
 		AppUser user;
 		if (input.contains("@")) {
-			user = this.userRepository.findByEmail(input);
+			user = this.appUserRepository.findByEmail(input);
 		} else {
-			user = this.userRepository.findByUsername(input);
+			user = this.appUserRepository.findByUsername(input);
 		}
 		
 		if (user == null) {

@@ -1,5 +1,3 @@
-USE oauth;
-
 CREATE TABLE oauth_client_details (
     client_id VARCHAR(255) PRIMARY KEY,
     client_name VARCHAR(255),

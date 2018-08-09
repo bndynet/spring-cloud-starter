@@ -22,7 +22,7 @@
 		  </div>
 		  <div sec:authorize="isAuthenticated()">
 			  <hr class="my-4">
-			  <a class="btn btn-primary btn-lg" th:href="@{/login}" role="button" th:text="#{labelSignOut}">Sign out</a>
+			  <a class="btn btn-primary btn-lg" th:href="@{/logout}" role="button" th:text="#{labelSignOut}">Sign out</a>
 		  </div>
 		</div>
         <div class="block text-center" th:utext="#{copyright}">Copyright</div>
