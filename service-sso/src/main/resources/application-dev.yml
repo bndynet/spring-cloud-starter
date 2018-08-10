@@ -1,0 +1,15 @@
+logging:
+  level:
+    org:
+      hibernate:
+        stat: debug
+        type: trace
+
+spring:
+  application:
+    name: service-sso-development
+
+  datasource:
+    # The following two properties will be used to initialize test data
+    data: classpath:sql/data.sql
+    initialization-mode: always

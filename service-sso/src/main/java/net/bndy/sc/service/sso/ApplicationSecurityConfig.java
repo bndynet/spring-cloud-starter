@@ -64,7 +64,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter  {
 			.authorizeRequests()
 			.antMatchers("/", "/hi", "/static/**").permitAll()
 			.anyRequest().authenticated()
-			.and().formLogin().loginPage("/login").permitAll()
+			.and().formLogin().defaultSuccessUrl("/").loginPage("/login").permitAll()
 				.and().rememberMe().rememberMeParameter("rememberMe")
 			.and().logout().permitAll()
 //    				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))	// required if enable CSRF, because CSRF requires a Post for logging out with CSRF code like login

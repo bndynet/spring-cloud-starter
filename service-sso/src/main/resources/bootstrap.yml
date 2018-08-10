@@ -1,66 +1,14 @@
-server:
-  port: 9110
-  error:
-    whitelabel:
-      enabled: false
-    # include-stacktrace: always
-
 eureka:
   client:
     serviceUrl:
       defaultZone: http://server-center:9000/eureka/
 
-logging:
-  level:
-    org:
-      hibernate:
-        stat: debug
-        type: trace
-
 spring:
-  application:
-    name: service-sso
-  banner:
-    location: classpath:banner.txt
+  profiles:
+    active: dev
   boot:
     admin:
       client:
+        enabled: false
         url:
-        - http://server-center:9000/sba
-  cloud:
-#    config:
-#      failFast: true
-#      retry:
-#        initialInterval: 3000
-#        multiplier: 1.3
-#        maxInterval: 5000
-#        maxAttempts: 20
-
-      #uri: http://localhost:9010
-      label: master
-      name: _config
-      profile: development
-      discovery:
-        enabled: true
-        serviceId: server-config
-
-  messages:
-    basename: i18n/messages
-    
-  jpa:
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-        generate_statistics: false
-    hibernate:
-      ddl-auto: update
-    
-  datasource:
-    url: jdbc:mysql://127.0.0.1:3306/sso
-    username: root
-    password: 123456
-    driver-class-name: com.mysql.jdbc.Driver
-    # The following two properties will be used to initialize test data
-    data: classpath:sql/data.sql
-    initialization-mode: always
+          - http://server-center:9000/sba
