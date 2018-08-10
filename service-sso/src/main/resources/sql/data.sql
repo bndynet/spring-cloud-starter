@@ -9,5 +9,5 @@ INSERT INTO app_user (`account_expired`, `account_locked`, `credentials_expired`
 DELETE FROM oauth_client_details 
 WHERE
     client_id = 'foo';
-INSERT INTO oauth_client_details(`client_id`, `authorized_grant_types`, `autoapprove`, `client_name`, `client_secret`, `redirect_uri`, `scope`) 
-	VALUES ('foo', 'authorization_code;refresh_token', 0, 'test', 'bar', 'http://127.0.0.1:9111/login/oauth2/code/home;https://www.getpostman.com/oauth2/callback', 'user_info');
+INSERT INTO oauth_client_details(`client_id`, `access_token_validity`, `authorized_grant_types`, `autoapprove`, `client_name`, `client_secret`, `redirect_uri`, `refresh_token_validity`, `resource_ids`, `scope`) 
+	VALUES ('foo', 60, 'authorization_code;refresh_token', 0, 'test', 'bar', 'http://127.0.0.1:9111/login/oauth2/code/home;https://www.getpostman.com/oauth2/callback', 60, 'sso-resource', 'user_info');

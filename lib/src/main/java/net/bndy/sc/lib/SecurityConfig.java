@@ -4,7 +4,6 @@
  */
 package net.bndy.sc.lib;
 
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
@@ -12,11 +11,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  * @author Bendy Zhang
  * @version 1.0
  */
-@Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().anyRequest().permitAll()  
+        http.authorizeRequests().anyRequest().permitAll()
+        	.antMatchers("/hi").permitAll()
             .and().csrf().disable();
     }
 }

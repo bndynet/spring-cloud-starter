@@ -6,6 +6,7 @@ package net.bndy.sc.service.sso.entity;
 
 import java.sql.Timestamp;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -16,15 +17,16 @@ import javax.persistence.Id;
 @Entity
 public class OauthApprovals {
 	@Id
+    @Column(name = "userid")
     private String userId; 
-    @SuppressWarnings("unused")
+    @Column(name = "clientid")
 	private String clientId;
     @SuppressWarnings("unused")
 	private String scope;
     @SuppressWarnings("unused")
 	private String status;
-    @SuppressWarnings("unused")
+    @Column(name = "expiresat")
 	private Timestamp expiresAt;
-    @SuppressWarnings("unused")
+    @Column(name = "lastmodifiedat")
 	private Timestamp lastModifiedAt;
 }
