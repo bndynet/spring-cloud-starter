@@ -1,6 +1,8 @@
 logging:
   level:
     org:
+      springframework:
+        web: debug
       hibernate:
         stat: debug
         type: trace

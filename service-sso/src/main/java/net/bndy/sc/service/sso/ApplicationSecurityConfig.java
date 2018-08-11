@@ -12,8 +12,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
@@ -47,12 +48,17 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter  {
 	
 	@Bean
     public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance(); // PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        return new BCryptPasswordEncoder();
     }
 	
 	@Bean
 	public TokenStore tokenStore() {
 		return new JdbcTokenStore(dataSource);
+	}
+	
+	@Override
+	public void configure(WebSecurity web) throws Exception {
+		web.ignoring().antMatchers("/hi", "/static/**");
 	}
 	
     @Override
@@ -62,7 +68,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter  {
 			.csrf().disable()
 			.httpBasic().disable()
 			.authorizeRequests()
-			.antMatchers("/", "/hi", "/static/**").permitAll()
+			.antMatchers("/").permitAll()
 			.anyRequest().authenticated()
 			.and().formLogin().defaultSuccessUrl("/").loginPage("/login").permitAll()
 				.and().rememberMe().rememberMeParameter("rememberMe")
@@ -94,7 +100,8 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter  {
 
         @Override
         public void configure(HttpSecurity http) throws Exception {
-            http.requestMatchers().antMatchers("/user/me").and().authorizeRequests().antMatchers("/user/me").access("#oauth2.hasScope('user_info')");
+            http.requestMatchers().antMatchers("/user/me")
+            	.and().authorizeRequests().antMatchers("/user/me").access("#oauth2.hasScope('user_info')");
         }
     }
     

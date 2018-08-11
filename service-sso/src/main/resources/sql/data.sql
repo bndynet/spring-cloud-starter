@@ -1,9 +1,10 @@
 DELETE FROM app_user 
 WHERE
-    username = 'bndy'
+    username = 'admin'
     AND email = 'zb@bndy.net';
     
-INSERT INTO app_user (`account_expired`, `account_locked`, `credentials_expired`, `email`, `enabled`, `password`, `username`) VALUES (0, 0, 0, 'zb@bndy.net', 1, '123456', 'bndy');
+-- Password: 1
+INSERT INTO app_user (`account_expired`, `account_locked`, `credentials_expired`, `email`, `enabled`, `password`, `username`) VALUES (0, 0, 0, 'zb@bndy.net', 1, '$2a$10$amr84zeHdajBaaEyTei80ukj3kj.Tntq887pv9JXN.P.K5sAllx2K', 'admin');
 
 
 DELETE FROM oauth_client_details 
