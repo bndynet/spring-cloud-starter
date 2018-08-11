@@ -20,6 +20,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * @author Bendy Zhang
  * @version 1.0
@@ -42,18 +44,23 @@ public class AppUser extends BaseIdEntity implements UserDetails {
 		this.email = email;
 	}
 
+	@JsonIgnore
 	@Column(name = "enabled", nullable = false)
 	private boolean enabled;
 
+	@JsonIgnore
 	@Column(name = "password", nullable = false)
 	private String password;
 	
+	@JsonIgnore
 	@Column(name = "account_locked", nullable = false)
 	private boolean accountLocked;
 
+	@JsonIgnore
 	@Column(name = "account_expired", nullable = false)
 	private boolean accountExpired;
 
+	@JsonIgnore
 	@Column(name = "credentials_expired", nullable = false)
 	private boolean credentialsExpired;
 
@@ -62,6 +69,8 @@ public class AppUser extends BaseIdEntity implements UserDetails {
 			@JoinColumn(name = "user_id", referencedColumnName = "id") }, inverseJoinColumns = {
 					@JoinColumn(name = "role_id", referencedColumnName = "id") })
 	private List<AppRole> roles;
+	
+	
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -48,6 +48,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter  {
 	
 	@Bean
     public PasswordEncoder passwordEncoder() {
+		// this encoder will be also used to encode client secret, so MUST encode it into store
         return new BCryptPasswordEncoder();
     }
 	
@@ -63,7 +64,6 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter  {
 	
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-    	super.configure(http);
 		http
 			.csrf().disable()
 			.httpBasic().disable()
@@ -101,7 +101,10 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter  {
         @Override
         public void configure(HttpSecurity http) throws Exception {
             http.requestMatchers().antMatchers("/user/me")
-            	.and().authorizeRequests().antMatchers("/user/me").access("#oauth2.hasScope('user_info')");
+            	.and().authorizeRequests().antMatchers("/user/me")
+            		.authenticated()
+//            		.access("#oauth2.hasScope('user_info')")
+            	;
         }
     }
     
