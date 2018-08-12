@@ -4,48 +4,63 @@
 	layout:decorator="_layout_admin">
 
 <head>
-<title th:text="#{client.clientList}"></title>
+	<title th:text="#{client.clientList}"></title>
 </head>
 
 <body>
 	<div layout:fragment="body">
-		<h1 th:text="#{client.clientList}">Client List</h1>
-		<div class="row">
-			<div class="col-4" th:each="client: ${clients}">
-				<div class="card">
-					<div class="card-header" th:text="${client.clientName}"> client name </div>
-					<img class="card-img-top" src="http://static.bndy.net/images/apple-icon-precomposed.png" alt="Card image cap">
-					<div class="card-body">
-						<div class="card-text">
-							<div>
-								<label th:text="#{client.redirectUri}"></label>: <span
-									th:each="uri: ${#strings.arraySplit(client.redirectUri, ';')}">
-									<small th:text="${uri}"></small><br />
-								</span>
+	   <nav aria-label="breadcrumb">
+           <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                 <a th:href="@{/home}">
+                     <i class="fa fa-fw fa-home"></i>
+                     <span th:text="#{home}">Home</span>
+                </a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page" th:text="#{client.clientList}"></li>
+            </ol>
+        </nav>
+        <div class="content-header">
+			<h1 th:text="#{client.clientList}">Client List</h1>
+        </div>
+        <div class="content-body">
+			<div class="row">
+				<div class="col-4" th:each="client: ${clients}">
+					<div class="card">
+						<div class="card-header" th:text="${client.clientName}"> client name </div>
+						<img class="card-img-top" src="http://static.bndy.net/images/apple-icon-precomposed.png" alt="Card image cap">
+						<div class="card-body">
+							<div class="card-text">
+								<div>
+									<label th:text="#{client.redirectUri}"></label>: <span
+										th:each="uri: ${#strings.arraySplit(client.redirectUri, ';')}">
+										<small th:text="${uri}"></small><br />
+									</span>
+								</div>
 							</div>
 						</div>
-					</div>
-					<ul class="list-group list-group-flush">
-						<li class="list-group-item py-2"><b
-							th:text="#{client.clientId}"></b> <span class="pull-right"
-							th:text="${client.clientId}"></span></li>
-						<li class="list-group-item py-2"><b
-							th:text="#{client.clientSecret}"></b> <span class="pull-right"
-							th:text="${client.clientSecretRaw}"></span></li>
-						<li class="list-group-item py-2"><b
-							th:text="#{client.resourceIds}"></b> <span class="pull-right"
-							th:text="${client.resourceIds}"></span></li>
-						<li class="list-group-item py-2"><b th:text="#{client.scope}"></b>
-							<span class="pull-right" th:text="${client.scope}"></span></li>
-						<li class="list-group-item py-2"><b
-							th:text="#{client.autoApprove}"></b> <th:block
-								th:if="${client.autoapprove}">
-								<i class="bicon bicon-checked pull-right"></i>
-							</th:block></li>
-					</ul>
-					<div class="card-body py-2">
-						<a th:href="@{/client/edit(id=${client.clientId})}"
-							class="card-link" th:text="#{labelEdit}">Edit</a> <a href="#" class="card-link" th:text="#{labelRemove}">Remove</a>
+						<ul class="list-group list-group-flush">
+							<li class="list-group-item py-2"><b
+								th:text="#{client.clientId}"></b> <span class="pull-right"
+								th:text="${client.clientId}"></span></li>
+							<li class="list-group-item py-2"><b
+								th:text="#{client.clientSecret}"></b> <span class="pull-right"
+								th:text="${client.clientSecretRaw}"></span></li>
+							<li class="list-group-item py-2"><b
+								th:text="#{client.resourceIds}"></b> <span class="pull-right"
+								th:text="${client.resourceIds}"></span></li>
+							<li class="list-group-item py-2"><b th:text="#{client.scope}"></b>
+								<span class="pull-right" th:text="${client.scope}"></span></li>
+							<li class="list-group-item py-2"><b
+								th:text="#{client.autoApprove}"></b> <th:block
+									th:if="${client.autoapprove}">
+									<i class="bicon bicon-checked pull-right"></i>
+								</th:block></li>
+						</ul>
+						<div class="card-body py-2">
+							<a th:href="@{/client/edit(id=${client.clientId})}"
+								class="card-link" th:text="#{labelEdit}">Edit</a> <a href="#" class="card-link" th:text="#{labelRemove}">Remove</a>
+						</div>
 					</div>
 				</div>
 			</div>

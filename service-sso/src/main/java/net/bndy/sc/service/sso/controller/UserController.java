@@ -32,7 +32,7 @@ public class UserController {
 		return "user/list";
 	}
 	
-	@RequestMapping(value = "/edit")
+	@RequestMapping(value = {"/edit", "/new"})
 	public String edit(Model model, @RequestParam(name = "id", required = false) Long id) {
 		AppUser user;
 		if (id != null) {
@@ -48,6 +48,12 @@ public class UserController {
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String save(@ModelAttribute AppUser formModel, Model model) {
 		this.appUserDetailsService.saveUser(formModel);
+		return "redirect:/user/list";
+	}
+	
+	@RequestMapping(value = "/remove", method = RequestMethod.GET)
+	public String remove(@RequestParam(name = "id") long id) {
+		this.appUserDetailsService.removeAppUser(id);
 		return "redirect:/user/list";
 	}
 }

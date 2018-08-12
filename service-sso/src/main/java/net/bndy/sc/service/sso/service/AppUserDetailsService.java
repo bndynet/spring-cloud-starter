@@ -83,4 +83,8 @@ public class AppUserDetailsService implements UserDetailsService {
 		}
 		return null;
 	}
+	
+	public void removeAppUser(long id) {
+		this.appUserRepository.deleteById(id);
+	}
 }

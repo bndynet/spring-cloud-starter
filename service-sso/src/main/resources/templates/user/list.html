@@ -8,40 +8,56 @@
 </head>
 
 <body>
-    <div layout:fragment="body">
-        <h1 th:text="#{user.userList}">User List</h1>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th th:text="#{user.userId}">User ID</th>
-                    <th th:text="#{user.username}">User Name</th>
-                    <th th:text="#{user.email}">Email</th>
-                    <th th:text="#{user.enabled}">Enabled?</th>
-                    <th th:text="#{createdAt}">Created at</th>
-                    <th th:text="#{updatedAt}">Updated at</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="user: ${users}">
-                    <td th:text="${user.id}"></td>
-                    <td th:text="${user.username}"></td>
-                    <td th:text="${user.email}"></td>
-                    <td>
-                        <th:block th:if="${user.enabled}">
-                            <i class="bicon bicon-checked"></i>
-                        </th:block>
-                    </td>
-                    <td class="d-ldt" th:text="${user.createdOn}"></td>
-                    <td class="d-ldt" th:text="${user.updatedOn}"></td>
-                    <td class="list-link">
-						<a class="text-primary" th:href="@{/user/edit(id=${user.id})}"><i class="fa fa-edit"></i></a>
-						<a class="text-danger"><i class="fa fa-trash"></i></a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+	<div layout:fragment="body">
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a th:href="@{/home}"> <i
+						class="fa fa-fw fa-home"></i> <span th:text="#{home}">Home</span>
+				</a></li>
+				<li class="breadcrumb-item active" aria-current="page"
+					th:text="#{user.userList}"></li>
+			</ol>
+		</nav>
+		<div class="content-header">
+			<h1 th:text="#{user.userList}">User List</h1>
+			<div class="toolbox">
+				<div class="btn-group btn-group-sm" role="group">
+					<a th:href="@{/user/new}" th:text="#{user.addUser}"
+						class="btn btn-primary">Add user</a>
+				</div>
+			</div>
+		</div>
+		<div class="content-body">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th th:text="#{user.userId}">User ID</th>
+						<th th:text="#{user.username}">User Name</th>
+						<th th:text="#{user.email}">Email</th>
+						<th th:text="#{createdAt}">Created at</th>
+						<th th:text="#{updatedAt}">Updated at</th>
+						<th th:text="#{user.enabled}" class="text-center">Enabled?</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="user: ${users}">
+						<td th:text="${user.id}"></td>
+						<td th:text="${user.username}"></td>
+						<td th:text="${user.email}"></td>
+						<td class="d-ldt" th:text="${user.createdOn}"></td>
+						<td class="d-ldt" th:text="${user.updatedOn}"></td>
+						<td class="text-center"><th:block th:if="${user.enabled}">
+								<i class="bicon bicon-checked"></i>
+							</th:block></td>
+						<td class="list-link text-center"><a class="text-primary"
+							th:href="@{/user/edit(id=${user.id})}"><i class="fa fa-edit"></i></a>
+							<a class="text-danger action-remove" th:href="@{/user/remove(id=${user.id})}"><i class="fa fa-trash"></i></a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
 </body>
 
 </html>

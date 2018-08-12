@@ -9,6 +9,19 @@
 	href="https://bndynet.github.io/bbootstrap/css/bbootstrap.min.css">
 <link rel="stylesheet" type="text/css" th:href="@{/static/css/main.css}" />
 <script src="https://bndynet.github.io/bbootstrap/js/bbootstrap.min.js"></script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var i18n = {
+        ok: /*[[#{ok}]]*/,
+        cancel: /*[[#{cancel}]]*/,
+        msgDeleteConfirm: /*[[#{msgDeleteConfirm}]]*/,
+    };
+    bbootstrap.defineLang('serverLang', i18n);
+    bbootstrap.setup({
+        locale: 'serverLang',
+    });
+	/*]]>*/
+</script>
 </head>
 
 <body class="layout-admin">
