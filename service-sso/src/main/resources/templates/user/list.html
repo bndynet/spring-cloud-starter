@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+	layout:decorator="_layout_admin">
+
+<head>
+<title th:text="#{user.userList}"></title>
+</head>
+
+<body>
+    <div layout:fragment="body">
+        <h1 th:text="#{user.userList}">User List</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th th:text="#{user.userId}">User ID</th>
+                    <th th:text="#{user.username}">User Name</th>
+                    <th th:text="#{user.email}">Email</th>
+                    <th th:text="#{user.enabled}">Enabled?</th>
+                    <th th:text="#{createdAt}">Created at</th>
+                    <th th:text="#{updatedAt}">Updated at</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="user: ${users}">
+                    <td th:text="${user.id}"></td>
+                    <td th:text="${user.username}"></td>
+                    <td th:text="${user.email}"></td>
+                    <td>
+                        <th:block th:if="${user.enabled}">
+                            <i class="bicon bicon-checked"></i>
+                        </th:block>
+                    </td>
+                    <td th:text="${user.email}"></td>
+                    <td th:text="${user.email}"></td>
+                    <td class="list-link">
+						<a class="text-primary" th:href="@{/user/edit(id=${user.id})}"><i class="fa fa-edit"></i></a>
+						<a class="text-danger"><i class="fa fa-trash"></i></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

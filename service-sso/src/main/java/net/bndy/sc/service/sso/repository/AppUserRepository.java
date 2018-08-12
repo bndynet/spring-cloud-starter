@@ -12,7 +12,7 @@ import net.bndy.sc.service.sso.entity.AppUser;
  * @author Bendy Zhang
  * @version 1.0
  */
-public interface AppUserRepository extends JpaRepository<AppUser, String> {
+public interface AppUserRepository extends JpaRepository<AppUser, Long> {
 
 	AppUser findByEmail(String email);
 	AppUser findByUsername(String username);

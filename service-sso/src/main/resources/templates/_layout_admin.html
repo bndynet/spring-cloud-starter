@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+
+<head>
+<title layout:title-pattern="$DECORATOR_TITLE - $CONTENT_TITLE" th:text="#{admin.title}"></title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css"
+	href="https://bndynet.github.io/bbootstrap/css/bbootstrap.min.css">
+<link rel="stylesheet" type="text/css" th:href="@{/static/css/main.css}" />
+<script src="https://bndynet.github.io/bbootstrap/js/bbootstrap.min.js"></script>
+</head>
+
+<body class="layout-admin">
+	<header class="navbar navbar-dark bg-dark bd-navbar">
+		<a class="navbar-brand" href="#"> <img
+			src="http://static.bndy.net/images/apple-icon-precomposed.png"
+			width="30" height="30" class="d-inline-block align-top" alt="" th:text="#{admin.title}">
+		</a>
+	</header>
+	<div class="side-left">
+		<nav class="list-group list-group-flush">
+			<a class="list-group-item text-center" th:text="#{menus}"></a> <a
+				class="list-group-item list-group-item-action" th:href="@{/user/list}"> <i
+				class="fa fa-fw fa-users"></i>
+				<span th:text="#{user.userManagement}"></span>
+			</a>
+			<a class="list-group-item list-group-item-action" th:href="@{/client/list}"> <i
+				class="fa fa-fw fa-plug"></i>
+				<span th:text="#{client.clientManagement}"></span>
+			</a>
+		</nav>
+	</div>
+	<div class="main" layout:fragment="body"></div>
+	<div class="side-right d-none"></div>
+</body>
+</html>

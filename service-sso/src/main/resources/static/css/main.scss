@@ -15,3 +15,16 @@
         width: 600px;
     }
 }
+
+.layout-admin {
+    & > .side-left {
+        border-right: 1px solid #dedede;
+    }
+    & > .main {
+        padding: 2rem;
+
+        & > h1 {
+            text-transform: uppercase;
+        }
+    }
+}

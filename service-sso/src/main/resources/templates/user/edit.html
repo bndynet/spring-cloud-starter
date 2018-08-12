@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+    layout:decorator="_layout_admin">
+
+<head>
+<title></title>
+</head>
+
+<body>
+    <div layout:fragment="body">
+        <h1>Edit User</h1>
+        <form th:action="@{/user/save}" method="POST">
+            <input type="hidden" name="id" th:value="${user.id}">
+            <div class="col-md-6">
+				<div class="form-group">
+					<label th:text="#{user.username}" for="username"></label>
+					<input id="username" name="username" class="form-control" th:value="${user.username}">
+				</div>
+				<div class="form-group">
+					<label th:text="#{user.password}" for="password"></label>
+					<input id="password" name="password" type="password" class="form-control" aria-discribedby="passwordHint">
+					<small id="passwordHint" class="form-text text-muted">Note that you can leave empty if you do not want change password.</small>
+				</div>
+				<div class="form-group" th:if="${user.id}">
+                    <label th:text="#{user.repassword}" for="repassword"></label>
+                    <input id="repassword" name="repassword" type="password" class="form-control" aria-discribedby="repasswordHint">
+                    <small id="repasswordHint" class="form-text text-muted">Confirm your password which MUST be same with above.</small>
+                </div>
+				<div class="form-group">
+					<label th:text="#{user.email}" for="email"></label>
+					<input id="email" name="email" type="text" class="form-control" th:value="${user.email}">
+				</div>
+				<div class="form-group">
+					<div class="form-check checkbox checkbox-primary">
+						<input class="form-check-input" id="enabled" name="enabled" type="checkbox" th:checked="${user.enabled}" value="true">
+						<label class="form-check-label" for="enabled" th:text="#{user.enabled}">
+						   Enabled?
+					</label>
+					</div>
+				</div>
+				<div class="form-group">
+				    <button type="submit" class="btn btn-primary" th:text="#{labelSave}">Save</button>
+				    <button type="reset" class="btn btn-light" th:text="#{labelCancel}">Cancel</button>
+				</div>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

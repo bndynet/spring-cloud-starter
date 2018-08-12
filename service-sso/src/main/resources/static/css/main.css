@@ -9,4 +9,16 @@
 .page-wel .main {
   width: 600px;
 }
+
+.layout-admin > .side-left {
+  border-right: 1px solid #dedede;
+}
+
+.layout-admin > .main {
+  padding: 2rem;
+}
+
+.layout-admin > .main > h1 {
+  text-transform: uppercase;
+}
 /*# sourceMappingURL=main.css.map */

@@ -100,8 +100,8 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter  {
 
         @Override
         public void configure(HttpSecurity http) throws Exception {
-            http.requestMatchers().antMatchers("/user/me")
-            	.and().authorizeRequests().antMatchers("/user/me")
+            http.requestMatchers().antMatchers("/oauth/me")
+            	.and().authorizeRequests().antMatchers("/oauth/me")
             		.authenticated()
 //            		.access("#oauth2.hasScope('user_info')")
             	;
