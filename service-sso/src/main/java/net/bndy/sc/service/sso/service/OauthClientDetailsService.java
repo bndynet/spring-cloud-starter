@@ -4,6 +4,8 @@
  */
 package net.bndy.sc.service.sso.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
@@ -36,5 +38,8 @@ public class OauthClientDetailsService implements ClientDetailsService {
 		
 		return clientDetails;
 	}
-
+	
+	public List<OauthClientDetails> getAllClients() {
+		return this.oauthClientDetailsRepository.findAll();
+	}
 }

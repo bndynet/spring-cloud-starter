@@ -22,7 +22,7 @@
 					<input id="password" name="password" type="password" class="form-control" aria-discribedby="passwordHint">
 					<small id="passwordHint" class="form-text text-muted">Note that you can leave empty if you do not want change password.</small>
 				</div>
-				<div class="form-group" th:if="${user.id}">
+				<div class="form-group" th:unless="${user.id}">
                     <label th:text="#{user.repassword}" for="repassword"></label>
                     <input id="repassword" name="repassword" type="password" class="form-control" aria-discribedby="repasswordHint">
                     <small id="repasswordHint" class="form-text text-muted">Confirm your password which MUST be same with above.</small>

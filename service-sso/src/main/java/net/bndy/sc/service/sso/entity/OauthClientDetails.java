@@ -15,9 +15,13 @@ import java.util.stream.Collectors;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.annotation.Persistent;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.provider.ClientDetails;
 
 /**
@@ -27,20 +31,63 @@ import org.springframework.security.oauth2.provider.ClientDetails;
 @Entity
 public class OauthClientDetails implements ClientDetails {
 	private static final long serialVersionUID = 1L;
+	@Autowired
+	@Transient
+	private PasswordEncoder passwordEncoder;
+	
 	@Id
 	private String clientId;
     private String clientName;
     private String clientSecret;
-    private String resourceIds;
+    private String clientSecretRaw;
+    public String getClientSecretRaw() {
+		return clientSecretRaw;
+	}
+	public void setClientSecretRaw(String clientSecretRaw) {
+		this.clientSecretRaw = clientSecretRaw;
+		this.clientSecret = this.passwordEncoder.encode(clientSecretRaw);
+	}
+	private String resourceIds;
     private String scope;
     private String authorizedGrantTypes;
     private String redirectUri;
-    private String authorities;
+
+    public String getRedirectUri() {
+		return redirectUri;
+	}
+	public void setRedirectUri(String redirectUri) {
+		this.redirectUri = redirectUri;
+	}
+	private String authorities;
     private Integer accessTokenValidity;
     private Integer refreshTokenValidity;
     private String additionalInformation;
     private Boolean autoapprove;
     
+	public Boolean getAutoapprove() {
+		return autoapprove;
+	}
+	public void setAutoapprove(Boolean autoapprove) {
+		this.autoapprove = autoapprove;
+	}
+	public String getClientName() {
+		return clientName;
+	}
+	public void setClientName(String clientName) {
+		this.clientName = clientName;
+	}
+	public void setResourceIds(String resourceIds) {
+		this.resourceIds = resourceIds;
+	}
+	public void setAdditionalInformation(String additionalInformation) {
+		this.additionalInformation = additionalInformation;
+	}
+	public void setAuthorities(String authorities) {
+		this.authorities = authorities;
+	}
+	public void setAuthorizedGrantTypes(String authorizedGrantTypes) {
+		this.authorizedGrantTypes = authorizedGrantTypes;
+	}
     
 	@Override
 	public String getClientId() {
@@ -117,23 +164,5 @@ public class OauthClientDetails implements ClientDetails {
 		// TODO: convert JSON string to Object
 		Object jsonObject = additionalInformation;
 		return null;
-	}
-	public String getClientName() {
-		return clientName;
-	}
-	public void setClientName(String clientName) {
-		this.clientName = clientName;
-	}
-	public void setResourceIds(String resourceIds) {
-		this.resourceIds = resourceIds;
-	}
-	public void setAdditionalInformation(String additionalInformation) {
-		this.additionalInformation = additionalInformation;
-	}
-	public void setAuthorities(String authorities) {
-		this.authorities = authorities;
-	}
-	public void setAuthorizedGrantTypes(String authorizedGrantTypes) {
-		this.authorizedGrantTypes = authorizedGrantTypes;
 	}
 }
