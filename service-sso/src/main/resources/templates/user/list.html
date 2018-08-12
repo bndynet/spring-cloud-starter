@@ -32,8 +32,8 @@
                             <i class="bicon bicon-checked"></i>
                         </th:block>
                     </td>
-                    <td th:text="${user.email}"></td>
-                    <td th:text="${user.email}"></td>
+                    <td class="d-ldt" th:text="${user.createdOn}"></td>
+                    <td class="d-ldt" th:text="${user.updatedOn}"></td>
                     <td class="list-link">
 						<a class="text-primary" th:href="@{/user/edit(id=${user.id})}"><i class="fa fa-edit"></i></a>
 						<a class="text-danger"><i class="fa fa-trash"></i></a>

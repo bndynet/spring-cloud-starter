@@ -4,6 +4,7 @@
  */
 package net.bndy.sc.service.sso.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -66,7 +67,6 @@ public class AppUserDetailsService implements UserDetailsService {
 			user.setAccountExpired(false);
 			user.setAccountLocked(false);
 			user.setCredentialsExpired(false);
-			user.setEnabled(true);
 		}
 		user = this.appUserRepository.save(user);
 		return user;

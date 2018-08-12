@@ -4,6 +4,10 @@
  */
 package net.bndy.sc.service.sso;
 
+import java.util.TimeZone;
+
+import javax.annotation.PostConstruct;
+
 import org.springframework.boot.SpringApplication;
 
 import net.bndy.sc.lib.ApplicationBase;
@@ -14,8 +18,12 @@ import net.bndy.sc.lib.ApplicationBase;
  */
 public class Application extends ApplicationBase {
 
+	@PostConstruct
+	void started() {
+		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+	}
+
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
 }
-

@@ -39,6 +39,7 @@ public class UserController {
 			user = this.appUserDetailsService.findById(id.longValue());
 		} else {
 			user = new AppUser();
+			user.setEnabled(true);
 		}
 		model.addAttribute("user", user);
 		return "user/edit";
