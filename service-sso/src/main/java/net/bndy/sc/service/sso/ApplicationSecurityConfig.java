@@ -37,58 +37,52 @@ import net.bndy.sc.service.sso.service.OauthClientDetailsService;
  * @version 1.0
  */
 @Configuration
-public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter  {
+public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	private static final String SERVER_RESOURCE_ID = "sso-resource";	//$NON-NLS-1$
-	
-	@Autowired
-	private DataSource dataSource;
-	@Autowired
-	private AppUserDetailsService appUserDetailsService;
-	
-	@Bean
+    private static final String SERVER_RESOURCE_ID = "sso-resource"; //$NON-NLS-1$
+
+    @Autowired
+    private DataSource dataSource;
+    @Autowired
+    private AppUserDetailsService appUserDetailsService;
+
+    @Bean
     public PasswordEncoder passwordEncoder() {
-		// this encoder will be also used to encode client secret, so MUST encode it into store
+        // this encoder will be also used to encode client secret, so MUST encode it
+        // into store
         return new BCryptPasswordEncoder();
     }
-	
-	@Bean
-	public TokenStore tokenStore() {
-		return new JdbcTokenStore(dataSource);
-	}
-	
-	@Override
-	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/hi", "/static/**");
-	}
-	
+
+    @Bean
+    public TokenStore tokenStore() {
+        return new JdbcTokenStore(dataSource);
+    }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/hi", "/static/**");
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-		http
-			.csrf().disable()
-			.httpBasic().disable()
-			.authorizeRequests()
-			.antMatchers("/").permitAll()
-			.anyRequest().authenticated()
-			.and().formLogin().defaultSuccessUrl("/").loginPage("/login").permitAll()
-				.and().rememberMe().rememberMeParameter("rememberMe")
-			.and().logout().permitAll()
+        http.csrf().disable().httpBasic().disable().authorizeRequests().antMatchers("/").permitAll().anyRequest()
+                .authenticated().and().formLogin().defaultSuccessUrl("/").loginPage("/login").permitAll().and()
+                .rememberMe().rememberMeParameter("rememberMe").and().logout().permitAll()
 //    				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))	// required if enable CSRF, because CSRF requires a Post for logging out with CSRF code like login
-			;
+        ;
     }
-     
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(appUserDetailsService)
-			.passwordEncoder(passwordEncoder());
+        auth.userDetailsService(appUserDetailsService).passwordEncoder(passwordEncoder());
     }
-    
+
     @Bean
     @Override
     protected AuthenticationManager authenticationManager() throws Exception {
-			return super.authenticationManager();
+        return super.authenticationManager();
     }
-    
+
     @Configuration
     @EnableResourceServer
     protected class ResourceServer extends ResourceServerConfigurerAdapter {
@@ -100,51 +94,44 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter  {
 
         @Override
         public void configure(HttpSecurity http) throws Exception {
-            http.requestMatchers().antMatchers("/oauth/me")
-            	.and().authorizeRequests().antMatchers("/oauth/me")
-            		.authenticated()
+            http.requestMatchers().antMatchers("/oauth/me").and().authorizeRequests().antMatchers("/oauth/me")
+                    .authenticated()
 //            		.access("#oauth2.hasScope('user_info')")
-            	;
+            ;
         }
     }
-    
+
     @Configuration
     @EnableAuthorizationServer
     protected class AuthConfig extends AuthorizationServerConfigurerAdapter {
 
         @Autowired
         private AuthenticationManager authenticationManager;
-		@Autowired
-		private AppUserDetailsService appUserDetailsService;
-		@Autowired
-		private OauthClientDetailsService oauthClientDetailsService;
-		
-		@Bean
-		protected ApprovalStore approvalStore() {
-			return new JdbcApprovalStore(dataSource);
-		}
-        
+        @Autowired
+        private AppUserDetailsService appUserDetailsService;
+        @Autowired
+        private OauthClientDetailsService oauthClientDetailsService;
+
+        @Bean
+        protected ApprovalStore approvalStore() {
+            return new JdbcApprovalStore(dataSource);
+        }
 
         @Override
         public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-            endpoints.authenticationManager(authenticationManager)
-            	.userDetailsService(appUserDetailsService)
-            	.tokenStore(tokenStore())
-            	.approvalStore(approvalStore())
-            	;
+            endpoints.authenticationManager(authenticationManager).userDetailsService(appUserDetailsService)
+                    .tokenStore(tokenStore()).approvalStore(approvalStore());
         }
-        
+
         @Override
         public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-				security.allowFormAuthenticationForClients()
-					.tokenKeyAccess("permitAll()")
-					.checkTokenAccess("isAuthenticated()");
+            security.allowFormAuthenticationForClients().tokenKeyAccess("permitAll()")
+                    .checkTokenAccess("isAuthenticated()");
         }
-        
+
         @Override
         public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-            clients
-            	.withClientDetails(oauthClientDetailsService);
+            clients.withClientDetails(oauthClientDetailsService);
         }
     }
 

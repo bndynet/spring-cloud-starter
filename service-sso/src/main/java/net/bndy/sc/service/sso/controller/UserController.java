@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import net.bndy.sc.service.sso.entity.AppUser;
 import net.bndy.sc.service.sso.service.AppUserDetailsService;
- 
+
 /**
  * @author Bendy Zhang
  * @version 1.0
@@ -22,38 +22,38 @@ import net.bndy.sc.service.sso.service.AppUserDetailsService;
 @Controller
 @RequestMapping(value = "/user")
 public class UserController {
-	
-	@Autowired
-	private AppUserDetailsService appUserDetailsService;
-	
-	@RequestMapping(value = "/list")
-	public String list(Model model) {
-		model.addAttribute("users", this.appUserDetailsService.getAllUsers());
-		return "user/list";
-	}
-	
-	@RequestMapping(value = {"/edit", "/new"})
-	public String edit(Model model, @RequestParam(name = "id", required = false) Long id) {
-		AppUser user;
-		if (id != null) {
-			user = this.appUserDetailsService.findById(id.longValue());
-		} else {
-			user = new AppUser();
-			user.setEnabled(true);
-		}
-		model.addAttribute("user", user);
-		return "user/edit";
-	}
-	
-	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String save(@ModelAttribute AppUser formModel, Model model) {
-		this.appUserDetailsService.saveUser(formModel);
-		return "redirect:/user/list";
-	}
-	
-	@RequestMapping(value = "/remove", method = RequestMethod.GET)
-	public String remove(@RequestParam(name = "id") long id) {
-		this.appUserDetailsService.removeAppUser(id);
-		return "redirect:/user/list";
-	}
+
+    @Autowired
+    private AppUserDetailsService appUserDetailsService;
+
+    @RequestMapping(value = "/list")
+    public String list(Model model) {
+        model.addAttribute("users", this.appUserDetailsService.getAllUsers());
+        return "user/list";
+    }
+
+    @RequestMapping(value = { "/edit", "/new" })
+    public String edit(Model viewModel, @RequestParam(name = "id", required = false) Long id) {
+        AppUser model;
+        if (id != null) {
+            model = this.appUserDetailsService.findById(id.longValue());
+        } else {
+            model = new AppUser();
+            model.setEnabled(true);
+        }
+        viewModel.addAttribute("model", model);
+        return "user/edit";
+    }
+
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    public String save(@ModelAttribute AppUser formModel, Model viewModel) {
+        this.appUserDetailsService.saveUser(formModel);
+        return "redirect:/user/list";
+    }
+
+    @RequestMapping(value = "/remove", method = RequestMethod.GET)
+    public String remove(@RequestParam(name = "id") long id) {
+        this.appUserDetailsService.removeAppUser(id);
+        return "redirect:/user/list";
+    }
 }

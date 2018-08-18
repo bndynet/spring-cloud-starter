@@ -18,12 +18,12 @@ import net.bndy.sc.lib.ApplicationBase;
  */
 public class Application extends ApplicationBase {
 
-	@PostConstruct
-	void started() {
-		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-	}
+    @PostConstruct
+    void started() {
+        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+    }
 
-	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
 }
