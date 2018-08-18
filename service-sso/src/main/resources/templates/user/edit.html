@@ -26,23 +26,26 @@
 			<h1 th:text="#{user.editUser}" th:if="${model.id}">Edit User</h1>
         </div>
         <div class="content-body">
-			<form th:action="@{/user/save}" method="POST">
+			<form th:action="@{/user/save}" method="POST" novalidate>
 				<input type="hidden" name="id" th:value="${model.id}">
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group">
 							<label th:text="#{user.username}" for="username"></label>
-							<input id="username" name="username" class="form-control" th:value="${model.username}">
+							<input id="username" name="username" class="form-control" required th:value="${model.username}">
+							<div th:text="#{msgRequiredField}" class="invalid-feedback">Required field</div>
 						</div>
 						<div class="form-group">
 							<label th:text="#{user.password}" for="password"></label>
-							<input id="password" name="password" type="password" class="form-control" aria-discribedby="passwordHint">
 							<small id="passwordHint" class="form-text text-muted" th:text="#{user.passwordHint}">Note that you can leave empty if you do not want change password.</small>
+							<input id="password" name="password" type="password" class="form-control" th:attr="(required=${model.id == null ? 'true': 'false'})" aria-discribedby="passwordHint">
+							<div th:text="#{msgRequiredField}" class="invalid-feedback">Required field</div>
 						</div>
 						<div class="form-group" th:unless="${model.id}">
 							<label th:text="#{user.repassword}" for="repassword"></label>
-							<input id="repassword" name="repassword" type="password" class="form-control" aria-discribedby="repasswordHint">
 							<small id="repasswordHint" class="form-text text-muted" th:text="#{user.repasswordHint}">Confirm your password which MUST be same with above.</small>
+							<input id="repassword" name="repassword" type="password" class="form-control" aria-discribedby="repasswordHint">
+							<div th:text="#{msgConfirmPasswordError}" class="invalid-feedback"></div>
 						</div>
 						<div class="form-group">
 							<label th:text="#{user.email}" for="email"></label>
@@ -64,6 +67,32 @@
 				</div>
 			</form>
         </div>
+		<script th:inline="javascript">
+		 /*<![CDATA[*/
+		 function checkForm() {
+		      if (/*[[${model.id == null ? '' : 'edit'}]]*/) {
+		          // for edit
+		          return $('#username').val();
+		      } else {
+		          var result = $('#username').val() && $('#password').val();
+		          if (result && $('#password').val() != $('#repassword').val()) {
+		              $('#repassword').prop('valid', false).addClass('is-invalid');
+		              result = false;
+		          }
+		          return result;
+		      }
+		 }
+		  $(function(){
+		      $('form').submit(function(event){
+		          if (!checkForm()) {
+					  event.preventDefault();
+					  event.stopPropagation();
+		          }
+				  $(this).addClass('was-validated');
+		      });
+		  });
+		  /*]]>*/
+		</script>
     </div>
 </body>
 
