@@ -6,6 +6,7 @@ package net.bndy.sc.service.sso;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.core.Ordered;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -29,6 +30,7 @@ public class ApplicationMvcConfig implements WebMvcConfigurer {
         resolver.setCookieName("locale");
         int ageInSeconds = 30 * 24 * 60 * 60;
         resolver.setCookieMaxAge(ageInSeconds);
+        resolver.setDefaultLocale(LocaleContextHolder.getLocale());
         return resolver;
     }
 

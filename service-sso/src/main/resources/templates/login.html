@@ -10,10 +10,10 @@
         <div class="card">
             <!-- <img class="card-img-top" src=".../100px180/" alt="Card image cap"> -->
             <div class="card-body">
-                 <div th:if="${param.error}" class="alert alert-danger" role="alert">    
+                 <div th:if="${param.error}" th:text="#{msgInvalidUsernameOrPassword}" class="alert alert-danger" role="alert">    
                     Invalid username and password.
                 </div>
-                <div th:if="${param.logout}" class="alert alert-success" role="alert"> 
+                <div th:if="${param.logout}" th:text="#{msgLogoutSuccess}" class="alert alert-success" role="alert"> 
                     You have been logged out.
                 </div>
                 <form th:action="@{login}" method="POST">
