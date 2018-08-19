@@ -71,7 +71,13 @@ public class AppUser extends BaseIdEntity implements UserDetails {
 	private List<AppRole> roles;
 	
 	
-	public void setUsername(String username) {
+	public List<AppRole> getRoles() {
+        return this.roles;
+    }
+    public void setRoles(List<AppRole> roles) {
+        this.roles = roles;
+    }
+    public void setUsername(String username) {
 		this.username = username;
 	}
 	public void setPassword(String password) {

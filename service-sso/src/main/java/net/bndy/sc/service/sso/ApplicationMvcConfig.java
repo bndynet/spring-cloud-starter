@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018 BNDY-NET. All Rights Reserved.
+ * copyright (c) 2018 bndy-net. all rights reserved.
  * http://bndy.net
  */
 package net.bndy.sc.service.sso;
@@ -46,7 +46,7 @@ public class ApplicationMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/home").setViewName("admin-home");
+        registry.addViewController("/admin").setViewName("admin/index");
         registry.addViewController("/login").setViewName("login");
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
     }

@@ -12,6 +12,7 @@ import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.ClientRegistrationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import net.bndy.lib.StringHelper;
 import net.bndy.sc.service.sso.entity.OauthClientDetails;
@@ -22,6 +23,7 @@ import net.bndy.sc.service.sso.repository.OauthClientDetailsRepository;
  * @version 1.0
  */
 @Service
+@Transactional
 public class OauthClientDetailsService implements ClientDetailsService {
 
     private final static int CLIENT_ID_LENGTH = 10;

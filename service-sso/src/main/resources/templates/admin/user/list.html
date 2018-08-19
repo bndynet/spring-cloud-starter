@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
-	layout:decorator="_layout-admin">
+	layout:decorator="admin/_layout">
 
 <head>
 <title th:text="#{user.userList}"></title>
@@ -11,7 +11,7 @@
 	<div layout:fragment="body">
 		<nav aria-label="breadcrumb">
 			<ol class="breadcrumb">
-				<li class="breadcrumb-item"><a th:href="@{/home}"> <i
+				<li class="breadcrumb-item"><a th:href="@{/admin}"> <i
 						class="fa fa-fw fa-home"></i> <span th:text="#{home}">Home</span>
 				</a></li>
 				<li class="breadcrumb-item active" aria-current="page"
@@ -21,8 +21,14 @@
 		<div class="content-header">
 			<h1 th:text="#{user.userList}">User List</h1>
 			<div class="toolbox">
+			     <div class="input-group">
+			         <input type="text" name="k" class="form-control">
+			         <div class="input-group-append">
+			             <button class="btn-outline-secondary" th:text="#{search}">Search</button>
+			         </div>
+			     </div>
 				<div class="btn-group btn-group-sm" role="group">
-					<a th:href="@{/user/new}" th:text="#{user.addUser}"
+					<a th:href="@{/admin/user/new}" th:text="#{user.addUser}"
 						class="btn btn-primary">Add user</a>
 				</div>
 			</div>
@@ -51,8 +57,8 @@
 								<i class="bicon bicon-checked"></i>
 							</th:block></td>
 						<td class="list-link text-center"><a class="text-primary"
-							th:href="@{/user/edit(id=${user.id})}"><i class="fa fa-edit"></i></a>
-							<a class="text-danger action-remove" th:href="@{/user/remove(id=${user.id})}"><i class="fa fa-trash"></i></a></td>
+							th:href="@{/admin/user/edit(id=${user.id})}"><i class="fa fa-edit"></i></a>
+							<a class="text-danger action-remove" th:href="@{/admin/user/remove(id=${user.id})}"><i class="fa fa-trash"></i></a></td>
 					</tr>
 				</tbody>
 			</table>

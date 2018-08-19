@@ -26,7 +26,7 @@
 
 <body class="layout-admin">
 	<header class="navbar navbar-dark bg-dark bd-navbar">
-		<a class="navbar-brand" href="#"> <img
+		<a class="navbar-brand" th:href="@{/admin}"> <img
 			src="http://static.bndy.net/images/apple-icon-precomposed.png"
 			width="30" height="30" class="d-inline-block align-top" alt="" th:text="#{admin.title}">
 		</a>
@@ -34,11 +34,11 @@
 	<div class="side-left">
 		<nav class="list-group list-group-flush">
 			<a class="list-group-item text-center" th:text="#{menus}"></a> <a
-				class="list-group-item list-group-item-action" th:href="@{/user/list}"> <i
+				class="list-group-item list-group-item-action" th:href="@{/admin/user/list}"> <i
 				class="fa fa-fw fa-users"></i>
 				<span th:text="#{user.userManagement}"></span>
 			</a>
-			<a class="list-group-item list-group-item-action" th:href="@{/client/list}"> <i
+			<a class="list-group-item list-group-item-action" th:href="@{/admin/client/list}"> <i
 				class="fa fa-fw fa-plug"></i>
 				<span th:text="#{client.clientManagement}"></span>
 			</a>

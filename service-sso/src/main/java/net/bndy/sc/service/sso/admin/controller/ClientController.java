@@ -2,7 +2,7 @@
  * Copyright (c) 2018 BNDY-NET. All Rights Reserved.
  * http://bndy.net
  */
-package net.bndy.sc.service.sso.controller;
+package net.bndy.sc.service.sso.admin.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,7 +20,7 @@ import net.bndy.sc.service.sso.service.OauthClientDetailsService;
  * @version 1.0
  */
 @Controller
-@RequestMapping(value = "/client")
+@RequestMapping(value = "/admin/client")
 public class ClientController {
 
     @Autowired
@@ -29,7 +29,7 @@ public class ClientController {
     @RequestMapping(value = "/list")
     public String list(Model model) {
         model.addAttribute("clients", this.oauthClientDetailsService.getAllClients());
-        return "client/list";
+        return "admin/client/list";
     }
 
     @RequestMapping(value = { "/edit", "/new" })
@@ -41,18 +41,18 @@ public class ClientController {
             model = new OauthClientDetails();
         }
         viewModel.addAttribute("model", model);
-        return "client/edit";
+        return "admin/client/edit";
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String save(@ModelAttribute OauthClientDetails formModel, Model viewModel) {
         this.oauthClientDetailsService.save(formModel);
-        return "redirect:/client/list";
+        return "redirect:/admin/client/list";
     }
 
     @RequestMapping(value = "/remove", method = RequestMethod.GET)
     public String remove(@RequestParam(name = "id") String id) {
         this.oauthClientDetailsService.remove(id);
-        return "redirect:/client/list";
+        return "redirect:/admin/client/list";
     }
 }

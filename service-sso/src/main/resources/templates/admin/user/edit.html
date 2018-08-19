@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
     xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
-    layout:decorator="_layout-admin">
+    layout:decorator="admin/_layout">
 
 <head>
 	<title th:text="#{user.userInfo}"></title>
@@ -12,12 +12,12 @@
 		<nav aria-label="breadcrumb">
 	       <ol class="breadcrumb">
 				<li class="breadcrumb-item">
-					 <a th:href="@{/home}">
+					 <a th:href="@{/admin}">
 						 <i class="fa fa-fw fa-home"></i>
 						 <span th:text="#{home}">Home</span>
 					</a>
 				</li>
-				<li class="breadcrumb-item"><a th:href="@{/user/list}" th:text="#{user.userList}"></a></li>
+				<li class="breadcrumb-item"><a th:href="@{/admin/user/list}" th:text="#{user.userList}"></a></li>
 				<li class="breadcrumb-item active" aria-current="page" th:text="#{user.userInfo}"></li>
 		    </ol>
 		</nav>
@@ -26,7 +26,7 @@
 			<h1 th:text="#{user.editUser}" th:if="${model.id}">Edit User</h1>
         </div>
         <div class="content-body">
-			<form th:action="@{/user/save}" method="POST" novalidate>
+			<form th:action="@{/admin/user/save}" method="POST" novalidate>
 				<input type="hidden" name="id" th:value="${model.id}">
 				<div class="row">
 					<div class="col-md-6">
@@ -61,7 +61,7 @@
 						</div>
 						<div class="form-group">
 							<button type="submit" class="btn btn-primary" th:text="#{labelSave}">Save</button>
-							<a class="btn btn-light" th:href="@{/user/list}" th:text="#{labelCancel}">Cancel</a>
+							<a class="btn btn-light" th:href="@{/admin/user/list}" th:text="#{labelCancel}">Cancel</a>
 						</div>
 					</div>
 				</div>

@@ -2,7 +2,7 @@
 <html
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
-	layout:decorator="_layout-admin">
+	layout:decorator="admin/_layout">
 
 <head>
 <title th:text="#{client.clientList}"></title>
@@ -12,7 +12,7 @@
 	<div layout:fragment="body">
 		<nav aria-label="breadcrumb">
 			<ol class="breadcrumb">
-				<li class="breadcrumb-item"><a th:href="@{/home}"> <i class="fa fa-fw fa-home"></i>
+				<li class="breadcrumb-item"><a th:href="@{/admin}"> <i class="fa fa-fw fa-home"></i>
 						<span th:text="#{home}">Home</span>
 				</a></li>
 				<li
@@ -28,7 +28,7 @@
 					class="btn-group btn-group-sm"
 					role="group">
 					<a
-						th:href="@{/client/new}"
+						th:href="@{/admin/client/new}"
 						th:text="#{client.addClient}"
 						class="btn btn-primary">Add</a>
 				</div>
@@ -66,9 +66,9 @@
 							</th:block></td>
 						<td class="list-link text-center"><a
 							class="text-primary"
-							th:href="@{/client/edit(id=${client.clientId})}"><i class="fa fa-edit"></i></a> <a
+							th:href="@{/admin/client/edit(id=${client.clientId})}"><i class="fa fa-edit"></i></a> <a
 							class="text-danger action-remove"
-							th:href="@{/client/remove(id=${client.clientId})}"><i class="fa fa-trash"></i></a></td>
+							th:href="@{/admin/client/remove(id=${client.clientId})}"><i class="fa fa-trash"></i></a></td>
 					</tr>
 				</tbody>
 			</table>

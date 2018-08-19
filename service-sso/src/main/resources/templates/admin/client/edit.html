@@ -2,7 +2,7 @@
 <html
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
-	layout:decorator="_layout-admin">
+	layout:decorator="admin/_layout">
 
 <head>
 <title th:text="#{client.clientInfo}"></title>
@@ -12,11 +12,11 @@
 	<div layout:fragment="body">
 		<nav aria-label="breadcrumb">
 			<ol class="breadcrumb">
-				<li class="breadcrumb-item"><a th:href="@{/home}"> <i class="fa fa-fw fa-home"></i>
+				<li class="breadcrumb-item"><a th:href="@{/admin}"> <i class="fa fa-fw fa-home"></i>
 						<span th:text="#{home}">Home</span>
 				</a></li>
 				<li class="breadcrumb-item"><a
-					th:href="@{/client/list}"
+					th:href="@{/admin/client/list}"
 					th:text="#{client.clientList}"></a></li>
 				<li
 					class="breadcrumb-item active"
@@ -34,7 +34,7 @@
 		</div>
 		<div class="content-body">
 			<form
-				th:action="@{/client/save}"
+				th:action="@{/admin/client/save}"
 				method="POST" novalidate>
 				<input
 					type="hidden"
@@ -83,7 +83,7 @@
 								th:text="#{labelSave}">Save</button>
 							<a
 								class="btn btn-light"
-								th:href="@{/client/list}"
+								th:href="@{/admin/client/list}"
 								th:text="#{labelCancel}">Cancel</a>
 						</div>
 					</div>

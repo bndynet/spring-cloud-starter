@@ -2,7 +2,7 @@
  * Copyright (c) 2018 BNDY-NET. All Rights Reserved.
  * http://bndy.net
  */
-package net.bndy.sc.service.sso.controller;
+package net.bndy.sc.service.sso.admin.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,16 +20,19 @@ import net.bndy.sc.service.sso.service.AppUserDetailsService;
  * @version 1.0
  */
 @Controller
-@RequestMapping(value = "/user")
+@RequestMapping(value = "/admin/user")
 public class UserController {
 
     @Autowired
     private AppUserDetailsService appUserDetailsService;
 
     @RequestMapping(value = "/list")
-    public String list(Model model) {
-        model.addAttribute("users", this.appUserDetailsService.getAllUsers());
-        return "user/list";
+    public String list(Model model, @RequestParam(name = "k", required = false) String keywords) {
+        model.addAttribute("keywords", keywords);
+        model.addAttribute("users", 
+                keywords != null && !keywords.trim().isEmpty() 
+                    ? this.appUserDetailsService.search(keywords) : this.appUserDetailsService.getAllUsers());
+        return "admin/user/list";
     }
 
     @RequestMapping(value = { "/edit", "/new" })
@@ -42,18 +45,18 @@ public class UserController {
             model.setEnabled(true);
         }
         viewModel.addAttribute("model", model);
-        return "user/edit";
+        return "admin/user/edit";
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String save(@ModelAttribute AppUser formModel, Model viewModel) {
         this.appUserDetailsService.saveUser(formModel);
-        return "redirect:/user/list";
+        return "redirect:/admin/user/list";
     }
 
     @RequestMapping(value = "/remove", method = RequestMethod.GET)
     public String remove(@RequestParam(name = "id") long id) {
         this.appUserDetailsService.removeAppUser(id);
-        return "redirect:/user/list";
+        return "redirect:/admin/user/list";
     }
 }

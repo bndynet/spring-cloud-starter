@@ -1,11 +1,3 @@
-DELETE FROM app_user 
-WHERE
-    username = 'admin'
-    AND email = 'zb@bndy.net';
-    
--- Password: 1
-INSERT INTO app_user (`account_expired`, `account_locked`, `credentials_expired`, `email`, `enabled`, `password`, `username`) VALUES (0, 0, 0, 'zb@bndy.net', 1, '$2a$10$amr84zeHdajBaaEyTei80ukj3kj.Tntq887pv9JXN.P.K5sAllx2K', 'admin');
-
 -- Client Secret: 1  (if enable PasswordEncoder in java, this filed Must be encrypted into database)
 DELETE FROM oauth_client_details 
 WHERE
