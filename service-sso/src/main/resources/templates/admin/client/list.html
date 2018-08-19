@@ -52,8 +52,12 @@
 				<tbody>
 					<tr th:each="client: ${clients}">
 						<td th:text="${client.clientName}"></td>
-						<td><span th:text="${client.clientId}" th:attr="(title=#{client.clientId})")></span> <br /> <span
-							th:text="${client.clientSecretRaw}" th:attr="(title=#{client.clientSecret})"></span></td>
+						<td><span
+							th:text="${client.clientId}"
+							th:attr="(title=#{client.clientId})"
+							)></span> <br /> <span
+							th:text="${client.clientSecretRaw}"
+							th:attr="(title=#{client.clientSecret})"></span></td>
 						<td><th:block th:each="uri: ${#strings.arraySplit(client.redirectUri, ';')}">
 								<div>
 									<span th:text="${uri}"></span>
@@ -69,6 +73,9 @@
 							th:href="@{/admin/client/edit(id=${client.clientId})}"><i class="fa fa-edit"></i></a> <a
 							class="text-danger action-remove"
 							th:href="@{/admin/client/remove(id=${client.clientId})}"><i class="fa fa-trash"></i></a></td>
+					</tr>
+					<tr th:if="${clients.size() == 0}">
+						<td colspan="7"><th:block th:insert="/admin/_fragments::noData"></th:block></td>
 					</tr>
 				</tbody>
 			</table>
