@@ -10,19 +10,11 @@
   width: 600px;
 }
 
-.layout-admin > .side-left {
-  border-right: 1px solid #dedede;
-}
-
-.layout-admin > .main {
-  font-size: 13px;
-}
-
 .layout-admin > .main .content-header .toolbox .form-search-slim {
   width: 260px;
 }
 
-.layout-admin > .main .content-body {
-  margin-bottom: 2rem;
+.layout-admin > footer {
+  font-size: 80%;
 }
 /*# sourceMappingURL=main.css.map */

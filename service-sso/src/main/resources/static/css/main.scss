@@ -1,3 +1,4 @@
+
 .page-error {
     .main {
         width: 600px;
@@ -17,11 +18,7 @@
 }
 
 .layout-admin {
-    & > .side-left {
-        border-right: 1px solid #dedede;
-    }
     & > .main {
-        font-size: 13px;
         .content-header {
             .toolbox {
                 .form-search-slim {
@@ -29,8 +26,9 @@
                 }
             }
         }
-        .content-body {
-            margin-bottom: 2rem;
-        }
+    }
+
+    & > footer {
+        font-size: 80%;
     }
 }

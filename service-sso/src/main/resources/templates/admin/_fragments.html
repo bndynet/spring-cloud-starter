@@ -1,3 +1,35 @@
-<div th:fragment="noData" class="text-center text-muted">
-    <h5 th:text="#{msgNoData}"></h5>
-</div>
+<!DOCTYPE html>
+<html
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+	layout:decorator="_layout">
+<body>
+	<div
+		th:fragment="noData"
+		class="text-center text-muted">
+		<h5 th:text="#{msgNoData}"></h5>
+	</div>
+
+
+	<th:block th:fragment="locale">
+		<div class="dropdown dropup">
+			<a
+				class="dropdown-toggle"
+				id="btnLocale"
+				data-toggle="dropdown"
+				aria-haspopup="true"
+				aria-expanded="false"> <i class="fa fa-globe"></i> <span
+				th:text="#{'locale.' + ${#locale}}"></span>
+			</a>
+			<div class="dropdown-menu" aria-labelledby="btnLocale">
+				<a th:text="#{locale.zh_CN}"
+					href="?lang=zh_CN"
+					class="dropdown-item"></a> <a
+					th:text="#{locale.en_US}"
+					href="?lang=en_US"
+					class="dropdown-item"></a>
+			</div>
+		</div>
+	</th:block>
+</body>
+</html>
