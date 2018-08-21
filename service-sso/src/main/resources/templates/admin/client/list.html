@@ -54,8 +54,8 @@
 						<td th:text="${client.clientName}"></td>
 						<td><span
 							th:text="${client.clientId}"
-							th:attr="(title=#{client.clientId})"
-							)></span> <br /> <span
+							th:attr="(title=#{client.clientId})">
+							</span> <br /> <span
 							th:text="${client.clientSecretRaw}"
 							th:attr="(title=#{client.clientSecret})"></span></td>
 						<td><th:block th:each="uri: ${#strings.arraySplit(client.redirectUri, ';')}">
