@@ -127,4 +127,8 @@ public class AppUserDetailsService implements UserDetailsService {
 	    }
 	    return null;
 	}
+	
+	public long countUser() {
+	    return this.appUserRepository.count();
+	}
 }

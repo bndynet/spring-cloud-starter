@@ -43,7 +43,10 @@
 	</header>
 	<div class="sidebar-main">
 		<nav class="list-group list-group-flush">
-			<a class="list-group-item text-center" th:text="#{menus}"></a> <a
+			<a class="list-group-item  list-group-item-action">
+			     <i class="fa fa-fw fa-home"></i>
+			     <span th:text="#{home}"></span>
+			</a> <a
 				class="list-group-item list-group-item-action" th:href="@{/admin/user/list}"> <i
 				class="fa fa-fw fa-users"></i>
 				<span th:text="#{user.userManagement}"></span>
@@ -53,6 +56,11 @@
 				<span th:text="#{client.clientManagement}"></span>
 			</a>
 		</nav>
+		<footer class="p-2 text-muted">
+		  <small>
+		     Powered by <a href="http://bndy.net" target="_blank">Bendy Zhang</a>
+		  </small>
+		</footer>
 	</div>
 	<div class="main" layout:fragment="body"></div>
 	<div class="sidebar-assist d-none"></div>

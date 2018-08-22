@@ -1,16 +1,41 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-    xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
-    layout:decorator="admin/_layout">
+<html
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+	layout:decorator="admin/_layout">
 
 <head>
 <title th:text="#{home}"></title>
 </head>
 
 <body>
-    <div layout:fragment="body">
-       
-    </div>
+	<div layout:fragment="body">
+		<div class="content-header with-border">
+			<h1 th:text="#{home}">Home</h1>
+		</div>
+		<div class="content-body">
+			<div class="row">
+				<div class="col-3">
+					<div class="card card-mini card-primary">
+						<div th:text="${userCount}" class="card-header">100</div>
+						<div th:text="#{user.userRegistration}" class="card-body">User Registration</div>
+						<a  th:text="#{moreinfo}"
+							th:href="@{/admin/user/list}"
+							class="card-footer"> More info </a> <i class="fa fa-users card-icon"></i>
+					</div>
+				</div>
+				<div class="col-3">
+					<div class="card card-mini card-success">
+						<div th:text="${clientCount}" class="card-header">100</div>
+						<div th:text="#{client.clientRegistration}" class="card-body">Client Registration</div>
+						<a  th:text="#{moreinfo}"
+							th:href="@{/admin/client/list}"
+							class="card-footer"> More info </a> <i class="fa fa-plug card-icon"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 
 </html>

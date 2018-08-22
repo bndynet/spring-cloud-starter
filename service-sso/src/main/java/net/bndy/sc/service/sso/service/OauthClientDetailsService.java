@@ -87,4 +87,8 @@ public class OauthClientDetailsService implements ClientDetailsService {
     public void remove(String id) {
         this.oauthClientDetailsRepository.deleteById(id);
     }
+
+	public long countClient() {
+	    return this.oauthClientDetailsRepository.count();
+	}
 }

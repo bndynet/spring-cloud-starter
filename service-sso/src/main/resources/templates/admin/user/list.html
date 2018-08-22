@@ -81,16 +81,18 @@
 						<td class="text-center"><th:block th:if="${user.enabled}">
 								<i class="bicon bicon-checked"></i>
 							</th:block></td>
-						<td class="list-link text-center"><a
-							class="text-primary"
-							th:href="@{/admin/user/edit(id=${user.id})}"><i class="fa fa-edit"></i></a> <a
-							class="text-danger action-remove"
-							th:href="@{/admin/user/remove(id=${user.id})}"><i class="fa fa-trash"></i></a></td>
+						<td class="list-link text-center">
+							<a
+								class="text-primary"
+								th:href="@{/admin/user/edit(id=${user.id})}"><i class="fa fa-edit"></i></a> 
+							<a  th:if="not ${#arrays.contains(adminIds, user.id)}"
+								class="text-danger action-remove"
+								th:href="@{/admin/user/remove(id=${user.id})}"><i class="fa fa-trash"></i></a>
+						
+						</td>
 					</tr>
 					<tr th:if="${users.size() == 0}">
-					   <td colspan="7">
-					       <th:block th:insert="/admin/_fragments::noData"></th:block>
-					   </td>
+						<td colspan="7"><th:block th:insert="/admin/_fragments::noData"></th:block></td>
 					</tr>
 				</tbody>
 			</table>
