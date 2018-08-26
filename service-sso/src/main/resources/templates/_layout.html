@@ -1,15 +1,22 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
 
 <head>
-    <title layout:title-pattern="$DECORATOR_TITLE - $CONTENT_TITLE">SSO</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" type="text/css" href="https://bndynet.github.io/bbootstrap/css/bbootstrap.min.css">
-    <link rel="stylesheet" type="text/css" th:href="@{/static/css/main.css}" />
-    <script src="https://bndynet.github.io/bbootstrap/js/bbootstrap.min.js"></script>
+	<title layout:title-pattern="$DECORATOR_TITLE - $CONTENT_TITLE">SSO</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<!-- 
+	<link rel="stylesheet" type="text/css"
+		href="https://bndynet.github.io/bbootstrap/css/bbootstrap.min.css">
+	<script src="https://bndynet.github.io/bbootstrap/js/bbootstrap.min.js"></script>
+	 -->
+	<link rel="stylesheet" type="text/css" href="http://localhost:5500/docs/css/bbootstrap.min.css" />
+	<script src="http://localhost:5500/docs/js/bbootstrap.min.js"></script>
+
+	<link rel="stylesheet" type="text/css" th:href="@{/static/css/main.css}" />
 </head>
 
 <body>
-    <th:block layout:fragment="body"></th:block>
+	<th:block layout:fragment="body"></th:block>
 </body>
 </html>

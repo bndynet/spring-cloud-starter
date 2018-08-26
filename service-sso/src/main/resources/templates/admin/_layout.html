@@ -32,10 +32,7 @@
 
 <body class="layout-admin layout-admin-sm">
 	<header class="navbar navbar-expand navbar-dark bg-dark bd-navbar">
-		<a class="navbar-brand" th:href="@{/admin}"> <img
-			src="http://static.bndy.net/images/apple-icon-precomposed.png"
-			width="30" height="30" class="d-inline-block align-top" alt="" th:text="#{admin.title}">
-		</a>
+		<a class="navbar-brand" th:href="@{/admin}" th:text="#{admin.title}"></a>
 		<ul class="navbar-nav ml-md-auto flex-row d-md-flex">
 			<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#"
 				id="userMenus" role="button" data-toggle="dropdown" aria-haspopup="true"

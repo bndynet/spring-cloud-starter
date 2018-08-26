@@ -9,12 +9,17 @@
     <div class="main" layout:fragment="body">
         <div class="card">
             <!-- <img class="card-img-top" src=".../100px180/" alt="Card image cap"> -->
+            <div class="card-header text-center">
+                <h1 th:text="#{app.brand}"></h1>
+            </div>
             <div class="card-body">
-                 <div th:if="${param.error}" th:text="#{msgInvalidUsernameOrPassword}" class="alert alert-danger" role="alert">    
-                    Invalid username and password.
+                 <div th:if="${param.error}" class="alert alert-danger" role="alert">
+                    <i class="fa fa-fw fa-warning"></i>
+                    <span th:text="#{msgInvalidUsernameOrPassword}"> Invalid username and password. </span>
                 </div>
-                <div th:if="${param.logout}" th:text="#{msgLogoutSuccess}" class="alert alert-success" role="alert"> 
-                    You have been logged out.
+                <div th:if="${param.logout}" class="alert alert-success" role="alert"> 
+                    <i class="fa fa-fw fa-check"></i>
+                    <span th:text="#{msgLogoutSuccess}"> You have been logged out. </span>
                 </div>
                 <form th:action="@{login}" method="POST">
                     <div class="form-group">
@@ -30,7 +35,7 @@
                         <input class="form-check-input" id="rememberMe" name="rememberMe" type="checkbox" tabindex="-1">
                         <label class="form-check-label" for="rememberMe" th:utext="#{labelRememberMe}">Remember me</label>
                     </div>
-                    <button type="submit" class="btn btn-block btn-primary" th:utext="#{labelSignIn}">Sign in</button>
+                    <button type="submit" class="btn btn-lg btn-block btn-primary" th:utext="#{labelSignIn}">Sign in</button>
                 </form>
             </div>
         </div>
