@@ -26,7 +26,7 @@
 			<h1 th:text="#{user.editUser}" th:if="${model.id}">Edit User</h1>
         </div>
         <div class="content-body">
-			<form th:action="@{/admin/user/save}" method="POST" novalidate>
+			<form th:action="@{/admin/user/save}" method="POST" autocomplete="off" novalidate>
 				<input type="hidden" name="id" th:value="${model.id}">
 				<div class="row">
 					<div class="col-md-6">
