@@ -25,9 +25,10 @@ spring:
           time_zone = UTC
     hibernate:
       ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/sso
     username: ${MYSQL_USER:root}
-    password: ${MYSQL_USER:123456}
+    password: ${MYSQL_PASSWORD:123456}
     driver-class-name: com.mysql.jdbc.Driver

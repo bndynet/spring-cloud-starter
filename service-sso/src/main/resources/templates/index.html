@@ -18,7 +18,7 @@
 		  <p class="lead" th:utext="#{welcomeMessage}"></p>
 		  <div sec:authorize="isAnonymous()">
 			  <hr class="my-4">
-			  <a class="btn btn-primary" th:href="@{/login}" role="button" th:text="#{labelSignIn}">Sign in</a>
+			  <a class="btn btn-lg btn-primary" th:href="@{/login}" role="button" th:text="#{labelSignIn}">Sign in</a>
 		  </div>
 		  <div sec:authorize="isAuthenticated()">
 			  <hr class="my-4">
