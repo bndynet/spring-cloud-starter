@@ -18,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import net.bndy.sc.service.sso.entity.AppPermission;
 import net.bndy.sc.service.sso.entity.AppRole;
 import net.bndy.sc.service.sso.entity.AppUser;
 import net.bndy.sc.service.sso.repository.AppRoleRepository;
@@ -33,7 +34,7 @@ public class AppUserDetailsService implements UserDetailsService {
 	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	private final static String DEFAULT_ADMIN_USER = "admin";
-	private final static String DEFAULT_ADMIN_PASS = "1";
+	private final static String DEFAULT_ADMIN_PASS = "pass";
 	private final static String DEFAULT_ADMIN_EMAIL = "zb@bndy.net";
 	public final static String ROLE_ADMIN = "ROLE_ADMIN";
 	
