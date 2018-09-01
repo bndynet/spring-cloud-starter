@@ -27,7 +27,7 @@
 				<div
 					class="btn-group"
 					role="group">
-					<a
+					<a  sec:authorize="hasAuthority('CLIENT:W')"
 						th:href="@{/admin/client/new}"
 						th:text="#{client.addClient}"
 						class="btn btn-primary">Add</a>
@@ -46,7 +46,7 @@
 						<th
 							th:text="#{client.autoApprove}"
 							class="text-center"></th>
-						<th></th>
+						<th sec:authorize="hasAuthority('CLIENT:W')"></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -68,7 +68,8 @@
 						<td class="text-center"><th:block th:if="${client.autoapprove}">
 								<i class="bicon bicon-checked"></i>
 							</th:block></td>
-						<td class="list-link text-center"><a
+						<td sec:authorize="hasAuthority('CLIENT:W')"
+						    class="list-link text-center"><a
 							class="text-primary"
 							th:href="@{/admin/client/edit(id=${client.clientId})}"><i class="fa fa-edit"></i></a> <a
 							class="text-danger action-remove"

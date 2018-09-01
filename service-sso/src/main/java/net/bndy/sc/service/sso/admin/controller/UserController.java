@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -30,6 +31,7 @@ public class UserController {
     @Autowired
     private AppUserDetailsService appUserDetailsService;
 
+    @PreAuthorize(value = "hasAuthority('" + AppUserDetailsService.PERMISSION_READ + "')")
     @RequestMapping(value = "/list")
     public String list(Model model, @RequestParam(name = "k", required = false) String keywords) {
         List<AppUser> users = keywords != null && !keywords.trim().isEmpty() 
@@ -43,6 +45,7 @@ public class UserController {
         return "admin/user/list";
     }
 
+    @PreAuthorize(value = "hasAuthority('" + AppUserDetailsService.PERMISSION_WRITE + "')")
     @RequestMapping(value = { "/edit", "/new" })
     public String edit(Model viewModel, @RequestParam(name = "id", required = false) Long id) {
         AppUser model;
@@ -56,12 +59,14 @@ public class UserController {
         return "admin/user/edit";
     }
 
+    @PreAuthorize(value = "hasAuthority('" + AppUserDetailsService.PERMISSION_WRITE + "')")
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String save(@ModelAttribute AppUser formModel, Model viewModel) {
         this.appUserDetailsService.saveUser(formModel);
         return "redirect:/admin/user/list";
     }
 
+    @PreAuthorize(value = "hasAuthority('" + AppUserDetailsService.PERMISSION_WRITE + "')")
     @RequestMapping(value = "/remove", method = RequestMethod.GET)
     public String remove(@RequestParam(name = "id") long id) {
         this.appUserDetailsService.removeAppUser(id);

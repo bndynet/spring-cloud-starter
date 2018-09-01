@@ -4,7 +4,6 @@
  */
 package net.bndy.sc.service.sso.service;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,10 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import net.bndy.sc.service.sso.entity.AppPermission;
-import net.bndy.sc.service.sso.entity.AppRole;
 import net.bndy.sc.service.sso.entity.AppUser;
-import net.bndy.sc.service.sso.repository.AppRoleRepository;
 import net.bndy.sc.service.sso.repository.AppUserRepository;
 
 /**
@@ -31,17 +27,17 @@ import net.bndy.sc.service.sso.repository.AppUserRepository;
 @Service
 @Transactional
 public class AppUserDetailsService implements UserDetailsService {
-	
+
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
-	private final static String DEFAULT_ADMIN_USER = "admin";
-	private final static String DEFAULT_ADMIN_PASS = "pass";
-	private final static String DEFAULT_ADMIN_EMAIL = "zb@bndy.net";
+
+	public final static String PERMISSION_READ = "USER:R";
+	public final static String PERMISSION_WRITE = "USER:W";
+	
 	public final static String ROLE_ADMIN = "ROLE_ADMIN";
+	public final static String ROLE_READONLY_USER = "ROLE_READONLY";
 	
 	@Autowired
 	private AppUserRepository appUserRepository;
-	@Autowired
-	private AppRoleRepository appRoleRepository;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
@@ -75,9 +71,6 @@ public class AppUserDetailsService implements UserDetailsService {
 			user = originUser;
 		} else {
 			user.setPassword(passwordEncoder.encode(user.getPassword()));
-			user.setAccountExpired(false);
-			user.setAccountLocked(false);
-			user.setCredentialsExpired(false);
 		}
 		user = this.appUserRepository.save(user);
 		return user;
@@ -101,32 +94,6 @@ public class AppUserDetailsService implements UserDetailsService {
 	
 	public void removeAppUser(long id) {
 		this.appUserRepository.deleteById(id);
-	}
-	
-	public AppUser initAdmin() {
-	    if (this.appUserRepository.count() == 0) {
-            AppUser admin = new AppUser();
-            admin.setUsername(DEFAULT_ADMIN_USER);
-            admin.setPassword(this.passwordEncoder.encode(DEFAULT_ADMIN_PASS));
-            admin.setEmail(DEFAULT_ADMIN_EMAIL);
-            admin.setAccountExpired(false);
-            admin.setAccountLocked(false);
-            admin.setCredentialsExpired(false);
-            admin.setEnabled(true);
-            
-            AppRole adminRole = this.appRoleRepository.findByName(ROLE_ADMIN);
-            if (adminRole == null) {
-                adminRole = new AppRole();
-                adminRole.setName(ROLE_ADMIN);
-                adminRole = this.appRoleRepository.save(adminRole);
-            }
-            
-            admin.setRoles(Arrays.asList(adminRole));
-            admin = this.appUserRepository.save(admin);
-            
-            return admin;
-	    }
-	    return null;
 	}
 	
 	public long countUser() {

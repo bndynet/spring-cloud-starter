@@ -15,12 +15,9 @@ import java.util.stream.Collectors;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Transient;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.provider.ClientDetails;
 
 /**
@@ -141,7 +138,6 @@ public class OauthClientDetails implements ClientDetails {
 
     @Override
     public boolean isSecretRequired() {
-        // TODO Auto-generated method stub
         return false;
     }
 
@@ -152,7 +148,6 @@ public class OauthClientDetails implements ClientDetails {
 
     @Override
     public boolean isScoped() {
-        // TODO Auto-generated method stub
         return false;
     }
 

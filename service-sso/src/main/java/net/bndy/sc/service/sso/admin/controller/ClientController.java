@@ -5,6 +5,7 @@
 package net.bndy.sc.service.sso.admin.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -26,12 +27,14 @@ public class ClientController {
     @Autowired
     private OauthClientDetailsService oauthClientDetailsService;
 
+    @PreAuthorize(value = "hasAuthority('" + OauthClientDetailsService.PERMISSION_READ + "')")
     @RequestMapping(value = "/list")
     public String list(Model model) {
         model.addAttribute("clients", this.oauthClientDetailsService.getAllClients());
         return "admin/client/list";
     }
 
+    @PreAuthorize(value = "hasAuthority('" + OauthClientDetailsService.PERMISSION_WRITE + "')")
     @RequestMapping(value = { "/edit", "/new" })
     public String edit(Model viewModel, @RequestParam(name = "id", required = false) String id) {
         OauthClientDetails model;
@@ -44,12 +47,14 @@ public class ClientController {
         return "admin/client/edit";
     }
 
+    @PreAuthorize(value = "hasAuthority('" + OauthClientDetailsService.PERMISSION_WRITE + "')")
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String save(@ModelAttribute OauthClientDetails formModel, Model viewModel) {
         this.oauthClientDetailsService.save(formModel);
         return "redirect:/admin/client/list";
     }
 
+    @PreAuthorize(value = "hasAuthority('" + OauthClientDetailsService.PERMISSION_WRITE + "')")
     @RequestMapping(value = "/remove", method = RequestMethod.GET)
     public String remove(@RequestParam(name = "id") String id) {
         this.oauthClientDetailsService.remove(id);

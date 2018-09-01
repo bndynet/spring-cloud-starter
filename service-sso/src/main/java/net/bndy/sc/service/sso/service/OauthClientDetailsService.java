@@ -25,6 +25,9 @@ import net.bndy.sc.service.sso.repository.OauthClientDetailsRepository;
 @Service
 @Transactional
 public class OauthClientDetailsService implements ClientDetailsService {
+    
+    public final static String PERMISSION_READ = "CLIENT:R";
+    public final static String PERMISSION_WRITE = "CLIENT:W";
 
     private final static int CLIENT_ID_LENGTH = 10;
     private final static int CLIENT_SECRET_LENGTH = 20;

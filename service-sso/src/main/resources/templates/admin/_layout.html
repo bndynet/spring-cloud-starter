@@ -41,9 +41,7 @@
 				aria-expanded="false"> 
 					<i class="fa fa-fw fa-user"></i>
 					<span sec:authentication="name">Bendy</span>
-					<!-- 
-						<span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]</span>
-					 -->
+					<span sec:authentication="principal.authorities" class="d-none">[ROLE_USER, ROLE_ADMIN]</span>
 				</a>
 				<div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenus">
 					<a th:href="@{/logout}" class="dropdown-item">

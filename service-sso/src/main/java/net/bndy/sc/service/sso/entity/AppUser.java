@@ -101,7 +101,7 @@ public class AppUser extends BaseIdEntity implements UserDetails {
 		Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
 
 		roles.forEach(r -> {
-			authorities.add(new SimpleGrantedAuthority(r.getName()));
+		    authorities.add(new SimpleGrantedAuthority(r.getName()));
 			r.getPermissions().forEach(p -> {
 				authorities.add(new SimpleGrantedAuthority(p.getName()));
 			});

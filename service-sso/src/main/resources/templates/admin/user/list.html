@@ -45,7 +45,7 @@
 				<div
 					class="btn-group"
 					role="group">
-					<a
+					<a  sec:authorize="hasAuthority('USER:W')"
 						th:href="@{/admin/user/new}"
 						th:text="#{user.addUser}"
 						class="btn btn-primary">Add user</a>
@@ -64,7 +64,7 @@
 						<th
 							th:text="#{user.enabled}"
 							class="text-center">Enabled?</th>
-						<th></th>
+						<th sec:authorize="hasAuthority('USER:W')"></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -81,7 +81,7 @@
 						<td class="text-center"><th:block th:if="${user.enabled}">
 								<i class="bicon bicon-checked"></i>
 							</th:block></td>
-						<td class="list-link text-center">
+						<td sec:authorize="hasAuthority('USER:W')" class="list-link text-center">
 							<a
 								class="text-primary"
 								th:href="@{/admin/user/edit(id=${user.id})}"><i class="fa fa-edit"></i></a> 

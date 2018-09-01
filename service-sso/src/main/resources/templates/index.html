@@ -22,7 +22,7 @@
 		  </div>
 		  <div sec:authorize="isAuthenticated()">
 			  <hr class="my-4">
-			  <a class="btn btn-lg btn-primary" th:href="@{/admin}" role="button" th:text="#{admin.title}" sec:authorize="hasRole('ROLE_ADMIN')"></a>
+			  <a class="btn btn-lg btn-primary" th:href="@{/admin}" role="button" th:text="#{admin.title}" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_READONLY')"></a>
 			  <a class="btn btn-lg btn-light" th:href="@{/logout}" role="button" th:text="#{labelSignOut}">Sign out</a>
 		  </div>
 		</div>

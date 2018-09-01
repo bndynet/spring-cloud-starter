@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -37,6 +38,7 @@ import net.bndy.sc.service.sso.service.OauthClientDetailsService;
  * @version 1.0
  */
 @Configuration
+@EnableGlobalMethodSecurity(prePostEnabled = true)  // for enabling @PreAuthorize support
 public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String SERVER_RESOURCE_ID = "sso-resource"; //$NON-NLS-1$
@@ -66,7 +68,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().httpBasic().disable().authorizeRequests().antMatchers("/").permitAll()
-            .antMatchers("/admin", "/admin/**").hasAuthority(AppUserDetailsService.ROLE_ADMIN)
+            .antMatchers("/admin", "/admin/**").hasAnyAuthority(AppUserDetailsService.ROLE_ADMIN, AppUserDetailsService.ROLE_READONLY_USER)
             .anyRequest().authenticated().and().formLogin().defaultSuccessUrl("/").loginPage("/login").permitAll().and()
             .rememberMe().rememberMeParameter("rememberMe").and().logout().permitAll()
 //    				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))	// required if enable CSRF, because CSRF requires a Post for logging out with CSRF code like login
