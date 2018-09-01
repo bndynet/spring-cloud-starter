@@ -67,7 +67,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().httpBasic().disable().authorizeRequests().antMatchers("/").permitAll()
+        http.csrf().disable().httpBasic().disable().authorizeRequests().antMatchers("/", "/login*").permitAll()
             .antMatchers("/admin", "/admin/**").hasAnyAuthority(AppUserDetailsService.ROLE_ADMIN, AppUserDetailsService.ROLE_READONLY_USER)
             .anyRequest().authenticated().and().formLogin().defaultSuccessUrl("/").loginPage("/login").permitAll().and()
             .rememberMe().rememberMeParameter("rememberMe").and().logout().permitAll()

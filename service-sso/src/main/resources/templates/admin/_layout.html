@@ -78,7 +78,7 @@
     <footer>
         <div class="row">
             <div class="col"><span th:utext="#{copyright}"></span></div>
-            <div class="col text-right"><th:block th:include="admin/_fragments::locale"></th:block></div>
+            <div class="col text-right"><th:block th:include="_fragments::locale(direction='up', alignment='right')"></th:block></div>
         </div>
     </footer>	
 	<script th:src="@{/static/js/main.js}"></script>

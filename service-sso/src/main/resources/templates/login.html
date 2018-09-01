@@ -40,7 +40,8 @@
             </div>
         </div>
         <div class="block text-center">
-            <span th:utext="#{copyright}"></span>
+            <div th:utext="#{copyright}"></div>
+            <th:block th:include="_fragments::locale(direction='up')"></th:block>
         </div>
     </div>
 </body>

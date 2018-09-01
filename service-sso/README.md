@@ -1,4 +1,4 @@
-# SSO - Singl Sign On
+# SSO - Single Sign On
 
 This is a single sign on application integrated authorization server and resource server.
 Meanwhile, implemented admin panel for user and client management.
