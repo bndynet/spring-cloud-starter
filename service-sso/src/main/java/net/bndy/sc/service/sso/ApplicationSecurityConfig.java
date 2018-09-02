@@ -15,7 +15,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
@@ -46,14 +45,9 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
     @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
     private AppUserDetailsService appUserDetailsService;
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        // this encoder will be also used to encode client secret, so MUST encode it
-        // into store
-        return new BCryptPasswordEncoder();
-    }
 
     @Bean
     public TokenStore tokenStore() {
@@ -77,7 +71,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(appUserDetailsService).passwordEncoder(passwordEncoder());
+        auth.userDetailsService(appUserDetailsService).passwordEncoder(this.passwordEncoder);
     }
 
     @Bean
