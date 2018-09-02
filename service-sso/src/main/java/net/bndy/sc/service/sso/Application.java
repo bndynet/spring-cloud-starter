@@ -9,6 +9,7 @@ import java.util.TimeZone;
 import javax.annotation.PostConstruct;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
 import net.bndy.sc.lib.ApplicationBase;
 
@@ -16,6 +17,7 @@ import net.bndy.sc.lib.ApplicationBase;
  * @author Bendy Zhang
  * @version 1.0
  */
+@EnableRedisHttpSession
 public class Application extends ApplicationBase {
 
     @PostConstruct
