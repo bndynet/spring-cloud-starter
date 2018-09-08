@@ -4,6 +4,7 @@
  */
 package net.bndy.sc.service.sso.entity;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -19,6 +20,11 @@ import javax.persistence.Id;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.provider.ClientDetails;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * @author Bendy Zhang
@@ -205,8 +211,21 @@ public class OauthClientDetails implements ClientDetails {
     @Override
     public Map<String, Object> getAdditionalInformation() {
         HashMap<String, Object> map = new HashMap<>();
-        // TODO: convert JSON string to Object
-        Object jsonObject = additionalInformation;
-        return null;
+        
+        ObjectMapper mapper = new ObjectMapper();
+
+        try {
+            map = mapper.readValue(this.additionalInformation, new TypeReference<Map<String, String>>(){});
+        } catch (JsonParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return map;
     }
 }
