@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 import net.bndy.sc.service.sso.entity.AppPermission;
 import net.bndy.sc.service.sso.entity.AppRole;
 import net.bndy.sc.service.sso.entity.AppUser;
+import net.bndy.sc.service.sso.exception.ApplicationException;
 import net.bndy.sc.service.sso.service.AppPermissionService;
 import net.bndy.sc.service.sso.service.AppRoleService;
 import net.bndy.sc.service.sso.service.AppUserDetailsService;
@@ -87,7 +88,11 @@ public class ApplicationInitializaton implements ApplicationListener<ContextRefr
             admin.setCredentialsExpired(false);
             admin.setEnabled(true);
             admin.setRoles(Arrays.asList(roleAdmin));
-            admin = this.appUserDetailsService.saveUser(admin);
+            try {
+                admin = this.appUserDetailsService.saveUser(admin);
+            } catch (ApplicationException e) {
+                e.printStackTrace();
+            }
 
             AppUser readonlyUser = new AppUser();
             readonlyUser.setUsername(DEFAULT_READONLY_USER);
@@ -98,7 +103,11 @@ public class ApplicationInitializaton implements ApplicationListener<ContextRefr
             readonlyUser.setCredentialsExpired(false);
             readonlyUser.setEnabled(true);
             readonlyUser.setRoles(Arrays.asList(roleReadonlyUser));
-            readonlyUser = this.appUserDetailsService.saveUser(readonlyUser);
+            try {
+                readonlyUser = this.appUserDetailsService.saveUser(readonlyUser);
+            } catch (ApplicationException e) {
+                e.printStackTrace();
+            }
         }
 
         alreadySetup = true;

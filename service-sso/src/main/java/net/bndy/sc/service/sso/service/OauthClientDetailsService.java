@@ -57,7 +57,7 @@ public class OauthClientDetailsService implements ClientDetailsService {
     }
 
     public OauthClientDetails save(OauthClientDetails clientDetails) {
-
+        
         if (clientDetails.getRedirectUri() != null) {
             clientDetails.setRedirectUri(clientDetails.getRedirectUri().trim().replaceAll("[\r|\n]+", ";"));
         }
