@@ -67,6 +67,7 @@ public class OauthClientDetailsService implements ClientDetailsService {
             originClient.setClientName(clientDetails.getClientName());
             originClient.setAutoapprove(clientDetails.getAutoapprove());
             originClient.setRedirectUri(clientDetails.getRedirectUri());
+            originClient.setOwner(clientDetails.getOwner());
             clientDetails = originClient;
 
         } else {

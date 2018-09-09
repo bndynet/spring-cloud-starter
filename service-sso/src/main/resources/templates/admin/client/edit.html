@@ -41,14 +41,24 @@
 					th:field="*{model.clientId}">
 				<div class="row">
 					<div class="col-md-6">
-						<div class="form-group">
-							<label
-								th:text="#{client.clientName}"
-								for="clientName"></label> <input
-								class="form-control" required
-								th:field="*{model.clientName}">
-							<div th:text="#{msgRequiredField}" class="invalid-feedback">Required field</div>
-						</div>
+					    <div class="row">
+							<div class="form-group col">
+								<label
+									th:text="#{client.clientName}"
+									for="clientName"></label> <input
+									class="form-control" required
+									th:field="*{model.clientName}">
+								<div th:text="#{msgRequiredField}" class="invalid-feedback">Required field</div>
+							</div>
+							<div class="form-group col">
+								<label
+									th:text="#{client.owner}"
+									for="owner"></label> <input
+									class="form-control" required
+									th:field="*{model.owner}">
+								<div th:text="#{msgRequiredField}" class="invalid-feedback">Required field</div>
+							</div>
+					    </div>
 						<div class="form-group">
 							<label
 								th:text="#{client.redirectUri}"
@@ -93,7 +103,7 @@
 		<script th:inline="javascript">
          /*<![CDATA[*/
          function checkForm() {
-              return $('#clientName').val() && $('#redirectUri').val();
+              return $('#clientName').val() && $('#owner').val() && $('#redirectUri').val();
          }
           $(function(){
               $('form').submit(function(event){

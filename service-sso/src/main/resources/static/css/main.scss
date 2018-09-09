@@ -1,4 +1,22 @@
 
+
+
+.layout-admin {
+    & > .main {
+        .content-header {
+            .toolbox {
+                .form-search-slim {
+                    width: 260px;
+                }
+            }
+        }
+    }
+
+    & > footer {
+        font-size: 80%;
+    }
+}
+
 .page-error {
     .main {
         width: 600px;
@@ -17,18 +35,15 @@
     }
 }
 
-.layout-admin {
-    & > .main {
-        .content-header {
-            .toolbox {
-                .form-search-slim {
-                    width: 260px;
-                }
+.page-oauth-approval {
+    .main {
+        width: 360px;
+
+        h2 {
+            line-height: 1.5rem;
+            small {
+                font-size: 50%;
             }
         }
-    }
-
-    & > footer {
-        font-size: 80%;
     }
 }

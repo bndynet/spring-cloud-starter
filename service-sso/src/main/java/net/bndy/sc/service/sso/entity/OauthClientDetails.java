@@ -40,6 +40,7 @@ public class OauthClientDetails implements ClientDetails {
         this.clientId = clientId;
     }
 
+    private String owner;
     private String clientName;
     private String clientSecret;
     private String clientSecretRaw;
@@ -205,7 +206,7 @@ public class OauthClientDetails implements ClientDetails {
 
     @Override
     public boolean isAutoApprove(String scope) {
-        return autoapprove;
+        return autoapprove != null && autoapprove;
     }
 
     @Override
@@ -227,5 +228,13 @@ public class OauthClientDetails implements ClientDetails {
             e.printStackTrace();
         }
         return map;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 }

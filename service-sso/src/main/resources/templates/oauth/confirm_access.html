@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" layout:decorator="_layout">
+
+<head>
+<title>OAuth Approval</title>
+</head>
+
+<body class="layout-one page-oauth-approval">
+	<div class="main" layout:fragment="body">
+		<div class="card">
+			<div class="card-header text-center">
+				<h1 th:text="#{app.brand}"></h1>
+			</div>
+			<div class="card-body">
+				<div class="text-center mb-4">
+					<i class="fa fa-github fa-5x"></i>
+					<h2 th:utext="#{client.msgConfirmAccessTitle(${client.clientName}, ${client.owner})}"
+						class="mt-2"></h2>
+				</div>
+				<form id="confirmationForm" name="confirmationForm" th:action="@{/oauth/authorize}"
+					method="post">
+					<div th:utext="#{client.msgConfirmAccess}" class="mb-3"></div>
+					<div th:each="scope: ${authRequest.scope}" class="ml-4">
+						<div>
+							<input id="r1" type="radio" th:name="${#strings.prepend(scope,'scope.')}" value="true" class="d-none"
+								checked> 
+							<i class="bicon bicon-checked"></i>
+							<label for="r1" th:text="#{${'scope.' + scope}}"></label>
+						</div>
+					</div>
+					<br /> <input name="user_oauth_approval" value="true" type="hidden" />
+					<button type="submit" class="btn btn-block btn-success"
+						th:text="#{client.labelAuthorizeApp}"></button>
+				</form>
+				<form id="denialForm" name="denialForm" th:action="@{/oauth/authorize}" method="post"
+					class="mt-2">
+					<input name="user_oauth_approval" value="false" type="hidden" />
+					<button type="submit" name="deny" class="btn btn-block btn-light" th:text="#{msgNoThx}"></button>
+				</form>
+			</div>
+		</div>
+		<div class="block text-center">
+			<div th:utext="#{copyright}"></div>
+		</div>
+	</div>
+</body>
+</html>

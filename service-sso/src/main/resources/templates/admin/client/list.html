@@ -51,7 +51,10 @@
 				</thead>
 				<tbody>
 					<tr th:each="client: ${clients}">
-						<td th:text="${client.clientName}"></td>
+						<td>
+						    <div th:text="${client.clientName}"></div>
+						    <small th:text="${client.owner}" class="text-muted"></small>
+						</td>
 						<td><span
 							th:text="${client.clientId}"
 							th:attr="(title=#{client.clientId})">
