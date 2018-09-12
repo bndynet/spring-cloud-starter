@@ -34,7 +34,7 @@ public class ControllerExceptionHandler {
     private MessageSource messageSource;
 
     @ExceptionHandler(value = ApplicationException.class)
-    public ModelAndView defaultErrorHandler(HttpServletRequest req, Exception e) {
+    public ModelAndView defaultErrorHandler(HttpServletRequest req, ApplicationException e) {
 
         this.logger.error("{} for {}", e.getMessage(), req.getRequestURL());
 
@@ -42,7 +42,7 @@ public class ControllerExceptionHandler {
         mView.addObject("status", HttpStatus.SC_BAD_REQUEST);
         mView.addObject("error", this.messageSource.getMessage("error.title", null, LocaleContextHolder.getLocale()));
         mView.addObject("timestamp",  Calendar.getInstance().getTime());
-        mView.addObject("message",  e.getMessage());
+        mView.addObject("message",  this.messageSource.getMessage("error." + e.getCode().getCode(), e.getArgs(), LocaleContextHolder.getLocale()));
         mView.addObject("path", req.getRequestURL());
         mView.addObject("exception", e);
         mView.addObject("trace", e.getStackTrace());

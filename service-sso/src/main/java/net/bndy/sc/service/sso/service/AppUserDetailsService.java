@@ -10,7 +10,6 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -43,8 +42,6 @@ public class AppUserDetailsService implements UserDetailsService {
 	private AppUserRepository appUserRepository;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	@Autowired
-	private MessageSource messageSource;
 	
 	@Override
 	public UserDetails loadUserByUsername(String input) throws UsernameNotFoundException {
@@ -68,7 +65,7 @@ public class AppUserDetailsService implements UserDetailsService {
 	    // check whether user name exists
 	    AppUser dbUser = this.appUserRepository.findByUsername(user.getUsername());
 	    if (dbUser != null && !dbUser.getId().equals(user.getId())) {
-	        throw new ApplicationException(this.messageSource, ErrorCode.USER_EXISTED_USERNAME);
+	        throw new ApplicationException(ErrorCode.USER_EXISTED_USERNAME);
 	    }
 		if (user.getId() != null) {
 			AppUser originUser = this.findById(user.getId());

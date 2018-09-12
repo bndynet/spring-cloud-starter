@@ -23,10 +23,10 @@
 					<div th:utext="#{client.msgConfirmAccess}" class="mb-3"></div>
 					<div th:each="scope: ${authRequest.scope}" class="ml-4">
 						<div>
-							<input id="r1" type="radio" th:name="${#strings.prepend(scope,'scope.')}" value="true" class="d-none"
+							<input type="radio" th:attr="id=${scope}" th:name="${#strings.prepend(scope,'scope.')}" value="true" class="d-none"
 								checked> 
 							<i class="bicon bicon-checked"></i>
-							<label for="r1" th:text="#{${'scope.' + scope}}"></label>
+							<label th:text="#{${'scope.' + scope}}" th:attr="for=${scope}"></label>
 						</div>
 					</div>
 					<br /> <input name="user_oauth_approval" value="true" type="hidden" />
