@@ -23,7 +23,7 @@ import net.bndy.sc.service.sso.service.OauthClientDetailsService;
 @Controller
 // Below is required, otherwise this type can not be passed to /oauth/confirm_access
 // Because the default Endpoint is /oauth/authorize and then forward to /oauth/confirm_access
-@SessionAttributes(types = AuthorizationRequest.class)  
+@SessionAttributes(types = {AuthorizationRequest.class})
 public class HomeController {
     
     @Autowired
@@ -40,8 +40,8 @@ public class HomeController {
     
     @RequestMapping("/oauth/confirm_access")
     public String oauthConfirmAccess(
-        @ModelAttribute AuthorizationRequest authRequest,
-        Model viewModel
+        Model viewModel,
+        @ModelAttribute AuthorizationRequest authRequest
     ) {
         ClientDetails clientDetails = this.oauthClientDetailsService.loadClientByClientId(authRequest.getClientId());
         viewModel.addAttribute("authRequest", authRequest);
@@ -50,4 +50,8 @@ public class HomeController {
         return "oauth/confirm_access";
     }
     
+    @RequestMapping("/oauth/error")
+    public String oauthError() {
+        return "oauth_error";
+    }
 }

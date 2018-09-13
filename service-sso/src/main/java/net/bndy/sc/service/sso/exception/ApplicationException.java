@@ -16,6 +16,14 @@ public class ApplicationException extends RuntimeException {
     private final Object[] args;
     
     
+    public String getError() {
+        return this.getCode().name().toLowerCase();
+    }
+
+    public ErrorCode getCode() {
+        return code;
+    }
+
     public Object[] getArgs() {
         return this.args;
     }
@@ -26,13 +34,9 @@ public class ApplicationException extends RuntimeException {
         this.args = args;
     }
 
-    public ErrorCode getCode() {
-        return code;
-    }
-
     @Override
     public String getMessage() {
-        return String.valueOf(this.getCode().getCode());
+        return this.getCode().getCode() + ": " + this.getError();
     }
     
 }

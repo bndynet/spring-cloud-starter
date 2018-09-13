@@ -117,7 +117,16 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         @Override
         public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
             endpoints.authenticationManager(authenticationManager).userDetailsService(appUserDetailsService)
-                    .tokenStore(tokenStore()).approvalStore(approvalStore());
+                    .tokenStore(tokenStore()).approvalStore(approvalStore())
+                    
+                    // Below will be used in org.springframework.security.oauth2.provider.endpoint.AuthorizationEndpoint L503,
+                    // for redirecting to global exception handling via throwing exception.
+                    // By default, the exception does not be throwing.
+//                    .exceptionTranslator(exception -> {
+//                        throw exception;
+//                    })
+                    
+                    ;
         }
 
         @Override

@@ -33,20 +33,27 @@ public class ControllerExceptionHandler {
     @Autowired
     private MessageSource messageSource;
 
-    @ExceptionHandler(value = ApplicationException.class)
-    public ModelAndView defaultErrorHandler(HttpServletRequest req, ApplicationException e) {
+    @ExceptionHandler(value = Exception.class)
+    public ModelAndView defaultErrorHandler(HttpServletRequest req, Exception e) {
 
         this.logger.error("{} for {}", e.getMessage(), req.getRequestURL());
 
         ModelAndView mView = new ModelAndView();
         mView.addObject("status", HttpStatus.SC_BAD_REQUEST);
-        mView.addObject("error", this.messageSource.getMessage("error.title", null, LocaleContextHolder.getLocale()));
-        mView.addObject("timestamp",  Calendar.getInstance().getTime());
-        mView.addObject("message",  this.messageSource.getMessage("error." + e.getCode().getCode(), e.getArgs(), LocaleContextHolder.getLocale()));
         mView.addObject("path", req.getRequestURL());
         mView.addObject("exception", e);
         mView.addObject("trace", e.getStackTrace());
         mView.addObject("url", req.getRequestURL());
+        mView.addObject("timestamp",  Calendar.getInstance().getTime());
+        mView.addObject("error", this.messageSource.getMessage("error.title", null, LocaleContextHolder.getLocale()));
+
+        if (e instanceof ApplicationException) {
+            ApplicationException applicationException = (ApplicationException)e;
+            mView.addObject("message",  this.messageSource.getMessage("error." + applicationException.getCode().getCode(), applicationException.getArgs(), LocaleContextHolder.getLocale()));
+        } else {
+            mView.addObject("message",  e.getMessage());
+        }
+
         mView.setViewName(DEFAULT_ERROR_VIEW);
 
         return mView;
