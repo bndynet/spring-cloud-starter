@@ -2,9 +2,13 @@
  * Copyright (c) 2018 BNDY-NET. All Rights Reserved.
  * http://bndy.net
  */
-package net.bndy.sc.service.sso.admin.controller;
+package net.bndy.sc.service.sso.controller;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.error.ErrorController;
+import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
 import org.springframework.security.oauth2.provider.AuthorizationRequest;
 import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.stereotype.Controller;
@@ -13,7 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import net.bndy.sc.service.sso.service.AppUserDetailsService;
+import net.bndy.sc.service.sso.ApplicationUtil;
 import net.bndy.sc.service.sso.service.OauthClientDetailsService;
 
 /**
@@ -21,22 +25,14 @@ import net.bndy.sc.service.sso.service.OauthClientDetailsService;
  * @version 1.0
  */
 @Controller
-// Below is required, otherwise this type can not be passed to /oauth/confirm_access
+// SessionAttribute is required, otherwise this type can not be passed to /oauth/confirm_access
 // Because the default Endpoint is /oauth/authorize and then forward to /oauth/confirm_access
 @SessionAttributes(types = {AuthorizationRequest.class})
-public class HomeController {
+// Implements ErrorController is for changing default error handling
+public class HomeController implements ErrorController {
     
-    @Autowired
-    private AppUserDetailsService appUserDetailsService;
     @Autowired
     private OauthClientDetailsService oauthClientDetailsService;
-    
-    @RequestMapping(value = "/admin")
-    public String index(Model model) {
-        model.addAttribute("userCount", this.appUserDetailsService.countUser());
-        model.addAttribute("clientCount", this.oauthClientDetailsService.countClient());
-        return "admin/index";
-    }
     
     @RequestMapping("/oauth/confirm_access")
     public String oauthConfirmAccess(
@@ -48,10 +44,21 @@ public class HomeController {
         viewModel.addAttribute("client", clientDetails);
         viewModel.addAttribute("scopes", String.join(",", authRequest.getScope()));
         return "oauth/confirm_access";
-    }
+    } 
     
-    @RequestMapping("/oauth/error")
-    public String oauthError() {
-        return "oauth_error";
+    @RequestMapping("/error")
+    public String handleError(Model mView, HttpServletRequest request) {
+        Object error = request.getAttribute("error");
+        if (error instanceof OAuth2Exception) {
+            OAuth2Exception exception = (OAuth2Exception)error;
+            mView.addAttribute("error", ApplicationUtil.getOauthErrorLang(exception.getOAuth2ErrorCode()));
+            mView.addAttribute("message", exception.getMessage());
+        }
+        return "error";
+    }
+
+    @Override
+    public String getErrorPath() {
+        return "/error";
     }
 }

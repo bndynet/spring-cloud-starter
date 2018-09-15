@@ -4,6 +4,7 @@
  */
 package net.bndy.sc.service.sso;
 
+import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.approval.ApprovalStore;
 import org.springframework.security.oauth2.provider.approval.JdbcApprovalStore;
+import org.springframework.security.oauth2.provider.endpoint.AuthorizationEndpoint;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
@@ -108,10 +110,19 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         private AppUserDetailsService appUserDetailsService;
         @Autowired
         private OauthClientDetailsService oauthClientDetailsService;
+        @Autowired
+        private AuthorizationEndpoint authorizationEndpoint;
 
         @Bean
         protected ApprovalStore approvalStore() {
             return new JdbcApprovalStore(dataSource);
+        }
+        
+        @PostConstruct
+        public void init() {
+            // custom your pages
+            this.authorizationEndpoint.setErrorPage("forward:/error");  // default is forward:/oauth/error
+            this.authorizationEndpoint.setUserApprovalPage("forward:/oauth/confirm_access");
         }
 
         @Override
