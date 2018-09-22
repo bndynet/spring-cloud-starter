@@ -46,7 +46,7 @@ public class HomeController implements ErrorController {
         return "oauth/confirm_access";
     } 
     
-    @RequestMapping("/error")
+    @RequestMapping(value = {"/error", "/oauth/error"})
     public String handleError(Model mView, HttpServletRequest request) {
         Object error = request.getAttribute("error");
         if (error instanceof OAuth2Exception) {
