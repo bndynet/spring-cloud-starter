@@ -4,6 +4,8 @@
  */
 package net.bndy.sc.service.sso;
 
+import java.util.Arrays;
+
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +35,6 @@ import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-
-import com.google.common.collect.ImmutableList;
 
 import net.bndy.sc.service.sso.service.AppUserDetailsService;
 import net.bndy.sc.service.sso.service.OauthClientDetailsService;
@@ -99,7 +99,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // setAllowedHeaders is important! Without it, OPTIONS preflight request
         // will fail with 403 Invalid CORS request
-        config.setAllowedHeaders(ImmutableList.of("Authorization", "Cache-Control", "Content-Type"));
+        config.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
 
         config.addAllowedMethod("*");
 
