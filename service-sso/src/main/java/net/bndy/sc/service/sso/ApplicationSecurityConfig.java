@@ -7,8 +7,10 @@ package net.bndy.sc.service.sso;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -28,6 +30,11 @@ import org.springframework.security.oauth2.provider.approval.ApprovalStore;
 import org.springframework.security.oauth2.provider.approval.JdbcApprovalStore;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
+
+import com.google.common.collect.ImmutableList;
 
 import net.bndy.sc.service.sso.service.AppUserDetailsService;
 import net.bndy.sc.service.sso.service.OauthClientDetailsService;
@@ -39,8 +46,6 @@ import net.bndy.sc.service.sso.service.OauthClientDetailsService;
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)  // for enabling @PreAuthorize support
 public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
-
-    private static final String SERVER_RESOURCE_ID = "sso-resource"; //$NON-NLS-1$
 
     @Autowired
     private DataSource dataSource;
@@ -61,7 +66,10 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().httpBasic().disable().authorizeRequests().antMatchers("/", "/login*").permitAll()
+        http.cors().and()
+            .csrf().disable()
+            .httpBasic().disable().authorizeRequests()
+            .antMatchers("/", "/login*").permitAll()
             .antMatchers("/admin", "/admin/**").hasAnyAuthority(AppUserDetailsService.ROLE_ADMIN, AppUserDetailsService.ROLE_READONLY_USER)
             .anyRequest().authenticated().and().formLogin().defaultSuccessUrl("/").loginPage("/login").permitAll().and()
             .rememberMe().rememberMeParameter("rememberMe").and().logout().permitAll()
@@ -79,22 +87,45 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     protected AuthenticationManager authenticationManager() throws Exception {
         return super.authenticationManager();
     }
+    
+    @Bean
+    public FilterRegistrationBean<CorsFilter> initCorsFilter() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
 
+        // setAllowCredentials(true) is important, otherwise:
+        // The value of the 'Access-Control-Allow-Origin' header in the response must not be the wildcard '*' when the request's credentials mode is 'include'.
+        config.setAllowCredentials(true);
+
+        // setAllowedHeaders is important! Without it, OPTIONS preflight request
+        // will fail with 403 Invalid CORS request
+        config.setAllowedHeaders(ImmutableList.of("Authorization", "Cache-Control", "Content-Type"));
+
+        config.addAllowedMethod("*");
+
+        // TODO: use setAllowedOrigins to allow multiple origins
+        config.addAllowedOrigin("*");
+        source.registerCorsConfiguration("/**", config);
+        FilterRegistrationBean<CorsFilter> bean = new FilterRegistrationBean<>(new CorsFilter(source));
+        bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
+        return bean;
+    }
+    
     @Configuration
     @EnableResourceServer
     protected class ResourceServer extends ResourceServerConfigurerAdapter {
 
         @Override
         public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
-            resources.tokenStore(tokenStore()).resourceId(SERVER_RESOURCE_ID);
+            resources.tokenStore(tokenStore()).resourceId(Application.RESOURCE_ID);
         }
 
         @Override
         public void configure(HttpSecurity http) throws Exception {
             http.requestMatchers().antMatchers("/oauth/me").and().authorizeRequests().antMatchers("/oauth/me")
                     .authenticated()
-//            		.access("#oauth2.hasScope('user_info')")
-            ;
+//                    .access("#oauth2.hasScope('user_info')")
+                    ;
         }
     }
 
@@ -133,13 +164,16 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         @Override
         public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
             security.allowFormAuthenticationForClients().tokenKeyAccess("permitAll()")
-                    .checkTokenAccess("isAuthenticated()");
+//                    .checkTokenAccess("isAuthenticated()");
+                ;
         }
 
         @Override
         public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
             clients.withClientDetails(oauthClientDetailsService);
         }
+        
+        
     }
 
 }

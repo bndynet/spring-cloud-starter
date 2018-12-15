@@ -20,6 +20,8 @@ import net.bndy.sc.lib.ApplicationBase;
 @EnableRedisHttpSession
 public class Application extends ApplicationBase {
 
+    public static final String RESOURCE_ID = "sso-resource"; //$NON-NLS-1$
+
     @PostConstruct
     void started() {
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
