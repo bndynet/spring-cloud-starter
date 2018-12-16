@@ -4,11 +4,18 @@
 .layout-admin {
     & > .main {
         .content-header {
+            margin-top: 30px;
+            margin-left: 35px;
+            margin-right: 35px;
             .toolbox {
                 .form-search-slim {
                     width: 260px;
                 }
             }
+        }
+        .content-body {
+            margin-left: 35px;
+            margin-right: 35px;
         }
     }
 

@@ -57,11 +57,11 @@ public class OauthClientDetails implements ClientDetails {
         this.clientSecretRaw = clientSecretRaw;
     }
 
-    private String resourceIds;
-    private String scope;
+    private String resources;
+    private String scopes;
 
-    public void setScope(String scope) {
-        this.scope = scope;
+    public void setScopes(String scopes) {
+        this.scopes = scopes;
     }
 
     private String authorizedGrantTypes;
@@ -114,8 +114,8 @@ public class OauthClientDetails implements ClientDetails {
         this.clientName = clientName;
     }
 
-    public void setResourceIds(String resourceIds) {
-        this.resourceIds = resourceIds;
+    public void setResources(String resources) {
+        this.resources = resources;
     }
 
     public void setAdditionalInformation(String additionalInformation) {
@@ -130,6 +130,22 @@ public class OauthClientDetails implements ClientDetails {
         this.authorizedGrantTypes = authorizedGrantTypes;
     }
 
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+    
+    public String getResources() {
+        return resources;
+    }
+    
+    public String getScopes() {
+        return scopes;
+    }
+
     @Override
     public String getClientId() {
         return clientId;
@@ -137,8 +153,8 @@ public class OauthClientDetails implements ClientDetails {
 
     @Override
     public Set<String> getResourceIds() {
-        if (resourceIds != null && !resourceIds.trim().isEmpty()) {
-            return Arrays.asList(resourceIds.split(";")).stream().collect(Collectors.toSet());
+        if (resources != null && !resources.trim().isEmpty()) {
+            return Arrays.asList(resources.split("[;,]")).stream().collect(Collectors.toSet());
         }
         return Collections.emptySet();
     }
@@ -160,8 +176,8 @@ public class OauthClientDetails implements ClientDetails {
 
     @Override
     public Set<String> getScope() {
-        if (scope != null && !scope.isEmpty()) {
-            return Arrays.asList(scope.split(";")).stream().collect(Collectors.toSet());
+        if (scopes != null && !scopes.isEmpty()) {
+            return Arrays.asList(scopes.split("[;,]")).stream().map(String::trim).collect(Collectors.toSet());
         }
         return Collections.emptySet();
     }
@@ -169,7 +185,7 @@ public class OauthClientDetails implements ClientDetails {
     @Override
     public Set<String> getAuthorizedGrantTypes() {
         if (authorizedGrantTypes != null && !authorizedGrantTypes.isEmpty()) {
-            return Arrays.asList(authorizedGrantTypes.split(";")).stream().collect(Collectors.toSet());
+            return Arrays.asList(authorizedGrantTypes.split("[;,]")).stream().map(String::trim).collect(Collectors.toSet());
         }
         return Collections.emptySet();
     }
@@ -177,7 +193,7 @@ public class OauthClientDetails implements ClientDetails {
     @Override
     public Set<String> getRegisteredRedirectUri() {
         if (redirectUri != null && !redirectUri.isEmpty()) {
-            return Arrays.asList(redirectUri.split(";")).stream().collect(Collectors.toSet());
+            return Arrays.asList(redirectUri.split("[;,]")).stream().map(String::trim).collect(Collectors.toSet());
         }
         return Collections.emptySet();
     }
@@ -228,13 +244,5 @@ public class OauthClientDetails implements ClientDetails {
             e.printStackTrace();
         }
         return map;
-    }
-
-    public String getOwner() {
-        return owner;
-    }
-
-    public void setOwner(String owner) {
-        this.owner = owner;
     }
 }

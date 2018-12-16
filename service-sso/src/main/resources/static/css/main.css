@@ -1,5 +1,16 @@
+.layout-admin > .main .content-header {
+  margin-top: 30px;
+  margin-left: 35px;
+  margin-right: 35px;
+}
+
 .layout-admin > .main .content-header .toolbox .form-search-slim {
   width: 260px;
+}
+
+.layout-admin > .main .content-body {
+  margin-left: 35px;
+  margin-right: 35px;
 }
 
 .layout-admin > footer {

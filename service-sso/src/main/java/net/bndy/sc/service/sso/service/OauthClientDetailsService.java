@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import net.bndy.lib.StringHelper;
+import net.bndy.sc.service.sso.Application;
 import net.bndy.sc.service.sso.entity.OauthClientDetails;
 import net.bndy.sc.service.sso.repository.OauthClientDetailsRepository;
 
@@ -31,7 +32,6 @@ public class OauthClientDetailsService implements ClientDetailsService {
 
     private final static int CLIENT_ID_LENGTH = 10;
     private final static int CLIENT_SECRET_LENGTH = 20;
-    private final static String DEFAULT_AUTHORIZED_GRANT_TYPES = "authorization_code;refresh_token";
 
     @Autowired
     private OauthClientDetailsRepository oauthClientDetailsRepository;
@@ -74,11 +74,14 @@ public class OauthClientDetailsService implements ClientDetailsService {
             clientDetails.setClientId(StringHelper.generateRandomCode(CLIENT_ID_LENGTH));
             clientDetails.setClientSecretRaw(StringHelper.generateRandomCode(CLIENT_SECRET_LENGTH));
             clientDetails.setClientSecret(this.passwordEncoder.encode(clientDetails.getClientSecretRaw()));
-            clientDetails.setResourceIds("*");
-            clientDetails.setScope("all");
-            clientDetails.setAuthorizedGrantTypes(DEFAULT_AUTHORIZED_GRANT_TYPES);
             clientDetails.setAccessTokenValidity(60);
             clientDetails.setRefreshTokenValidity(60);
+        }
+        if (clientDetails.getResources() == null) {
+            clientDetails.setResources(Application.RESOURCE_ID);
+        }
+        if (clientDetails.getResources() != null && !clientDetails.getResources().contains(Application.RESOURCE_ID)) {
+            clientDetails.setResources(Application.RESOURCE_ID + ";" + clientDetails.getResources());
         }
         clientDetails = this.oauthClientDetailsRepository.save(clientDetails);
         return clientDetails;

@@ -1,8 +1,6 @@
 <!DOCTYPE html>
-<html
-	xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
-	layout:decorator="admin/_layout">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" layout:decorator="admin/_layout">
 
 <head>
 <title th:text="#{client.clientInfo}"></title>
@@ -15,107 +13,127 @@
 				<li class="breadcrumb-item"><a th:href="@{/admin}"> <i class="fa fa-fw fa-home"></i>
 						<span th:text="#{home}">Home</span>
 				</a></li>
-				<li class="breadcrumb-item"><a
-					th:href="@{/admin/client/list}"
+				<li class="breadcrumb-item"><a th:href="@{/admin/client/list}"
 					th:text="#{client.clientList}"></a></li>
-				<li
-					class="breadcrumb-item active"
-					aria-current="page"
-					th:text="#{client.clientInfo}"></li>
+				<li class="breadcrumb-item active" aria-current="page" th:text="#{client.clientInfo}"></li>
 			</ol>
 		</nav>
 		<div class="content-header with-border">
-			<h1
-				th:text="#{client.addClient}"
-				th:unless="${model.clientId}">Add Client</h1>
-			<h1
-				th:text="#{client.editClient}"
-				th:if="${model.clientId}">Edit Client</h1>
+			<h1 th:text="#{client.addClient}" th:unless="${model.clientId}">Add Client</h1>
+			<h1 th:text="#{client.editClient}" th:if="${model.clientId}">Edit Client</h1>
 		</div>
 		<div class="content-body">
-			<form
-				th:action="@{/admin/client/save}"
-				method="POST" novalidate>
-				<input
-					type="hidden"
-					th:field="*{model.clientId}">
+			<form th:action="@{/admin/client/save}" method="POST" novalidate>
+				<input type="hidden" th:field="*{model.clientId}">
 				<div class="row">
 					<div class="col-md-6">
-					    <div class="row">
+						<div class="row">
 							<div class="form-group col">
-								<label
-									th:text="#{client.clientName}"
-									for="clientName"></label> <input
-									class="form-control" required
-									th:field="*{model.clientName}">
+								<label th:text="#{client.clientName}" for="clientName"></label> <input
+									class="form-control" required th:field="*{model.clientName}">
 								<div th:text="#{msgRequiredField}" class="invalid-feedback">Required field</div>
 							</div>
 							<div class="form-group col">
-								<label
-									th:text="#{client.owner}"
-									for="owner"></label> <input
-									class="form-control" required
-									th:field="*{model.owner}">
+								<label th:text="#{client.owner}" for="owner"></label> <input class="form-control"
+									required th:field="*{model.owner}">
 								<div th:text="#{msgRequiredField}" class="invalid-feedback">Required field</div>
 							</div>
-					    </div>
+						</div>
+						<div class="row">
+							<div class="form-group col">
+								<label for="resources"><span th:text="#{client.resourceIds}"></span> 
+									<small>(Built-in resource: <span th:text="${T(net.bndy.sc.service.sso.Application).RESOURCE_ID}"></span>)</small></label> <input
+									class="form-control" required th:field="*{model.resources}">
+								<div th:text="#{msgRequiredField}" class="invalid-feedback">Required field</div>
+							</div>
+							<div class="form-group col">
+								<label th:text="#{client.scope}" for="scope"></label> <input class="form-control" required th:field="*{model.scopes}">
+								<div th:text="#{msgRequiredField}" class="invalid-feedback">Required field</div>
+							</div>
+						</div>
 						<div class="form-group">
-							<label
-								th:text="#{client.redirectUri}"
-								for="redirectUri"></label> <textarea
-								rows="5"
-								id="redirectUri"
-								name="redirectUri"
-								class="form-control"
-								required
-								><th:block th:each="url: ${#strings.arraySplit(model.redirectUri, ';')}"><th:block th:text="${{url}}"></th:block>
+							<label th:text="#{client.redirectUri}" for="redirectUri"></label>
+							<textarea rows="5" id="redirectUri" name="redirectUri" class="form-control" required><th:block
+									th:each="url: ${#strings.arraySplit(model.redirectUri, ';')}"><th:block th:text="${{#strings.trim(url)}}"></th:block> 
 </th:block></textarea>
 							<div th:text="#{msgRequiredField}" class="invalid-feedback">Required field</div>
 						</div>
 						<div class="form-group">
-							<div class="form-check checkbox checkbox-primary">
-								<input
-									class="form-check-input"
-									type="checkbox"
-									id="autoapprove"
-									name="autoapprove"
-									th:checked="*{model.autoapprove}"
-									value="true"> <label
-									class="form-check-label"
-									for="autoapprove"
-									th:text="#{client.autoApprove}"> Auto-approve? </label>
+							<label th:text="#{client.grantTypes}"></label>
+							<div>
+								<div class="form-check checkbox form-check-inline">
+									<input class="form-check-input" type="checkbox" id="grantTypeAuthorizationCode" name="authorizedGrantTypes"
+										th:checked="${#strings.contains(model.authorizedGrantTypes, 'authorization_code')}" value="authorization_code"> <label
+										class="form-check-label" for="grantTypeAuthorizationCode" th:text="#{client.grantTypeAuthorizationCode}"> 
+										Grant Type</label>
+								</div>
+								<div class="form-check checkbox form-check-inline">
+									<input class="form-check-input" type="checkbox" id="grantTypeRefreshToken" name="authorizedGrantTypes"
+										th:checked="${#strings.contains(model.authorizedGrantTypes, 'refresh_token')}" value="refresh_token"> <label
+										class="form-check-label" for="grantTypeRefreshToken" th:text="#{client.grantTypeRefreshToken}"> 
+										Grant Type</label>
+								</div>
+								<div class="form-check checkbox form-check-inline">
+									<input class="form-check-input" type="checkbox" id="grantTypePassword" name="authorizedGrantTypes"
+										th:checked="${#strings.contains(model.authorizedGrantTypes, 'password')}" value="password"> <label
+										class="form-check-label" for="grantTypePassword" th:text="#{client.grantTypePassword}"> 
+										Grant Type</label>
+								</div>
+								<div class="form-check checkbox form-check-inline">
+									<input class="form-check-input" type="checkbox" id="grantTypeClientCredentials" name="authorizedGrantTypes"
+										th:checked="${#strings.contains(model.authorizedGrantTypes, 'client_credentials')}" value="client_credentials"> <label
+										class="form-check-label" for="grantTypeClientCredentials" th:text="#{client.grantTypeClientCredentials}"> 
+										Grant Type</label>
+								</div>
+								<br />
+								<div class="form-check checkbox form-check-inline">
+									<input class="form-check-input" type="checkbox" id="grantTypeDeviceCode" name="authorizedGrantTypes"
+										th:checked="${#strings.contains(model.authorizedGrantTypes, 'device_code')}" value="device_code"> <label
+										class="form-check-label" for="grantTypeDeviceCode" th:text="#{client.grantTypeDeviceCode}"> 
+										Grant Type</label>
+								</div>
+								<div class="form-check checkbox form-check-inline">
+									<input class="form-check-input" type="checkbox" id="grantTypeImplicit" name="authorizedGrantTypes"
+										th:checked="${#strings.contains(model.authorizedGrantTypes, 'implicit')}" value="implicit"> <label
+										class="form-check-label" for="grantTypeImplicit" th:text="#{client.grantTypeImplicit}"> 
+										Implicit</label>
+								</div>
 							</div>
 						</div>
 						<div class="form-group">
-							<button
-								type="submit"
-								class="btn btn-primary"
-								th:text="#{labelSave}">Save</button>
-							<a
-								class="btn btn-light"
-								th:href="@{/admin/client/list}"
-								th:text="#{labelCancel}">Cancel</a>
+							<label th:text="#{client.autoApprove}"></label>
+							<div class="form-check checkbox checkbox-primary">
+								<input class="form-check-input" type="checkbox" id="autoapprove" name="autoapprove"
+									th:checked="*{model.autoapprove}" value="true"> <label
+									class="form-check-label" for="autoapprove" th:text="#{client.autoApproveDesc}">
+									Auto-approve? </label>
+							</div>
+						</div>
+						<div class="form-group">
+							<button type="submit" class="btn btn-primary" th:text="#{labelSave}">Save</button>
+							<a class="btn btn-light" th:href="@{/admin/client/list}" th:text="#{labelCancel}">Cancel</a>
 						</div>
 					</div>
 				</div>
 			</form>
 		</div>
 		<script th:inline="javascript">
-         /*<![CDATA[*/
-         function checkForm() {
-              return $('#clientName').val() && $('#owner').val() && $('#redirectUri').val();
-         }
-          $(function(){
-              $('form').submit(function(event){
-                  if (!checkForm()) {
-                      event.preventDefault();
-                      event.stopPropagation();
-                  }
-				  $(this).addClass('was-validated');
-              });
-          });
-          /*]]>*/
-        </script>
+			/*<![CDATA[*/
+			function checkForm() {
+				return $('#clientName').val() && $('#owner').val()
+						&& $('#redirectUri').val() && $('$scopes').val();;
+			}
+			$(function() {
+				$('form').submit(function(event) {
+					if (!checkForm()) {
+						event.preventDefault();
+						event.stopPropagation();
+					}
+					$(this).addClass('was-validated');
+				});
+			});
+			/*]]>*/
+		</script>
 	</div>
 </body>
 
