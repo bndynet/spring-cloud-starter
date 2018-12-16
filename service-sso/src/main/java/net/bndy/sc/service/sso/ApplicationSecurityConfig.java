@@ -4,7 +4,13 @@
  */
 package net.bndy.sc.service.sso;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -36,8 +42,12 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import com.fasterxml.jackson.databind.deser.std.StringArrayDeserializer;
+
+import net.bndy.sc.service.sso.entity.OauthClientDetails;
 import net.bndy.sc.service.sso.service.AppUserDetailsService;
 import net.bndy.sc.service.sso.service.OauthClientDetailsService;
+import software.amazon.ion.impl.PrivateScalarConversions.ValueVariant;
 
 /**
  * @author Bendy Zhang
@@ -53,6 +63,8 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private AppUserDetailsService appUserDetailsService;
+    @Autowired
+    private OauthClientDetailsService oauthClientDetailsService;
 
     @Bean
     public TokenStore tokenStore() {
@@ -103,8 +115,21 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
         config.addAllowedMethod("*");
 
-        // TODO: use setAllowedOrigins to allow multiple origins
-        config.addAllowedOrigin("*");
+        List<OauthClientDetails> allClients = this.oauthClientDetailsService.getAllClients();
+        for(OauthClientDetails client: allClients) {
+            for(String redirectUrl: client.getRegisteredRedirectUri()) {
+                if (redirectUrl != null) {
+                    try {
+                        URL url =new URL(redirectUrl);
+                        config.addAllowedOrigin(url.getProtocol() + "://" + url.getHost() + (url.getPort() == 80 ? "" : ":" + url.getPort()));
+                    } catch (MalformedURLException e) {
+                        // TODO Auto-generated catch block
+                        System.out.print(redirectUrl + " is not valid URL.");
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
         source.registerCorsConfiguration("/**", config);
         FilterRegistrationBean<CorsFilter> bean = new FilterRegistrationBean<>(new CorsFilter(source));
         bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
