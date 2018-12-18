@@ -47,7 +47,6 @@ import com.fasterxml.jackson.databind.deser.std.StringArrayDeserializer;
 import net.bndy.sc.service.sso.entity.OauthClientDetails;
 import net.bndy.sc.service.sso.service.AppUserDetailsService;
 import net.bndy.sc.service.sso.service.OauthClientDetailsService;
-import software.amazon.ion.impl.PrivateScalarConversions.ValueVariant;
 
 /**
  * @author Bendy Zhang
