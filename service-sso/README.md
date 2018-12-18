@@ -3,6 +3,11 @@
 This is a single sign on application integrated authorization server and resource server.
 Meanwhile, implemented admin panel for user and client management.
 
+## Requirements
+
+- MySQL: the main database
+- Redis: store the sessions
+
 ## Getting Started
 
 1. Clone this repo
