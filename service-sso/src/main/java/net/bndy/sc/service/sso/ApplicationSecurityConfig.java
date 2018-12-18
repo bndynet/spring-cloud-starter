@@ -4,8 +4,6 @@
  */
 package net.bndy.sc.service.sso;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
