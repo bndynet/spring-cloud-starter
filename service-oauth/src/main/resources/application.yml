@@ -13,17 +13,16 @@ spring:
         - http://server-center:9000/sba
 
 app:
-#  callbackUri: http://cloud.bndy.net/service-oauth/callback   # here to use nginx for proxy, if empty, will use the default server endpoint (/callback)
-  callbackUri: http://localhost:9100/callback
+  callbackUri: ${BNDYNET_CLOUD_OAUTH_CALLBACK_URL:http://localhost:9100/callback}   # here to use nginx for proxy, if empty, will use the default server endpoint (/callback)
   allowedOrigins: http://localhost,http://gh-dashboard.bndy.net,https://gh-dashboard.bndy.net
   clients:
     github:
-      clientId: 8dfe3a52a2d02a042b84 # f19062e395781988b16b
-      clientSecret: 352915019b5c410eb6df86ef64f02c8c6de39947 # c2aff484725198c6147e498bf5d43b1d55969fca
+      clientId: ${GITHUB_CLIENT_ID:8dfe3a52a2d02a042b84}
+      clientSecret: ${GITHUB_CLIENT_SECRET:352915019b5c410eb6df86ef64f02c8c6de39947}
       accessTokenUri: https://github.com/login/oauth/access_token
       userAuthorizationUri: https://github.com/login/oauth/authorize
     bndynet:
-      clientId: foo
-      clientSecret: 1
-      accessTokenUri: http://localhost:9110/oauth/token
-      userAuthorizationUri: http://localhost:9110/oauth/authorize
+      clientId: ${BNDYNET_CLIENT_ID:foo}
+      clientSecret: ${BNDYNET_CLIENT_SECRET:1}
+      accessTokenUri: ${BNDYNET_CLOUD_SSO_TOKEN_URL:http://localhost:9110/oauth/token}
+      userAuthorizationUri: ${BNDYNET_CLOUD_SSO_AUTH_URL:http://localhost:9110/oauth/authorize}
