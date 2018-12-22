@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import net.bndy.sc.service.sso.Application;
 import net.bndy.sc.service.sso.entity.OauthClientDetails;
 import net.bndy.sc.service.sso.service.OauthClientDetailsService;
 
@@ -51,8 +50,6 @@ public class ClientController {
     @PreAuthorize(value = "hasAuthority('" + OauthClientDetailsService.PERMISSION_WRITE + "')")
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String save(@ModelAttribute OauthClientDetails formModel, Model viewModel) {
-        // attach resource id so that this client can be get user info
-        formModel.setResources(Application.RESOURCE_ID);
         this.oauthClientDetailsService.save(formModel);
         return "redirect:/admin/client/list";
     }

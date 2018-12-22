@@ -64,6 +64,7 @@ public class OauthClientDetailsService implements ClientDetailsService {
 
         if (clientDetails.getClientId() != null && !clientDetails.getClientId().trim().isEmpty()) {
             OauthClientDetails originClient = this.findByClientId(clientDetails.getClientId());
+            originClient.setScopes(clientDetails.getScopes());
             originClient.setClientName(clientDetails.getClientName());
             originClient.setAutoapprove(clientDetails.getAutoapprove());
             originClient.setRedirectUri(clientDetails.getRedirectUri());
@@ -77,6 +78,7 @@ public class OauthClientDetailsService implements ClientDetailsService {
             clientDetails.setAccessTokenValidity(60);
             clientDetails.setRefreshTokenValidity(60);
         }
+        // attach resource id so that this client can be get user info
         if (clientDetails.getResources() == null) {
             clientDetails.setResources(Application.RESOURCE_ID);
         }
