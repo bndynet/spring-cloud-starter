@@ -40,8 +40,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-import com.fasterxml.jackson.databind.deser.std.StringArrayDeserializer;
-
 import net.bndy.sc.service.sso.entity.OauthClientDetails;
 import net.bndy.sc.service.sso.service.AppUserDetailsService;
 import net.bndy.sc.service.sso.service.OauthClientDetailsService;
@@ -77,7 +75,8 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and()
             .csrf().disable()
-            .httpBasic().disable().authorizeRequests()
+//            .httpBasic().disable()
+            .authorizeRequests()
             .antMatchers("/", "/login*").permitAll()
             .antMatchers("/admin", "/admin/**").hasAnyAuthority(AppUserDetailsService.ROLE_ADMIN, AppUserDetailsService.ROLE_READONLY_USER)
             .anyRequest().authenticated().and().formLogin().defaultSuccessUrl("/").loginPage("/login").permitAll().and()
@@ -120,7 +119,6 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                         URL url =new URL(redirectUrl);
                         config.addAllowedOrigin(url.getProtocol() + "://" + url.getHost() + (url.getPort() == 80 ? "" : ":" + url.getPort()));
                     } catch (MalformedURLException e) {
-                        // TODO Auto-generated catch block
                         System.out.print(redirectUrl + " is not valid URL.");
                         e.printStackTrace();
                     }

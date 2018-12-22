@@ -9,5 +9,6 @@ package net.bndy.sc.ms.oauth;
  * @version 1.0
  */
 public enum OAuthTarget {
-	GitHub
+	GitHub,
+	BndyNet,
 }

@@ -12,12 +12,18 @@ spring:
         url:
         - http://server-center:9000/sba
 
-oauth:
-  callback-url: http://cloud.bndy.net/service-oauth/callback   # here to use nginx for proxy, if empty, will use the default server endpoint (/callback)
-  allowed-origins: http://localhost:8080, http://gh-dashboard.bndy.net
-  github:
-    client_id: f19062e395781988b16b
-    client_secret: c2aff484725198c6147e498bf5d43b1d55969fca
-    url:
-      authorize: https://github.com/login/oauth/authorize
-      access_token: https://github.com/login/oauth/access_token
+app:
+#  callbackUri: http://cloud.bndy.net/service-oauth/callback   # here to use nginx for proxy, if empty, will use the default server endpoint (/callback)
+  callbackUri: http://localhost:9100/callback
+  allowedOrigins: http://localhost,http://gh-dashboard.bndy.net,https://gh-dashboard.bndy.net
+  clients:
+    github:
+      clientId: 8dfe3a52a2d02a042b84 # f19062e395781988b16b
+      clientSecret: 352915019b5c410eb6df86ef64f02c8c6de39947 # c2aff484725198c6147e498bf5d43b1d55969fca
+      accessTokenUri: https://github.com/login/oauth/access_token
+      userAuthorizationUri: https://github.com/login/oauth/authorize
+    bndynet:
+      clientId: foo
+      clientSecret: 1
+      accessTokenUri: http://localhost:9110/oauth/token
+      userAuthorizationUri: http://localhost:9110/oauth/authorize
