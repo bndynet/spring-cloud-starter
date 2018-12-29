@@ -21,6 +21,7 @@ app:
       clientSecret: ${GITHUB_CLIENT_SECRET:352915019b5c410eb6df86ef64f02c8c6de39947}
       accessTokenUri: https://github.com/login/oauth/access_token
       userAuthorizationUri: https://github.com/login/oauth/authorize
+      scope: gist
     bndynet:
       clientId: ${BNDYNET_CLIENT_ID:foo}
       clientSecret: ${BNDYNET_CLIENT_SECRET:1}

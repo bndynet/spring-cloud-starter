@@ -14,6 +14,7 @@ public class ClientConfiguration {
     private String clientSecret;
     private String accessTokenUri;
     private String userAuthorizationUri;
+    private String scope;
 
     public String getClientId() {
         return clientId;
@@ -47,4 +48,11 @@ public class ClientConfiguration {
         this.userAuthorizationUri = userAuthorizationUri;
     }
 
+    public String getScope() {
+        return scope;
+    }
+
+    public void setScope(String scope) {
+        this.scope = scope;
+    }
 }

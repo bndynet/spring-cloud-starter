@@ -31,6 +31,7 @@ public class OAuthController {
     private final String KEY_REDIRECT_URI = "redirect_uri";
     private final String KEY_CLIENT_ID = "client_id";
     private final String KEY_STATE = "state";
+    private final String KEY_SCOPE = "scope";
     private final String KEY_ACCESS_TOKEN = "access_token";
     private final String KEY_CONFIG = "oauth_config";
     private final String KEY_RESPONSE_TYPE = "response_type";
@@ -80,6 +81,7 @@ public class OAuthController {
         attributes.addAttribute(KEY_CLIENT_ID, client.getClientId());
         attributes.addAttribute(KEY_REDIRECT_URI, this.getCallbackUrl());
         attributes.addAttribute(KEY_STATE, state);
+        attributes.addAttribute(KEY_SCOPE, client.getScope());
         attributes.addAttribute(KEY_RESPONSE_TYPE, "code");
         return new RedirectView(client.getUserAuthorizationUri());
     }
