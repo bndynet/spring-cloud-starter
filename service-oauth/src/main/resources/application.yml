@@ -14,7 +14,7 @@ spring:
 
 app:
   callbackUri: ${BNDYNET_CLOUD_OAUTH_CALLBACK_URL:http://localhost:9100/callback}   # here to use nginx for proxy, if empty, will use the default server endpoint (/callback)
-  allowedOrigins: http://localhost,http://gh-dashboard.bndy.net,https://gh-dashboard.bndy.net
+  allowedOrigins: http://localhost,http://gh-dashboard.bndy.net,https://gh-dashboard.bndy.net,http://gh-gist.bndy.net,https://gh-gist.bndy.net
   clients:
     github:
       clientId: ${GITHUB_CLIENT_ID:8dfe3a52a2d02a042b84}
