@@ -22,6 +22,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
@@ -37,6 +38,7 @@ import org.springframework.security.oauth2.provider.approval.JdbcApprovalStore;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
@@ -49,6 +51,7 @@ import net.bndy.sc.service.sso.service.OauthClientDetailsService;
  * @version 1.0
  */
 @Configuration
+@EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)  // for enabling @PreAuthorize support
 public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -73,8 +76,8 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and()
-            .csrf().disable()
+        http.cors()
+            .and().csrf().disable()
 //            .httpBasic().disable()
             .authorizeRequests()
             .antMatchers("/", "/login*").permitAll()
@@ -95,6 +98,21 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     protected AuthenticationManager authenticationManager() throws Exception {
         return super.authenticationManager();
     }
+
+    // Option instead of initCorsFilter method
+    // but can not append `Access-Control-Allow-Origin` header in response,
+    // so does not work
+//    @Bean
+//    CorsConfigurationSource corsConfigurationSource() {
+//        CorsConfiguration configuration = new CorsConfiguration();
+//        configuration.setAllowCredentials(true);
+//        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
+//        configuration.addAllowedMethod("*");
+//        configuration.setAllowedOrigins(this.getAllowedOrigins());
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", configuration);
+//        return source;
+//    }
     
     @Bean
     public FilterRegistrationBean<CorsFilter> initCorsFilter() {
@@ -111,13 +129,26 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
         config.addAllowedMethod("*");
 
+        List<String> origins = getAllowedOrigins();
+        for(String origin: origins) {
+            config.addAllowedOrigin(origin);
+        }
+        source.registerCorsConfiguration("/**", config);
+        FilterRegistrationBean<CorsFilter> bean = new FilterRegistrationBean<>(new CorsFilter(source));
+        bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
+        return bean;
+    }
+
+    private List<String> getAllowedOrigins() {
+        List<String> result = new ArrayList<>();
         List<OauthClientDetails> allClients = this.oauthClientDetailsService.getAllClients();
         for(OauthClientDetails client: allClients) {
             for(String redirectUrl: client.getRegisteredRedirectUri()) {
                 if (redirectUrl != null) {
                     try {
-                        URL url =new URL(redirectUrl);
-                        config.addAllowedOrigin(url.getProtocol() + "://" + url.getHost() + (url.getPort() == 80 ? "" : ":" + url.getPort()));
+                        URL url = new URL(redirectUrl);
+                        // if url has no port specified like `http://bndy.net`, the `getPort()` returns -1
+                        result.add(url.getProtocol() + "://" + url.getHost() + (url.getPort() == -1 ? "" : ":" + url.getPort()));
                     } catch (MalformedURLException e) {
                         System.out.print(redirectUrl + " is not valid URL.");
                         e.printStackTrace();
@@ -125,10 +156,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 }
             }
         }
-        source.registerCorsConfiguration("/**", config);
-        FilterRegistrationBean<CorsFilter> bean = new FilterRegistrationBean<>(new CorsFilter(source));
-        bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
-        return bean;
+        return result;
     }
     
     @Configuration
