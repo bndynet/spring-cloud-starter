@@ -80,7 +80,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
             .and().csrf().disable()
 //            .httpBasic().disable()
             .authorizeRequests()
-            .antMatchers("/", "/login*").permitAll()
+            .antMatchers("/", "/login*", "/oauth/logout").permitAll()
             .antMatchers("/admin", "/admin/**").hasAnyAuthority(AppUserDetailsService.ROLE_ADMIN, AppUserDetailsService.ROLE_READONLY_USER)
             .anyRequest().authenticated().and().formLogin().defaultSuccessUrl("/").loginPage("/login").permitAll().and()
             .rememberMe().rememberMeParameter("rememberMe").and().logout().permitAll()

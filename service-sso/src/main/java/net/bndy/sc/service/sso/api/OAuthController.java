@@ -33,8 +33,8 @@ public class OAuthController {
     @DeleteMapping("/oauth/logout")
     public void revokeToken(HttpServletRequest request) {
         String authorization = request.getHeader("Authorization");
-        if (authorization != null && authorization.contains("Bearer")) {
-            String tokenId = authorization.substring("Bearer".length() + 1);
+        if (authorization != null && authorization.split(" ").length > 1) {
+            String tokenId = authorization.split(" ")[1];
             tokenServices.revokeToken(tokenId);
         }
     }
