@@ -7,5 +7,5 @@ INSERT INTO oauth_client_details(`client_id`, `owner`, `access_token_validity`, 
     `redirect_uri`, `refresh_token_validity`, `resources`, `scopes`)
 	VALUES ('foo', 'BDNY-NET', 60, 'authorization_code;refresh_token;password',
 	0, 'OAuth Client', '$2a$10$amr84zeHdajBaaEyTei80ukj3kj.Tntq887pv9JXN.P.K5sAllx2K', '1',
-	'http://127.0.0.1:9111/login/oauth2/code/home;https://www.getpostman.com/oauth2/callback;http://localhost:9100/callback',
+	'http://127.0.0.1:9111/login/oauth2/code/home;https://www.getpostman.com/oauth2/callback;http://localhost:9100/callback;http://localhost:8080/auth/callback',
 	60, 'sso-resource', 'user_info');
