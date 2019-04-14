@@ -4,6 +4,7 @@
  */
 package net.bndy.sc.service.sso.entity;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
@@ -15,10 +16,16 @@ import javax.persistence.Id;
  * @version 1.0
  */
 @Entity
-public class OauthApprovals {
-	@Id
+public class OauthApprovals implements Serializable {
+    /**
+     * Composed-id MUST be serializable
+     */
+    private static final long serialVersionUID = 1L;
+
+    @Id
     @Column(name = "userid")
-    private String userId; 
+    private String userId;
+    @Id
     @Column(name = "clientid")
 	private String clientId;
     @SuppressWarnings("unused")
