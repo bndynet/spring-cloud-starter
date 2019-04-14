@@ -14,18 +14,18 @@ import javax.persistence.Id;
  */
 @Entity
 public class OauthAccessToken {
-	@Id
+    @Id
     private String tokenId;
-	@Column(columnDefinition="BLOB")
+    @Column(columnDefinition = "BLOB")
     private byte[] token;
     @SuppressWarnings("unused")
-	private String authenticationId;
+    private String authenticationId;
     @SuppressWarnings("unused")
-	private String userName;
+    private String userName;
     @SuppressWarnings("unused")
-	private String clientId;
-	@Column(columnDefinition="BLOB")
+    private String clientId;
+    @Column(columnDefinition = "BLOB")
     private byte[] authentication;
     @SuppressWarnings("unused")
-	private String refreshToken;
+    private String refreshToken;
 }

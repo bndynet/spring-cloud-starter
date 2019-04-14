@@ -14,7 +14,7 @@ import javax.persistence.Id;
  */
 @Entity
 public class OauthCode {
-	@Id
+    @Id
     private String code;
     @Column(columnDefinition = "BLOB")
     private byte[] authentication;

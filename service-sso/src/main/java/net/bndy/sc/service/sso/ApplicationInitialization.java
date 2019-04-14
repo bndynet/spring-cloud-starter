@@ -29,7 +29,7 @@ import net.bndy.sc.service.sso.service.OauthClientDetailsService;
  * @version 1.0
  */
 @Component
-public class ApplicationInitializaton implements ApplicationListener<ContextRefreshedEvent> {
+public class ApplicationInitialization implements ApplicationListener<ContextRefreshedEvent> {
 
     private final static String DEFAULT_ADMIN_USER = "admin";
     private final static String DEFAULT_ADMIN_PASS = "pass";
@@ -60,17 +60,18 @@ public class ApplicationInitializaton implements ApplicationListener<ContextRefr
     private AppPermissionService appPermissionService;
 
     @Override
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     public void onApplicationEvent(ContextRefreshedEvent event) {
 
-        if (alreadySetup)
+        if (alreadySetup) {
             return;
+        }
 
-        List<AppPermission> adminPermissions = new ArrayList<AppPermission>();
+        List<AppPermission> adminPermissions = new ArrayList<>();
         for (String permission : ADMIN_PERMISSIONS) {
             adminPermissions.add(this.appPermissionService.createIfNotFound(permission));
         }
-        List<AppPermission> readonlyUserPermissions = new ArrayList<AppPermission>();
+        List<AppPermission> readonlyUserPermissions = new ArrayList<>();
         for (String permission : READONLY_USER_PERMISSIONS) {
             readonlyUserPermissions.add(this.appPermissionService.createIfNotFound(permission));
         }
@@ -89,7 +90,7 @@ public class ApplicationInitializaton implements ApplicationListener<ContextRefr
             admin.setEnabled(true);
             admin.setRoles(Arrays.asList(roleAdmin));
             try {
-                admin = this.appUserDetailsService.saveUser(admin);
+                this.appUserDetailsService.saveUser(admin);
             } catch (ApplicationException e) {
                 e.printStackTrace();
             }
@@ -104,7 +105,7 @@ public class ApplicationInitializaton implements ApplicationListener<ContextRefr
             readonlyUser.setEnabled(true);
             readonlyUser.setRoles(Arrays.asList(roleReadonlyUser));
             try {
-                readonlyUser = this.appUserDetailsService.saveUser(readonlyUser);
+                this.appUserDetailsService.saveUser(readonlyUser);
             } catch (ApplicationException e) {
                 e.printStackTrace();
             }

@@ -20,7 +20,7 @@ import net.bndy.sc.service.sso.repository.AppRoleRepository;
  * @version 1.0
  */
 @Service
-@Transactional
+@Transactional(rollbackOn = Exception.class)
 public class AppRoleService {
     
     @Autowired

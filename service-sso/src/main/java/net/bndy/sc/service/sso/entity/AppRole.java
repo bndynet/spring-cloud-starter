@@ -20,30 +20,30 @@ import javax.persistence.JoinColumn;
 @Entity
 public class AppRole extends BaseIdEntity {
 
-		private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-		private String name;
+    private String name;
 
-		@ManyToMany(fetch = FetchType.EAGER)
-		@JoinTable(name = "app_role_permission", joinColumns = {
-				@JoinColumn(name = "role_id", referencedColumnName = "id") }, inverseJoinColumns = {
-						@JoinColumn(name = "permission_id", referencedColumnName = "id") })
-		private List<AppPermission> permissions;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "app_role_permission", joinColumns = {
+        @JoinColumn(name = "role_id", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "permission_id", referencedColumnName = "id")})
+    private List<AppPermission> permissions;
 
-		public String getName() {
-			return name;
-		}
+    public String getName() {
+        return name;
+    }
 
-		public List<AppPermission> getPermissions() {
-			return permissions;
-		}
+    public List<AppPermission> getPermissions() {
+        return permissions;
+    }
 
-		public void setName(String name) {
-			this.name = name;
-		}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-		public void setPermissions(List<AppPermission> permissions) {
-			this.permissions = permissions;
-		}
+    public void setPermissions(List<AppPermission> permissions) {
+        this.permissions = permissions;
+    }
 
-	}
+}

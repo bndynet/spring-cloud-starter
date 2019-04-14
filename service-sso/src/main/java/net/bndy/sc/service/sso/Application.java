@@ -20,7 +20,7 @@ import net.bndy.sc.lib.ApplicationBase;
 @EnableRedisHttpSession
 public class Application extends ApplicationBase {
 
-    public static final String RESOURCE_ID = "sso-resource"; //$NON-NLS-1$
+    public static final String RESOURCE_ID = "sso-resource";
 
     @PostConstruct
     void started() {

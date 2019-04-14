@@ -28,109 +28,123 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 @Entity
 public class AppUser extends BaseIdEntity implements UserDetails {
-	
-	private static final long serialVersionUID = 1L;
 
-	@Column(name = "username", nullable = false)
-	private String username;
+    private static final long serialVersionUID = 1L;
 
-	@Column(name = "email", nullable = false)
-	private String email;
+    @Column(name = "username", nullable = false)
+    private String username;
 
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    @Column(name = "email", nullable = false)
+    private String email;
 
-	@JsonIgnore
-	@Column(name = "enabled", nullable = false)
-	private boolean enabled;
+    public String getEmail() {
+        return email;
+    }
 
-	@JsonIgnore
-	@Column(name = "password", nullable = false)
-	private String password;
-	
-	@JsonIgnore
-	@Column(name = "account_locked", nullable = false)
-	private boolean accountLocked;
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	@JsonIgnore
-	@Column(name = "account_expired", nullable = false)
-	private boolean accountExpired;
+    @JsonIgnore
+    @Column(name = "enabled", nullable = false)
+    private boolean enabled;
 
-	@JsonIgnore
-	@Column(name = "credentials_expired", nullable = false)
-	private boolean credentialsExpired;
+    @JsonIgnore
+    @Column(name = "password", nullable = false)
+    private String password;
 
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "app_user_role", joinColumns = {
-			@JoinColumn(name = "user_id", referencedColumnName = "id") }, inverseJoinColumns = {
-					@JoinColumn(name = "role_id", referencedColumnName = "id") })
-	private List<AppRole> roles;
-	
-	
-	public List<AppRole> getRoles() {
+    @JsonIgnore
+    @Column(name = "account_locked", nullable = false)
+    private boolean accountLocked;
+
+    @JsonIgnore
+    @Column(name = "account_expired", nullable = false)
+    private boolean accountExpired;
+
+    @JsonIgnore
+    @Column(name = "credentials_expired", nullable = false)
+    private boolean credentialsExpired;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "app_user_role", joinColumns = {
+        @JoinColumn(name = "user_id", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "role_id", referencedColumnName = "id")})
+    private List<AppRole> roles;
+
+
+    public List<AppRole> getRoles() {
         return this.roles;
     }
+
     public void setRoles(List<AppRole> roles) {
         this.roles = roles;
     }
+
     public void setUsername(String username) {
-		this.username = username;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
-	public void setAccountExpired(boolean accountExpired) {
-		this.accountExpired = accountExpired;
-	}
-	public void setAccountLocked(boolean accountLocked) {
-		this.accountLocked = accountLocked;
-	}
-	public void setCredentialsExpired(boolean credentialsExpired) {
-		this.credentialsExpired = credentialsExpired;
-	}
-	
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
+        this.username = username;
+    }
 
-		roles.forEach(r -> {
-		    authorities.add(new SimpleGrantedAuthority(r.getName()));
-			r.getPermissions().forEach(p -> {
-				authorities.add(new SimpleGrantedAuthority(p.getName()));
-			});
-		});
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-		return authorities;
-	}
-	@Override
-	public String getPassword() {
-		return password;
-	}
-	@Override
-	public String getUsername() {
-		return username;
-	}
-	@Override
-	public boolean isAccountNonExpired() {
-		return !accountExpired;
-	}
-	@Override
-	public boolean isAccountNonLocked() {
-		return !accountLocked;
-	}
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return !credentialsExpired;
-	}
-	@Override
-	public boolean isEnabled() {
-		return enabled;
-	}
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public void setAccountExpired(boolean accountExpired) {
+        this.accountExpired = accountExpired;
+    }
+
+    public void setAccountLocked(boolean accountLocked) {
+        this.accountLocked = accountLocked;
+    }
+
+    public void setCredentialsExpired(boolean credentialsExpired) {
+        this.credentialsExpired = credentialsExpired;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
+
+        roles.forEach(r -> {
+            authorities.add(new SimpleGrantedAuthority(r.getName()));
+            r.getPermissions().forEach(p -> {
+                authorities.add(new SimpleGrantedAuthority(p.getName()));
+            });
+        });
+
+        return authorities;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return !accountExpired;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return !accountLocked;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return !credentialsExpired;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
 }

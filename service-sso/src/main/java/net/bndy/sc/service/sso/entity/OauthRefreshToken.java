@@ -14,10 +14,10 @@ import javax.persistence.Id;
  */
 @Entity
 public class OauthRefreshToken {
-	@Id
+    @Id
     private String tokenId;
-	@Column(columnDefinition="BLOB")
+    @Column(columnDefinition = "BLOB")
     private byte[] token;
-	@Column(columnDefinition="BLOB")
+    @Column(columnDefinition = "BLOB")
     private byte[] authentication;
 }

@@ -14,5 +14,5 @@ import net.bndy.sc.service.sso.entity.OauthClientDetails;
  */
 public interface OauthClientDetailsRepository extends JpaRepository<OauthClientDetails, String> {
 
-	OauthClientDetails findByClientId(String clientId);
+    OauthClientDetails findByClientId(String clientId);
 }

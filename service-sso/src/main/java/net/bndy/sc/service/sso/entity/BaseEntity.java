@@ -21,43 +21,43 @@ import org.hibernate.annotations.UpdateTimestamp;
 @MappedSuperclass
 public class BaseEntity implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Version
-	@Column(columnDefinition = "BIGINT(20) DEFAULT 0")
-	protected long version;
+    @Version
+    @Column(columnDefinition = "BIGINT(20) DEFAULT 0")
+    protected long version;
 
-	@CreationTimestamp
-	@Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-	protected LocalDateTime createdOn;
+    @CreationTimestamp
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    protected LocalDateTime createdOn;
 
-	@UpdateTimestamp
-	@Column(columnDefinition = "TIMESTAMP NULL")
-	protected LocalDateTime updatedOn;
+    @UpdateTimestamp
+    @Column(columnDefinition = "TIMESTAMP NULL")
+    protected LocalDateTime updatedOn;
 
 
-	public long getVersion() {
-		return version;
-	}
+    public long getVersion() {
+        return version;
+    }
 
-	public void setVersion(long version) {
-		this.version = version;
-	}
+    public void setVersion(long version) {
+        this.version = version;
+    }
 
-	public LocalDateTime getCreatedOn() {
-		return createdOn;
-	}
+    public LocalDateTime getCreatedOn() {
+        return createdOn;
+    }
 
-	public void setCreatedOn(LocalDateTime createdOn) {
-		this.createdOn = createdOn;
-	}
+    public void setCreatedOn(LocalDateTime createdOn) {
+        this.createdOn = createdOn;
+    }
 
-	public LocalDateTime getUpdatedOn() {
-		return updatedOn;
-	}
+    public LocalDateTime getUpdatedOn() {
+        return updatedOn;
+    }
 
-	public void setUpdatedOn(LocalDateTime updatedOn) {
-		this.updatedOn = updatedOn;
-	}
-	
+    public void setUpdatedOn(LocalDateTime updatedOn) {
+        this.updatedOn = updatedOn;
+    }
+
 }

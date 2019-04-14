@@ -17,7 +17,7 @@ import net.bndy.sc.service.sso.repository.AppPermissionRepository;
  * @version 1.0
  */
 @Service
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public class AppPermissionService extends JpaService<AppPermission, Long> {
     
     @Autowired

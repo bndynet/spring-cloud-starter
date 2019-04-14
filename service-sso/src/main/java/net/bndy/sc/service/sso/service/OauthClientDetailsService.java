@@ -24,9 +24,9 @@ import net.bndy.sc.service.sso.repository.OauthClientDetailsRepository;
  * @version 1.0
  */
 @Service
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public class OauthClientDetailsService implements ClientDetailsService {
-    
+
     public final static String PERMISSION_READ = "CLIENT:R";
     public final static String PERMISSION_WRITE = "CLIENT:W";
 
@@ -57,7 +57,7 @@ public class OauthClientDetailsService implements ClientDetailsService {
     }
 
     public OauthClientDetails save(OauthClientDetails clientDetails) {
-        
+
         if (clientDetails.getRedirectUri() != null) {
             clientDetails.setRedirectUri(clientDetails.getRedirectUri().trim().replaceAll("[\r|\n]+", ";"));
         }
@@ -97,7 +97,7 @@ public class OauthClientDetailsService implements ClientDetailsService {
         this.oauthClientDetailsRepository.deleteById(id);
     }
 
-	public long countClient() {
-	    return this.oauthClientDetailsRepository.count();
-	}
+    public long countClient() {
+        return this.oauthClientDetailsRepository.count();
+    }
 }

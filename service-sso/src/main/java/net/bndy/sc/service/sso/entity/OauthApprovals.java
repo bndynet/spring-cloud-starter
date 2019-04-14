@@ -27,13 +27,13 @@ public class OauthApprovals implements Serializable {
     private String userId;
     @Id
     @Column(name = "clientid")
-	private String clientId;
+    private String clientId;
     @SuppressWarnings("unused")
-	private String scope;
+    private String scope;
     @SuppressWarnings("unused")
-	private String status;
+    private String status;
     @Column(name = "expiresat")
-	private Timestamp expiresAt;
+    private Timestamp expiresAt;
     @Column(name = "lastmodifiedat")
-	private Timestamp lastModifiedAt;
+    private Timestamp lastModifiedAt;
 }

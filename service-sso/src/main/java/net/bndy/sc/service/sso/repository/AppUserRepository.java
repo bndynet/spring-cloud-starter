@@ -17,9 +17,10 @@ import net.bndy.sc.service.sso.entity.AppUser;
  */
 public interface AppUserRepository extends JpaRepository<AppUser, Long> {
 
-	AppUser findByEmail(String email);
-	AppUser findByUsername(String username);
-	
-	@Query("select e from #{#entityName} e where e.username like %:keywords% or e.email like %:keywords%")
-	List<AppUser> findByUsernameOrEmailContaining(String keywords);
+    AppUser findByEmail(String email);
+
+    AppUser findByUsername(String username);
+
+    @Query("select e from #{#entityName} e where e.username like %:keywords% or e.email like %:keywords%")
+    List<AppUser> findByUsernameOrEmailContaining(String keywords);
 }
