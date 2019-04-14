@@ -4,6 +4,7 @@
  */
 package net.bndy.sc.service.sso.controller;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,12 +49,25 @@ public class HomeController implements ErrorController {
     
     @RequestMapping(value = {"/error", "/oauth/error"})
     public String handleError(Model mView, HttpServletRequest request) {
+        mView.addAttribute("status", request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE));
+
         Object error = request.getAttribute("error");
+        if (error == null) {
+            error = request.getAttribute(RequestDispatcher.ERROR_EXCEPTION);
+        }
         if (error instanceof OAuth2Exception) {
             OAuth2Exception exception = (OAuth2Exception)error;
             mView.addAttribute("error", ApplicationUtil.getOauthErrorLang(exception.getOAuth2ErrorCode()));
             mView.addAttribute("message", exception.getMessage());
+        } else if (error instanceof Exception) {
+            Exception exception = (Exception)error;
+            mView.addAttribute("exception", exception);
+            mView.addAttribute("trace", exception.getStackTrace());
+            if (exception != null && exception.getCause() != null) {
+                mView.addAttribute("message", exception.getMessage());
+            }
         }
+
         return "error";
     }
 
