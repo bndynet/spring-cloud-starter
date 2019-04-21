@@ -13,6 +13,15 @@
   margin-right: 35px;
 }
 
+.layout-admin > .sidebar-main {
+  background-color: #eeeeee;
+}
+
+.layout-admin > .sidebar-main footer {
+  height: 38px;
+  background-color: #ffffff;
+}
+
 .layout-admin > footer {
   font-size: 80%;
 }
@@ -22,7 +31,11 @@
 }
 
 .page-login .main {
-  width: 460px;
+  width: 420px;
+}
+
+.page-login .main .form-control {
+  font-size: 1.25rem;
 }
 
 .page-wel .main {

@@ -5,6 +5,11 @@
 <head>
     <title layout:title-pattern="$DECORATOR_TITLE - $CONTENT_TITLE" th:text="#{admin.title}"></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="apple-touch-icon" sizes="180x180" href="https://static.bndy.net/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://static.bndy.net/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://static.bndy.net/favicon-16x16.png">
+    <link rel="mask-icon" href="https://static.bndy.net/safari-pinned-tab.svg" color="#5bbad5">
+
     <link rel="stylesheet" href="https://unpkg.com/@bndynet/bbootstrap/dist/css/bbootstrap.min.css">
     <script src="https://unpkg.com/@bndynet/bbootstrap/dist/js/bbootstrap.min.js"></script>
 
@@ -26,41 +31,54 @@
 </head>
 
 <body class="layout-admin layout-admin-sm">
-<header class="navbar navbar-expand navbar-dark bg-dark bd-navbar">
-    <a class="navbar-brand" th:href="@{/admin}" th:text="#{admin.title}"></a>
-    <ul class="navbar-nav ml-md-auto flex-row d-md-flex">
-        <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#"
-                                         id="userMenus" role="button" data-toggle="dropdown" aria-haspopup="true"
-                                         aria-expanded="false">
-            <i class="fa fa-fw fa-user"></i>
-            <span sec:authentication="name">Bendy</span>
-            <span sec:authentication="principal.authorities" class="d-none">[ROLE_USER, ROLE_ADMIN]</span>
-        </a>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenus">
-                <a th:href="@{/logout}" class="dropdown-item">
-                    <i class="fa fa-fw fa-sign-out"></i>
-                    <span th:text="#{labelSignOut}"></span>
+
+<header>
+    <nav class="navbar navbar-expand navbar-dark bg-dark bd-navbar">
+        <a class="navbar-brand" th:href="@{/admin}" th:text="#{admin.title}"></a>
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" onclick="bbootstrap.toggleLeftSide()">
+                        <i class="fa fa-bars fa-2x"></i>
+                    </a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#"
+                                                 id="userMenus" role="button" data-toggle="dropdown" aria-haspopup="true"
+                                                 aria-expanded="false">
+                    <i class="fa fa-fw fa-user"></i>
+                    <span sec:authentication="name">Bendy</span>
+                    <span sec:authentication="principal.authorities" class="d-none">[ROLE_USER, ROLE_ADMIN]</span>
                 </a>
-            </div>
-        </li>
-    </ul>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenus">
+                        <a th:href="@{/logout}" class="dropdown-item">
+                            <i class="fa fa-fw fa-sign-out"></i>
+                            <span th:text="#{labelSignOut}"></span>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
 </header>
+
 <div class="sidebar-main">
     <nav class="list-group list-group-flush">
         <a class="list-group-item  list-group-item-action" th:href="@{/admin}">
             <i class="fa fa-fw fa-home"></i>
-            <span th:text="#{home}"></span>
+            <span th:text="#{home}" class="hidden-mini"></span>
         </a> <a
             class="list-group-item list-group-item-action" th:href="@{/admin/user/list}"> <i
             class="fa fa-fw fa-users"></i>
-        <span th:text="#{user.userManagement}"></span>
+        <span th:text="#{user.userManagement}" class="hidden-mini"></span>
     </a>
         <a class="list-group-item list-group-item-action" th:href="@{/admin/client/list}"> <i
                 class="fa fa-fw fa-plug"></i>
-            <span th:text="#{client.clientManagement}"></span>
+            <span th:text="#{client.clientManagement}" class="hidden-mini"></span>
         </a>
     </nav>
-    <footer class="p-2 text-muted d-none">
+    <footer class="p-2 text-muted hidden-mini">
         <small th:utext="#{poweredBy}">
             Powered by <a href="http://bndy.net" target="_blank">Bendy Zhang</a>
         </small>
