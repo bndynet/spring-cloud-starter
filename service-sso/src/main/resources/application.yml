@@ -28,7 +28,7 @@ spring:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/sso
+    url: jdbc:mysql://127.0.0.1:3306/sso?useSSL=false
     username: ${MYSQL_USER:root}
     password: ${MYSQL_PASSWORD:123456}
     driver-class-name: com.mysql.jdbc.Driver

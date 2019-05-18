@@ -1,5 +1,9 @@
 # Spring Cloud Starter Project
 
+## Requires
+
+- JDK 8
+
 ## Components
 
 | SERVICE NAME | PORT | DESCRIPTION |
