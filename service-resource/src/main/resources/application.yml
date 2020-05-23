@@ -8,6 +8,8 @@ logging:
     root: DEBUG
 
 spring:
+  application:
+    name: Resource Service
   autoconfigure:
     exclude:
       - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration

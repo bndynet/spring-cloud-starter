@@ -1,4 +1,4 @@
-package net.bndy.res;
+package net.bndy.res.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
