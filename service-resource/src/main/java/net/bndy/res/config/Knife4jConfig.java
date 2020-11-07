@@ -3,7 +3,6 @@ package net.bndy.res.config;
 import com.github.xiaoymin.knife4j.spring.extension.OpenApiExtensionResolver;
 import net.bndy.res.ApplicationInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -14,6 +13,10 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
+/**
+ * @author Bendy Zhang
+ * @version 1.0
+ */
 @Configuration
 @EnableSwagger2WebMvc
 public class Knife4jConfig {
@@ -41,7 +44,7 @@ public class Knife4jConfig {
                 .groupName("v1.0")
                 .select()
                 // package to scan the controllers
-                .apis(RequestHandlerSelectors.basePackage("net.bndy.res.controllers"))
+                .apis(RequestHandlerSelectors.basePackage("net.bndy.res.controller"))
                 .paths(PathSelectors.any())
                 .build()
                 .extensions((openApiExtensionResolver.buildSettingExtensions()));

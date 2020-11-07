@@ -24,7 +24,7 @@ spring:
       resourceserver:
         jwt:
 #          issuer-uri: http://127.0.0.1:8080/auth/realms/master
-          jwk-set-uri: http://127.0.0.1:8080/auth/realms/master/protocol/openid-connect/certs
+          jwk-set-uri: http://127.0.0.1:9900/auth/realms/master/protocol/openid-connect/certs
 
 knife4j:
   enable: true

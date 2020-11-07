@@ -1,4 +1,4 @@
-package net.bndy.res.entities;
+package net.bndy.res.entity;
 
 public class Foo {
     private String id;
