@@ -2,6 +2,8 @@ package net.bndy.res.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,9 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/api/hi")
 public class HiController {
 
+    Logger logger = LoggerFactory.getLogger(HiController.class);
+
     @ApiOperation(value = "Hello world")
     @GetMapping()
     public String hi() {
+        logger.error("Call hi.");
         return "Hello World!";
     }
 
@@ -33,6 +38,12 @@ public class HiController {
     @GetMapping(value = "data")
     public String data() {
         return "You should not see this response since no 'data' scope granted";
+    }
+
+    @ApiOperation(value = "Error")
+    @GetMapping(value = "er")
+    public int error() throws Exception {
+        throw new Exception("This should be an error.");
     }
 
 }

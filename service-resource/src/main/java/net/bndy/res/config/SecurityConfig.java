@@ -33,7 +33,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/webjars/**",
                         "/swagger-resources",
                         "/v2/api-docs",
-                        "/api/hi"
+                        "/api/hi",
+                        "/api/hi/er"
                 ).permitAll()
 
                 // APIs access

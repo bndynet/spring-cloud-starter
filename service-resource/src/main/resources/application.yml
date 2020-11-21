@@ -7,9 +7,14 @@ logging:
   level:
     root: DEBUG
 
+logstash:
+  host: 127.0.0.1
+  port: 5044
+  queue-size: 512
+
 spring:
   application:
-    name: Resource Service
+    name: resource-service
   autoconfigure:
     exclude:
       - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
