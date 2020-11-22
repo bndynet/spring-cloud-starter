@@ -24,7 +24,10 @@ public class HiController {
     @ApiOperation(value = "Hello world")
     @GetMapping()
     public String hi() {
-        logger.error("Call hi.");
+        logger.debug("Debug hi");
+        logger.info("Info hi");
+        logger.warn("Warn hi");
+        logger.error("Error hi");
         return "Hello World!";
     }
 

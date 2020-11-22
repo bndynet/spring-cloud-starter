@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <springProperty scope="context" name="APP_NAME" source="spring.application.name"/>
+    <springProperty scope="context" name="LOGSTASH_HOST" source="logstash.host"/>
+    <springProperty scope="context" name="LOGSTASH_PORT" source="logstash.port"/>
+
+    <property name="LOGS" value="./logs" />
+
+    <appender name="console"
+              class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>
+                %white(%d{ISO8601}) %highlight(%-5level) [%blue(%t)] %yellow(%C{1.}): %msg%n%throwable
+            </Pattern>
+        </layout>
+    </appender>
+
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+
+    <appender name="stash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <destination>${LOGSTASH_HOST}:${LOGSTASH_PORT}</destination>
+        <keepAliveDuration>5 minutes</keepAliveDuration>
+        <reconnectionDelay>10 seconds</reconnectionDelay>
+        <!-- encoder is required -->
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <customFields>
+                {"app_name":"${APP_NAME}"}
+            </customFields>
+        </encoder>
+    </appender>
+
+<!--    <appender name="stash-access" class="net.logstash.logback.appender.LogstashAccessTcpSocketAppender">-->
+<!--        <destination>127.0.0.1:5044</destination>-->
+<!--        &lt;!&ndash; encoder is required &ndash;&gt;-->
+<!--        <encoder class="net.logstash.logback.encoder.LogstashAccessEncoder" />-->
+<!--    </appender>-->
+
+    <root level="INFO">
+        <appender-ref ref="console" />
+        <appender-ref ref="stash" />
+<!--        <appender-ref ref="stash-access" />-->
+    </root>
+</configuration>
