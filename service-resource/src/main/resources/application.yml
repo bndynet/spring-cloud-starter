@@ -3,10 +3,6 @@ server:
 #  servlet:
 #    context-path: /resource-server
 
-logging:
-  level:
-    root: DEBUG
-
 logstash:
   host: 127.0.0.1
   port: 5044

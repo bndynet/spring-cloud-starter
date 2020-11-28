@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration>
+<configuration scan="true" scanPeriod="2 seconds">
 
+    <!--
+        springProperty requires this file name is logback-spring.xml rather than logback,
+        otherwise, they are undefined.
+    -->
     <springProperty scope="context" name="APP_NAME" source="spring.application.name"/>
     <springProperty scope="context" name="LOGSTASH_HOST" source="logstash.host"/>
     <springProperty scope="context" name="LOGSTASH_PORT" source="logstash.port"/>
@@ -30,15 +34,12 @@
         </encoder>
     </appender>
 
-<!--    <appender name="stash-access" class="net.logstash.logback.appender.LogstashAccessTcpSocketAppender">-->
-<!--        <destination>127.0.0.1:5044</destination>-->
-<!--        &lt;!&ndash; encoder is required &ndash;&gt;-->
-<!--        <encoder class="net.logstash.logback.encoder.LogstashAccessEncoder" />-->
-<!--    </appender>-->
-
-    <root level="INFO">
+    <root level="info">
         <appender-ref ref="console" />
         <appender-ref ref="stash" />
-<!--        <appender-ref ref="stash-access" />-->
     </root>
+
+    <logger name="net.bndy.res" level="info" additivity="false">
+        <appender-ref ref="stash" />
+    </logger>
 </configuration>
