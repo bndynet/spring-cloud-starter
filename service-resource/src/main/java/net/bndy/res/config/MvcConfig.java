@@ -1,6 +1,6 @@
 package net.bndy.res.config;
 
-import net.bndy.res.interceptor.LoggerInterceptor;
+import net.bndy.res.interceptor.RequestInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -22,6 +22,6 @@ public class MvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LoggerInterceptor());
+        registry.addInterceptor(new RequestInterceptor());
     }
 }

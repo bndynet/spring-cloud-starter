@@ -8,13 +8,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Enumeration;
 
-public class LoggerInterceptor implements HandlerInterceptor {
+public class RequestInterceptor implements HandlerInterceptor {
 
-    private static Logger log = LoggerFactory.getLogger(LoggerInterceptor.class);
+    private static Logger log = LoggerFactory.getLogger(RequestInterceptor.class);
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        log.info("[preHandle][" + request + "][" + request.getMethod() + "]" + request.getRequestURI() + this.getParameters(request));
+        log.info("[" + request.getMethod() + "]" + request.getRequestURI() + this.getParameters(request));
         return HandlerInterceptor.super.preHandle(request, response, handler);
     }
 
