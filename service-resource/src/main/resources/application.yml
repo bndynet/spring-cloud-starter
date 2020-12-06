@@ -11,6 +11,10 @@ logstash:
 spring:
   application:
     name: resource-service
+  cors:
+    origins: https://bndy.net, https://cdpn.io
+    methods: GET, POST, PUT, PATCH, DELETE, OPTIONS
+    maxAge: 3600
   autoconfigure:
     exclude:
       - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
